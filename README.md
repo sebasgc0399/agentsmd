@@ -95,34 +95,34 @@ npm test
 npm run lint
 ```
 
-## Contributing
+## Contribuciones
 
-Thanks for helping improve **agents-md** — contributions are welcome.
+Gracias por ayudar a mejorar **agents-md**: las contribuciones son bienvenidas.
 
-To keep the project high-signal and easy to maintain, please:
+Para mantener el proyecto de alta calidad y fácil de mantener, por favor:
 
-- **Open an issue first** for non-trivial changes (new features, behavior changes, template expansions).
-- Include a clear **problem statement**, **proposed solution**, and **why** it's the right trade-off.
-- If you used an AI assistant, that's totally fine — please make sure the result is **reviewed by you**, tested locally, and aligned with the repo's conventions.  
-  In other words: AI can help you move faster, but the PR should reflect **your engineering judgment**.
-- Keep PRs **small and focused** when possible.
-- Add or update **tests** when behavior changes.
-- Run `npm test` before submitting.
+- **Abre un issue primero** para cambios no triviales (nuevas funcionalidades, cambios de comportamiento, expansiones de templates).
+- Incluye un **planteamiento claro del problema**, una **solución propuesta** y **por qué** es el mejor trade-off.
+- Si usaste un asistente de IA, está perfecto: asegúrate de que el resultado esté **revisado por ti**, probado en local y alineado con las convenciones del repo.  
+  En otras palabras: la IA puede ayudarte a ir más rápido, pero el PR debe reflejar **tu criterio de ingeniería**.
+- Mantén los PRs **pequeños y enfocados** cuando sea posible.
+- Agrega o actualiza **tests** cuando cambie el comportamiento.
+- Ejecuta `npm test` antes de enviar.
 
-### Development
+### Desarrollo
 
-- Install: `npm install`
+- Instalar: `npm install`
 - Build: `npm run build`
 - Test: `npm test`
 
-## Support
+## Soporte
 
-If you find this tool useful, you can support the project by:
+Si esta herramienta te resulta útil, puedes apoyar el proyecto de estas formas:
 
-- Starring the repo
-- Sharing it with your team
-- Reporting bugs with reproducible steps
-- Proposing improvements via issues or well-scoped PRs
+- Dar estrella al repo
+- Compartirlo con tu equipo
+- Reportar bugs con pasos reproducibles
+- Proponer mejoras vía issues o PRs bien acotados
 
 ## License
 
