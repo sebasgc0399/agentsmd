@@ -1,6 +1,6 @@
 {
-  "name": "agentsmd",
-  "version": "1.0.0",
+  "name": "@sebasgc0399/agents-md",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebasgc0399/agents-md.git"
@@ -12,7 +12,7 @@
   "description": "Generate AGENTS.md files for AI coding agents",
   "type": "module",
   "bin": {
-    "agentsmd": "./dist/cli.js"
+    "agents-md": "./dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -50,7 +50,6 @@
     "README.md"
   ],
   "dependencies": {
-    "agentsmd": "file:agentsmd-1.0.0.tgz",
     "commander": "^11.1.0",
     "mustache": "^4.2.0"
   },

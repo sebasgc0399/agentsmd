@@ -1,4 +1,4 @@
-# agentsmd
+# agents-md
 
 CLI para generar archivos AGENTS.md automáticamente para proyectos Node.js.
 
@@ -17,28 +17,28 @@ AGENTS.md es un "README para AI agents" que reduce las alucinaciones de agentes 
 
 ```bash
 # Generar AGENTS.md en el directorio actual
-npx agentsmd init
+npx @sebasgc0399/agents-md init
 
 # Preview sin escribir archivo
-npx agentsmd init --dry-run
+npx @sebasgc0399/agents-md init --dry-run
 
 # Elegir perfil de salida
-npx agentsmd init --profile compact    # ~70 líneas (default)
-npx agentsmd init --profile standard   # ~150 líneas
-npx agentsmd init --profile full       # ~220 líneas
+npx @sebasgc0399/agents-md init --profile compact    # ~70 líneas (default)
+npx @sebasgc0399/agents-md init --profile standard   # ~150 líneas
+npx @sebasgc0399/agents-md init --profile full       # ~220 líneas
 ```
 
 ## Instalación
 
 **Opción 1: Sin instalación (npx)**
 ```bash
-npx agentsmd init
+npx @sebasgc0399/agents-md init
 ```
 
 **Opción 2: Instalación global**
 ```bash
-npm install -g agentsmd
-agentsmd init
+npm install -g @sebasgc0399/agents-md
+agents-md init
 ```
 
 **Requisitos**: Node.js ≥18
@@ -47,24 +47,24 @@ agentsmd init
 
 ```bash
 # Generar AGENTS.md en el directorio actual
-agentsmd init
+agents-md init
 
 # Preview sin escribir archivo
-agentsmd init --dry-run
+agents-md init --dry-run
 
 # Elegir perfil de salida (default: compact)
-agentsmd init --profile compact
-agentsmd init --profile standard
-agentsmd init --profile full
+agents-md init --profile compact
+agents-md init --profile standard
+agents-md init --profile full
 
 # Sobrescribir archivo existente
-agentsmd init --force
+agents-md init --force
 
 # Modo verbose (mostrar detalles de detección)
-agentsmd init --verbose
+agents-md init --verbose
 
 # Especificar ruta de salida
-agentsmd init --out ./docs/AGENTS.md
+agents-md init --out ./docs/AGENTS.md
 ```
 
 ## Proyectos Soportados

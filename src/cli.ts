@@ -17,9 +17,9 @@ const program = new Command();
 const VALID_PROFILES: Profile[] = ['compact', 'standard', 'full'];
 
 program
-  .name('agentsmd')
+  .name('agents-md')
   .description('Generate AGENTS.md files for AI coding agents')
-  .version('1.0.0');
+  .version('0.1.0');
 
 program
   .command('init')
