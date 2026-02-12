@@ -34,9 +34,15 @@ export function validateOutput(content: string): ValidationResult {
     );
   }
 
-  // Check for placeholder strings that shouldn't be in output
-  if (content.includes('undefined') || content.includes('null')) {
-    errors.push('Output contains "undefined" or "null" strings');
+  // Check for placeholder tokens that shouldn't be in output
+  const forbiddenPlaceholders: Array<{ token: string; pattern: RegExp }> = [
+    { token: 'undefined', pattern: /\bundefined\b/ },
+    { token: 'null', pattern: /\bnull\b/ },
+  ];
+  for (const { token, pattern } of forbiddenPlaceholders) {
+    if (pattern.test(content)) {
+      errors.push(`Output contains forbidden placeholder string: "${token}"`);
+    }
   }
 
   // Check for N/A commands (should use conditional rendering instead)
