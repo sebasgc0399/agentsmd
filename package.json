@@ -1,0 +1,51 @@
+{
+  "name": "agents-md",
+  "version": "1.0.0",
+  "description": "Generate AGENTS.md files for AI coding agents",
+  "type": "module",
+  "bin": {
+    "agents-md": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && npm run copy-templates",
+    "copy-templates": "node -e \"require('fs').cpSync('src/templates', 'dist/templates', {recursive: true})\"",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "agents",
+    "ai",
+    "llm",
+    "documentation",
+    "readme",
+    "claude",
+    "copilot",
+    "windsurf"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/mustache": "^4.2.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
