@@ -110,6 +110,21 @@ La generación solo se bloquea cuando hay **errors** de validación.
 - Node.js 18+
 - `package.json` en la raíz del proyecto
 
+## 📦 Releases y Novedades
+
+**Versión actual: v0.1.0**
+
+### Cambios en esta versión:
+- 🎉 Lanzamiento inicial de la CLI
+
+> **💡 Actualizar a la última versión:**
+> Si tienes instalada una versión anterior globalmente, actualiza con:
+> ```bash
+> npm update -g @sebasgc0399/agents-md
+> ```
+
+[📋 Ver el historial completo de versiones →](https://github.com/sebasgc0399/agentsmd/releases)
+
 ## Desarrollo
 
 ```bash
