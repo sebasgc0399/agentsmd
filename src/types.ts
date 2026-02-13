@@ -113,7 +113,6 @@ export interface TemplateContext {
   isFull: boolean;
   isStandardOrFull: boolean;
   is_unknown_generic?: boolean;
-  is_vue_or_nuxt_base?: boolean;
   framework_type: string;
   runtime_type: string;
 }

@@ -173,7 +173,6 @@ export function buildTemplateContext(
     isFull: profile === 'full',
     isStandardOrFull: profile === 'standard' || profile === 'full',
     is_unknown_generic: framework.type === 'unknown' && !folderStructure.isMonorepo,
-    is_vue_or_nuxt_base: framework.type === 'vue' || framework.type === 'nuxt',
     framework_type: framework.type,
     runtime_type: runtime.type,
   };

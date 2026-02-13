@@ -160,28 +160,6 @@ Antes de considerar una tarea completa:
 - Confirm no placeholder content leaked.
 {{/is_unknown_generic}}
 
-{{#is_vue_or_nuxt_base}}
-## Vue/Nuxt delivery notes
-
-### Component boundaries
-- Keep SFC structure explicit: template for markup, script for logic, style for visual rules.
-- Prefer composables for reusable stateful behavior over duplicating component logic.
-- Keep route-level pages lightweight and move heavy logic into shared modules.
-
-### Validation expectations
-- Verify `dev` startup and `build` output after changing routes, plugins, or config.
-- Keep lint/test commands aligned with `package.json` scripts and CI expectations.
-- Confirm key user flows (loading, empty, error) render predictable states.
-- Document environment variables required by client/runtime code before handoff.
-- Verify SSR/hydration assumptions explicitly when Nuxt route behavior changes.
-
-### PR evidence checklist (Vue/Nuxt)
-- List changed routes/components and expected behavior per change.
-- Include one rendered-state example for success and one for error handling.
-- Note plugin/config updates and any migration step needed for teammates.
-- Keep rollback steps explicit when touching router, build config, or env wiring.
-{{/is_vue_or_nuxt_base}}
-
 ## Do / Don't
 ### Do
 - Do preserve existing behavior unless a change is requested.
