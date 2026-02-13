@@ -120,8 +120,14 @@ npm run dev
 # Tests
 npm test
 
+# Coverage
+npm run test:coverage
+
 # Lint (verificar tipos)
 npm run lint
+
+# Smoke del CLI compilado
+node dist/cli.js init --dry-run
 ```
 
 ## Contribuciones
@@ -143,6 +149,7 @@ Para mantener el proyecto de alta calidad y fácil de mantener, por favor:
 - Instalar: `npm install`
 - Build: `npm run build`
 - Test: `npm test`
+- Coverage: `npm run test:coverage`
 
 ## Soporte
 
