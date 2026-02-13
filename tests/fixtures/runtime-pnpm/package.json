@@ -1,0 +1,10 @@
+{
+  "name": "runtime-pnpm",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": "18.17.0"
+  }
+}

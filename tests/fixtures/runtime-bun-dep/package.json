@@ -1,0 +1,12 @@
+{
+  "name": "runtime-bun-dep",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {
+    "bun": "^1.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "bun": "1.1.3"
+  }
+}
