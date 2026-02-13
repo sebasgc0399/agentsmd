@@ -18,11 +18,11 @@ AGENTS.md se plantea como un formato abierto y sencillo (sin esquema rígido) pa
 
 En paralelo, los principales entornos han creado mecanismos similares de “instrucciones persistentes” (a veces compatibles con AGENTS.md, a veces con nombres/ubicaciones propias):
 
-- ["company","OpenAI","ai company"] Codex lee AGENTS.md y AGENTS.override.md tanto en un ámbito global (`~/.codex`) como por proyecto, concatenando archivos desde la raíz hacia el directorio actual, con límites de tamaño configurables.  
-- ["company","GitHub","code hosting company"] Copilot dispone de instrucciones de repositorio (`.github/copilot-instructions.md`) y de instrucciones por ruta con frontmatter `applyTo` en `.github/instructions/*.instructions.md` (y las aplica automáticamente). Además, Copilot coding agent anunció soporte para AGENTS.md (incluyendo ficheros anidados).   
+- ["company","OpenAI","ai company"]  Codex lee AGENTS.md y AGENTS.override.md tanto en un ámbito global (`~/.codex`) como por proyecto, concatenando archivos desde la raíz hacia el directorio actual, con límites de tamaño configurables.  
+- ["company","GitHub","code hosting company"]  Copilot dispone de instrucciones de repositorio (`.github/copilot-instructions.md`) y de instrucciones por ruta con frontmatter `applyTo` en `.github/instructions/*.instructions.md` (y las aplica automáticamente). Además, Copilot coding agent anunció soporte para AGENTS.md (incluyendo ficheros anidados).   
 - Windsurf soporta AGENTS.md con *scoping* automático por ubicación (raíz vs subdirectorios) y, por otro lado, reglas en `.windsurf/rules` con descubrimiento en workspace/subdirectorios y hasta el git root, con límites explícitos por fichero de reglas.   
 - Cline estructura reglas en `.clinerules/` (y soporta múltiples formatos de otros ecosistemas), con precedencia entre reglas globales y del workspace, y con opción de reglas condicionales.   
-- ["company","Google","tech company"] Gemini en Android Studio documenta un modelo muy similar al de Codex/Windsurf: AGENTS.md buscado en el directorio actual y superiores, con posibilidad de varios ficheros para control fino, importación modular con `@ruta`, y notas de precedencia frente a GEMINI.md.   
+- ["company","Google","tech company"]  Gemini en Android Studio documenta un modelo muy similar al de Codex/Windsurf: AGENTS.md buscado en el directorio actual y superiores, con posibilidad de varios ficheros para control fino, importación modular con `@ruta`, y notas de precedencia frente a GEMINI.md.   
 
 A continuación, una tabla comparativa centrada en **qué se inyecta** y **cómo escala** (lo importante para ingeniería de contexto):
 
@@ -44,7 +44,7 @@ Nota sobre `.windsurfrules` y `.cursorrules`: aparecen como nombres históricos 
 
 Un “coding agent” rara vez manda al modelo solo tu prompt. Normalmente compone una solicitud a partir de: (1) instrucciones de alto nivel (system/developer/instructions), (2) tu petición, (3) contexto del workspace (archivos relevantes, diffs, estructura), (4) resultados de herramientas (búsquedas, terminal, tests), y (5) reglas persistentes (AGENTS.md, rules por carpeta, etc.). Cline lo explica de forma directa: antes de enviar tu petición al LLM, agrega información del workspace, preferencias y codebase al system prompt. 
 
-En APIs modernas (por ejemplo, en la API de ["company","OpenAI","ai company"]), la jerarquía de seguimiento de instrucciones se articula explícitamente: instrucciones en rol *developer* o *system* tienen precedencia sobre rol *user*. 
+En APIs modernas (por ejemplo, en la API de ["company","OpenAI","ai company"] ), la jerarquía de seguimiento de instrucciones se articula explícitamente: instrucciones en rol *developer* o *system* tienen precedencia sobre rol *user*. 
 
 ### Tokens, ventana de contexto y por qué importa para reglas persistentes
 
@@ -443,5 +443,5 @@ services/payments/
 - Documentación de Android Developers para Gemini/Android Studio sobre AGENTS.md (búsqueda en directorios superiores, importación `@`, preámbulo, precedencia con GEMINI.md). 
 - Post del GitHub Blog con lecciones de miles de repositorios sobre cómo escribir good agents.md (útil para patrones emergentes).  
 - Evaluaciones: Vercel reporta mejoras medibles ajustando instrucciones en AGENTS.md para disparar “skills”. 
-- Seguridad: investigación de ["company","Pillar Security","cybersecurity company"] sobre “Rules File Backdoor”; cheat sheet de ["organization","OWASP","security foundation"] sobre prompt injection; referencia industrial sobre prompt injection invisible con Unicode. 
+- Seguridad: investigación de ["company","Pillar Security","cybersecurity company"]  sobre “Rules File Backdoor”; cheat sheet de ["organization","OWASP","security foundation"]  sobre prompt injection; referencia industrial sobre prompt injection invisible con Unicode. 
 - Evidencia académica sobre limitaciones de largo contexto (“lost in the middle”) y sobre RAG como técnica de grounding y reducción de alucinación/errores factuales. 
