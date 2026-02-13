@@ -13,6 +13,8 @@ export interface CLIOptions {
   profile: Profile;
 }
 
+export type WorkspaceConfig = string[] | { packages?: string[] };
+
 export interface PackageInfo {
   name: string;
   version?: string;
@@ -22,7 +24,7 @@ export interface PackageInfo {
   dependencies: Record<string, string>;
   devDependencies: Record<string, string>;
   engines?: Record<string, string>;
-  workspaces?: string[];
+  workspaces?: WorkspaceConfig;
 }
 
 export interface FolderStructure {

@@ -25,4 +25,37 @@ describe('CLI init --dry-run', () => {
     expect(result.stdout).toContain('Comandos');
     expect(result.stdout).toContain('npm run dev');
   });
+
+  it('accepts -y and -i flags without changing default dry-run behavior', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'react-vite');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', fixturePath, '--dry-run', '-y', '-i'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('# AGENTS');
+    expect(result.stdout).toContain('Comandos');
+  });
+
+  it('blocks output paths outside project directory', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'react-vite');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', fixturePath, '--out', '../AGENTS.md'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('Output path must be within the project directory');
+  });
 });

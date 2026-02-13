@@ -43,6 +43,16 @@ describe('detectPackageInfo', () => {
     expect(info.devDependencies.turbo).toBeDefined();
   });
 
+  it('should normalize workspaces object format', async () => {
+    const monorepoPath = path.join(fixturesDir, 'monorepo-workspaces-object');
+    const info = await detectPackageInfo(monorepoPath);
+
+    expect(Array.isArray(info.workspaces)).toBe(false);
+    expect(info.workspaces).toEqual({
+      packages: ['apps/*', 'packages/*'],
+    });
+  });
+
   it('should throw error when package.json not found', async () => {
     const invalidPath = path.join(fixturesDir, 'non-existent');
     await expect(detectPackageInfo(invalidPath)).rejects.toThrow('No package.json found');

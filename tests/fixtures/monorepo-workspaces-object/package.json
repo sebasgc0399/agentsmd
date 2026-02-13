@@ -1,0 +1,14 @@
+{
+  "name": "my-monorepo-workspaces-object",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "build": "npm run -ws build"
+  }
+}

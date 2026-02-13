@@ -14,10 +14,11 @@ export async function detectProject(rootPath: string): Promise<DetectionResult> 
   const packageInfo = await detectPackageInfo(rootPath);
 
   // 2. Detect folder structure
-  const folderStructure = detectFolderStructure(rootPath);
+  const folderStructure = detectFolderStructure(rootPath, packageInfo);
 
   // 3. Detect framework
-  const framework = detectFramework(packageInfo);
+  const rawFramework = detectFramework(packageInfo);
+  const framework = applyFolderSignals(rawFramework, folderStructure);
 
   // 4. Detect runtime and package manager
   const runtime = detectRuntime(rootPath, packageInfo);
@@ -36,6 +37,21 @@ export async function detectProject(rootPath: string): Promise<DetectionResult> 
     commands,
     confidence,
   };
+}
+
+function applyFolderSignals(
+  framework: DetectionResult['framework'],
+  folderStructure: DetectionResult['folderStructure']
+): DetectionResult['framework'] {
+  if (framework.type === 'firebase-functions' && !folderStructure.hasFunctions) {
+    return {
+      type: 'unknown',
+      confidence: 'low',
+      indicators: [...framework.indicators, 'missing functions/ directory'],
+    };
+  }
+
+  return framework;
 }
 
 /**

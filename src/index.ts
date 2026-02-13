@@ -31,6 +31,7 @@ export { Logger } from './utils/logger.js';
 // Export types
 export type {
   CLIOptions,
+  WorkspaceConfig,
   PackageInfo,
   FolderStructure,
   FrameworkInfo,

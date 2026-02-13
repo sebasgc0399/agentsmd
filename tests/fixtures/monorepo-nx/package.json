@@ -1,0 +1,11 @@
+{
+  "name": "my-monorepo-nx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nx build"
+  },
+  "devDependencies": {
+    "nx": "^19.0.0"
+  }
+}

@@ -67,6 +67,9 @@ agents-md init --verbose
 agents-md init --out ./docs/AGENTS.md
 ```
 
+Nota: en la version `v0.1.x`, las flags `-y/--yes` y `-i/--interactive`
+estan reservadas y actualmente no cambian el comportamiento del comando.
+
 ## Proyectos Soportados
 
 - React (con Vite, CRA, o Next.js)

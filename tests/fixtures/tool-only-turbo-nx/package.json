@@ -1,0 +1,12 @@
+{
+  "name": "tool-only-turbo-nx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"build\""
+  },
+  "devDependencies": {
+    "turbo": "^1.11.0",
+    "nx": "^19.0.0"
+  }
+}

@@ -33,19 +33,19 @@ export function detectFramework(packageInfo: PackageInfo): FrameworkInfo {
     };
   }
 
+  // Nuxt detection (works even when vue is not explicitly listed)
+  if (allDeps.nuxt) {
+    return {
+      type: 'nuxt',
+      version: allDeps.nuxt,
+      confidence: 'high',
+      indicators: ['nuxt in dependencies/devDependencies'],
+    };
+  }
+
   // Vue detection
   if (deps.vue) {
     indicators.push('vue in dependencies');
-
-    // Check if it's Nuxt
-    if (deps.nuxt) {
-      return {
-        type: 'nuxt',
-        version: deps.nuxt,
-        confidence: 'high',
-        indicators: [...indicators, 'nuxt in dependencies'],
-      };
-    }
 
     return {
       type: 'vue',
@@ -76,12 +76,12 @@ export function detectFramework(packageInfo: PackageInfo): FrameworkInfo {
   }
 
   // Firebase Functions detection
-  if (deps['firebase-functions']) {
+  if (allDeps['firebase-functions']) {
     return {
       type: 'firebase-functions',
-      version: deps['firebase-functions'],
+      version: allDeps['firebase-functions'],
       confidence: 'high',
-      indicators: ['firebase-functions in dependencies'],
+      indicators: ['firebase-functions in dependencies/devDependencies'],
     };
   }
 

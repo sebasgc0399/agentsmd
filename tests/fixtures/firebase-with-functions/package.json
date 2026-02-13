@@ -1,0 +1,12 @@
+{
+  "name": "my-firebase-with-functions",
+  "version": "1.0.0",
+  "description": "Firebase Functions project with functions folder",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-functions": "^4.5.0"
+  }
+}

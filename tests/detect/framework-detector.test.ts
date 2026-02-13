@@ -55,6 +55,23 @@ describe('detectFramework', () => {
     expect(framework.confidence).toBe('high');
   });
 
+  it('should detect Nuxt even when Vue is not explicitly listed', () => {
+    const packageInfo: PackageInfo = {
+      name: 'test',
+      scripts: {},
+      dependencies: {
+        nuxt: '^3.12.0',
+      },
+      devDependencies: {},
+    };
+
+    const framework = detectFramework(packageInfo);
+
+    expect(framework.type).toBe('nuxt');
+    expect(framework.confidence).toBe('high');
+    expect(framework.version).toBe('^3.12.0');
+  });
+
   it('should return unknown for no recognized framework', () => {
     const packageInfo: PackageInfo = {
       name: 'test',
