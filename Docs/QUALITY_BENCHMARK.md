@@ -192,7 +192,52 @@ Politica de baseline:
 - El diff del baseline debe incluirse en el mismo PR.
 - Si el cambio no es intencional, se corrige el codigo y no se actualiza baseline.
 
-## 9. Reporte minimo esperado del benchmark
+## 9. P2 nucleo (tendencias no bloqueantes)
+
+Objetivo:
+
+- Derivar metricas semanales de calidad desde `benchmark:lite` + `benchmark:p1`.
+- Enriquecer con conteo de issues etiquetados via GitHub API.
+- Mantener P2 como observabilidad (no bloquea merges de PR).
+
+Comando P2:
+
+```bash
+npm run benchmark:p2
+```
+
+Salida:
+
+- `artifacts/benchmark-p2/report.json`
+- `artifacts/benchmark-p2/report.md`
+
+Labels usadas en P2:
+
+- `benchmark:unknown`
+- `benchmark:invalid-command`
+- `benchmark:regression`
+
+Metricas P2:
+
+- `totalCases`, `passRate`, `determinismRate`
+- `avgScore`, `minScore`, `scoreVsBaselineAvg`
+- `invalidCommandRate`
+- `unknownTokenCaseRate`
+- `lineTokenWarningRate` (solo observabilidad)
+
+Alertas P2 (no bloqueantes):
+
+- `determinismRate < 1.0`
+- `invalidCommandRate > 0`
+- `scoreVsBaselineAvg < 0`
+- `p1Status = fail`
+
+Politica CI:
+
+- P2 corre en workflow dedicado semanal/manual (`benchmark-trends.yml`).
+- No modifica `ci.yml` de PR; los gates bloqueantes siguen en P0/P1.
+
+## 10. Reporte minimo esperado del benchmark
 
 Salida sugerida por fixture/perfil:
 

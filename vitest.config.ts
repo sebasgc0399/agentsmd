@@ -17,9 +17,12 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         'dist/',
+        'scripts/benchmark/',
         'tests/fixtures/',
         '**/*.test.ts',
         'vitest.config.ts',
+        'src/cli.ts',
+        'src/index.ts',
       ],
     },
   },

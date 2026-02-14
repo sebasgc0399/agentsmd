@@ -39,6 +39,7 @@ const REQUIRED_SECTIONS = [
 
 const BLOCKING_PLACEHOLDER_REGEX = /\b(undefined|null)\b/gi;
 const ADDITIONAL_PLACEHOLDER_REGEX = /\b(N\/A|TBD)\b/gi;
+const UNKNOWN_TOKEN_REGEX = /\b(unknown|desconocido)\b/gi;
 
 const TOOL_SPECIFIC_INSTRUCTION_REGEX =
   /\b(abre|usa|utiliza|ejecuta|run|open|use|haz)\b[\s\S]{0,80}\b(cursor|claude|copilot|windsurf|gemini|cline)\b|\b(en)\s+(cursor|claude|copilot|windsurf|gemini|cline)\b[\s\S]{0,80}\b(haz|run|open|use|usa|ejecuta)\b/i;
@@ -233,6 +234,26 @@ function findToolSpecificLines(content) {
     }
   }
   return matches;
+}
+
+function findUnknownTokens(content) {
+  const rawMatches = content.match(UNKNOWN_TOKEN_REGEX) || [];
+  const hits = [];
+  const seen = new Set();
+
+  for (const match of rawMatches) {
+    const normalized = match.toLowerCase();
+    if (seen.has(normalized)) {
+      continue;
+    }
+    seen.add(normalized);
+    hits.push(normalized);
+  }
+
+  return {
+    hits,
+    count: rawMatches.length,
+  };
 }
 
 function scoreStructure(content) {
@@ -473,6 +494,8 @@ async function main() {
           sectionWarnings: [],
           additionalPlaceholderWarnings: [],
           blockingPlaceholderHits: [],
+          unknownTokenHits: [],
+          unknownTokenCount: 0,
           lockInHits: [],
           validatorErrors: [],
         },
@@ -551,10 +574,13 @@ async function main() {
 
       const blockingPlaceholderHits = findBlockingPlaceholders(firstPreview);
       const additionalPlaceholderWarnings = findAdditionalPlaceholders(firstPreview);
+      const unknownTokenData = findUnknownTokens(firstPreview);
       const lockInHits = findToolSpecificLines(firstPreview);
 
       caseResult.validation.blockingPlaceholderHits = blockingPlaceholderHits;
       caseResult.validation.additionalPlaceholderWarnings = additionalPlaceholderWarnings;
+      caseResult.validation.unknownTokenHits = unknownTokenData.hits;
+      caseResult.validation.unknownTokenCount = unknownTokenData.count;
       caseResult.validation.lockInHits = lockInHits;
 
       const extractedCommands = extractCanonicalCommands(firstPreview);

@@ -1,0 +1,46 @@
+name: Benchmark Trends
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 1'
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  trends:
+    name: benchmark-trends (node 20)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Benchmark P2 report
+        run: npm run benchmark:p2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Upload benchmark trends artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-trends-report
+          path: artifacts/benchmark-p2/*
+
+      - name: Publish markdown summary
+        run: cat artifacts/benchmark-p2/report.md >> "$GITHUB_STEP_SUMMARY"

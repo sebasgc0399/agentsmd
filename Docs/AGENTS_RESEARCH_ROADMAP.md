@@ -8,7 +8,7 @@ Decision concreta:
 
 - `P0`: quick wins obligatorios (determinismo + benchmark lite + gate en CI).
 - `P1`: consolidar score automatico, snapshots y checks semanticos.
-- `P2`: seguimiento con metricas derivadas del benchmark + issues reportados.
+- `P2`: seguimiento no bloqueante con metricas derivadas del benchmark + issues etiquetados via GitHub API.
 
 ## 2) Baseline tecnico (estado actual)
 
@@ -26,7 +26,7 @@ Evidencia local:
 |---|---|---|---|
 | P0 | 1-2 semanas | Tener benchmark lite ejecutable en local y CI | rubrica versionada, harness lite sin deps nuevas, chequeo determinismo, chequeo exactitud de comandos, job CI bloqueante |
 | P1 | 2-4 semanas | Hacer robusta la evaluacion de calidad | snapshots por fixture/perfil, validacion semantica markdown, score automatico por criterio, expansion de fixtures |
-| P2 | 4-8 semanas | Medir tendencia de calidad sin telemetria de usuarios | reportes semanales CI (md/json), metricas derivadas de benchmark e issues etiquetados, ajuste de umbrales |
+| P2 | 4-8 semanas | Medir tendencia de calidad sin telemetria de usuarios | script `benchmark:p2`, reportes semanales CI (md/json), metricas derivadas de benchmark e issues etiquetados, alerts no bloqueantes |
 
 ## 4) Matriz de fixtures (P0 vs target)
 
@@ -73,10 +73,14 @@ Target de expansion (Issue 7):
 
 ### P2 (impacto y seguimiento)
 
-- Tasa de casos `unknown` en fixtures y repos de muestra estable o descendente.
+- Tasa de casos `unknown` en fixtures actuales estable o descendente.
 - Tasa de comandos invalidos detectados por benchmark estable o descendente.
 - Tendencia de score estable o creciente en `>= 4` semanas consecutivas.
 - Reporte semanal en markdown/json generado por CI (sin datos de usuarios).
+- Tendencia de issues por labels:
+  - `benchmark:unknown`
+  - `benchmark:invalid-command`
+  - `benchmark:regression`
 
 ## 6) Plan minimo de implementacion (sin dependencias nuevas)
 
@@ -197,13 +201,15 @@ Target de expansion (Issue 7):
 ### Issue 8 - observabilidad: metricas derivadas sin telemetria de usuarios
 
 - Contexto: P2 necesita tendencia objetiva sin recopilar datos de uso privado.
-- Alcance minimo: reporte de tendencias desde benchmark + issues etiquetados.
+- Alcance minimo: `benchmark:p2` + workflow semanal/manual con reporte de tendencias desde benchmark + issues etiquetados.
 - DoD:
-  - reporte semanal simple en markdown/json desde CI,
-  - trendline comparando baseline vs semana actual.
+  - genera `artifacts/benchmark-p2/report.json` y `report.md`,
+  - workflow `benchmark-trends.yml` publica artifacts y summary,
+  - P2 no bloquea merges de PR.
 - Tests esperados:
   - test de agregacion de metricas,
-  - test de export con formato estable.
+  - test de export con formato estable,
+  - test de modo `--no-issues` para entorno local.
 
 ## 8) Comandos de verificacion obligatoria
 
@@ -219,6 +225,7 @@ Para cambios de benchmark/harness (cuando exista):
 ```bash
 npm run benchmark:lite
 npm run benchmark:p1
+npm run benchmark:p2
 ```
 
 ## 9) Estado operativo P0 (branch actual)
@@ -235,3 +242,11 @@ npm run benchmark:p1
 - [x] Gate CI `npm run benchmark:p1` agregado.
 - [x] Presupuesto de regresion activado (`score actual >= baseline - 1`).
 - [x] Lineas/tokens se mantienen como warning no bloqueante.
+
+## 11) Estado operativo P2 nucleo (branch actual)
+
+- [x] Script `scripts/benchmark/p2.mjs` implementado (JSON + Markdown).
+- [x] Script npm `benchmark:p2` disponible.
+- [x] Workflow semanal/manual `.github/workflows/benchmark-trends.yml` agregado.
+- [x] Reportes P2 publicados como artifacts (`artifacts/benchmark-p2/*`).
+- [x] P2 mantiene politica no bloqueante para PRs.

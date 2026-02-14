@@ -155,6 +155,9 @@ npm run benchmark:p1
 # Regenerar baseline P1 (solo cuando el cambio es intencional)
 npm run benchmark:p1:update
 
+# Benchmark P2 (weekly trends report, non-blocking)
+npm run benchmark:p2
+
 # Smoke del CLI compilado
 node dist/cli.js init --dry-run
 ```
@@ -182,6 +185,7 @@ Para mantener el proyecto de alta calidad y fácil de mantener, por favor:
 - Benchmark lite: `npm run benchmark:lite`
 - Benchmark P1: `npm run benchmark:p1`
 - Update baseline P1: `npm run benchmark:p1:update`
+- Benchmark P2 trends (no gate de PR): `npm run benchmark:p2`
 
 ## Soporte
 
