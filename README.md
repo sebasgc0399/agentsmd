@@ -72,7 +72,7 @@ agents-md init --verbose
 agents-md init --out ./docs/AGENTS.md
 ```
 
-Nota: en la version `v0.1.x`, las flags `-y/--yes` y `-i/--interactive`
+Nota: en la version `v0.2.x`, las flags `-y/--yes` y `-i/--interactive`
 estan reservadas y actualmente no cambian el comportamiento del comando.
 
 ## Proyectos Soportados
@@ -112,10 +112,12 @@ La generación solo se bloquea cuando hay **errors** de validación.
 
 ## 📦 Releases y Novedades
 
-**Versión actual: v0.1.0**
+**Version actual: v0.2.0**
 
 ### Cambios en esta versión:
-- 🎉 Lanzamiento inicial de la CLI
+- Benchmark de calidad P0/P1/P2 integrado (`benchmark:lite`, `benchmark:p1`, `benchmark:p2`)
+- Gates de calidad en CI para benchmark lite + baseline semantico P1
+- Workflow semanal/manual de tendencias (`benchmark-trends`) con reporte JSON/Markdown
 
 > **💡 Actualizar a la última versión:**
 > Si tienes instalada una versión anterior globalmente, actualiza con:
@@ -123,7 +125,7 @@ La generación solo se bloquea cuando hay **errors** de validación.
 > npm update -g @sebasgc0399/agents-md
 > ```
 
-[📋 Ver el historial completo de versiones →](https://github.com/sebasgc0399/agentsmd/releases)
+[Ver el historial completo de versiones](https://github.com/sebasgc0399/agents-md/releases)
 
 ## Desarrollo
 
