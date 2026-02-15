@@ -26,6 +26,15 @@ function getLengthWarnings(warnings: string[]): string[] {
   );
 }
 
+function getTokenWarnings(warnings: string[]): string[] {
+  return warnings.filter(
+    warning =>
+      warning.startsWith('Only ') ||
+      warning.includes('exceeds budget') ||
+      warning.startsWith('[BREACH] Token count')
+  );
+}
+
 describe('renderAgentsMd profiles', () => {
   it('renders compact, standard and full with expected growth and limits', async () => {
     const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'react-vite');
@@ -95,6 +104,20 @@ describe('renderAgentsMd profiles', () => {
 
     expect(reactStandard.content).toContain('React delivery checklist');
     expect(monorepoStandard.content).toContain('Monorepo delivery checklist');
+  });
+
+  it('keeps representative calibrated profiles free of token warning regressions', async () => {
+    const runtimePath = path.join(repoRoot, 'tests', 'fixtures', 'runtime-npm');
+    const vuePath = path.join(repoRoot, 'tests', 'fixtures', 'vue-vite');
+
+    const runtimeDetection = await detectProject(runtimePath);
+    const vueDetection = await detectProject(vuePath);
+
+    const runtimeCompact = renderAgentsMd(runtimeDetection, 'compact');
+    const vueFull = renderAgentsMd(vueDetection, 'full');
+
+    expect(getTokenWarnings(runtimeCompact.validation.warnings)).toEqual([]);
+    expect(getTokenWarnings(vueFull.validation.warnings)).toEqual([]);
   });
 
   it('does not leak unknown generic block into vue projects using base template', async () => {

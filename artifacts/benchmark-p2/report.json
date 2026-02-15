@@ -1,6 +1,6 @@
 {
   "mode": "p2",
-  "generatedAt": "2026-02-15T02:25:16.846Z",
+  "generatedAt": "2026-02-15T19:33:17.479Z",
   "context": {
     "repository": null,
     "fixtures": [
@@ -39,8 +39,8 @@
       "extractedCommandCount": 60,
       "unknownTokenCaseRate": 0,
       "unknownTokenCaseCount": 0,
-      "lineTokenWarningRate": 0.4444444444444444,
-      "lineTokenWarningCaseCount": 8
+      "lineTokenWarningRate": 0,
+      "lineTokenWarningCaseCount": 0
     },
     "liteSummary": {
       "totalCases": 18,
@@ -50,8 +50,8 @@
     }
   },
   "issues": {
-    "status": "skipped",
-    "reason": "missing_repo",
+    "status": "disabled",
+    "reason": "disabled_by_flag",
     "labels": {}
   },
   "alerts": []

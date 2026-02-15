@@ -104,9 +104,9 @@ Nota: actualmente las flags `-y/--yes` y `-i/--interactive` estan reservadas y n
 
 ## Limites de salida (soft limits)
 
-- `compact`: 250-700 tokens, 30-90 lines
+- `compact`: 190-700 tokens, 30-90 lines
 - `standard`: 1050-1700 tokens, 130-190 lines
-- `full`: 1700-2600 tokens, 200-280 lines
+- `full`: 1650-2600 tokens, 200-280 lines
 
 Se aplica tolerancia de +-10% por perfil. Fuera del rango base genera warning; fuera de tolerancia se reporta breach no bloqueante en P0.
 La generacion solo se bloquea cuando hay errors de validacion.
@@ -179,9 +179,35 @@ npm run benchmark:p1:update
 # Benchmark P2 (weekly trends report, non-blocking)
 npm run benchmark:p2
 
+# Benchmark P2 local (sin GitHub Issues)
+npm run benchmark:p2:local
+
+# Benchmark P2 deterministico (json-only, fecha fija)
+npm run benchmark:p2:deterministic
+
 # Smoke del CLI compilado
 node dist/cli.js init --dry-run
 ```
+
+### Runbook P2 (operacion)
+
+Comandos de operacion:
+
+- Local sin red/issues: `npm run benchmark:p2:local`
+- Deterministico local: `npm run benchmark:p2:deterministic`
+- CI/semanal: `npm run benchmark:p2`
+
+Lectura minima de reportes:
+
+- `artifacts/benchmark-p2/report.json`: estado estructurado (`metrics`, `issues`, `alerts`).
+- `artifacts/benchmark-p2/report.md`: resumen para `GITHUB_STEP_SUMMARY`.
+
+Respuesta a alertas P2:
+
+- `determinism_rate`: revisar salida no estable (doble corrida por fixture/perfil).
+- `invalid_command_rate`: validar comandos contra scripts reales + allowlist.
+- `score_vs_baseline`: revisar drift contra baseline P1; corregir o justificar update.
+- `p1_status`: ejecutar `npm run benchmark:p1` y resolver drift/regresion antes de continuar.
 
 ## Contribuciones
 

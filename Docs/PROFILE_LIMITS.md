@@ -21,17 +21,17 @@
 
 Rangos base por perfil (soft limits):
 
-- compact: `250-700` tokens, `30-90` lineas.
+- compact: `190-700` tokens, `30-90` lineas.
 - standard: `1050-1700` tokens, `130-190` lineas.
-- full: `1700-2600` tokens, `200-280` lineas.
+- full: `1650-2600` tokens, `200-280` lineas.
 
 Tolerancia:
 
 - `+-10%` sobre cada borde del rango.
 - Rango tolerado efectivo:
-  - compact: `225-770` tokens, `27-99` lineas.
+  - compact: `171-770` tokens, `27-99` lineas.
   - standard: `945-1870` tokens, `117-209` lineas.
-  - full: `1530-2860` tokens, `180-308` lineas.
+  - full: `1485-2860` tokens, `180-308` lineas.
 
 Politica de severidad:
 

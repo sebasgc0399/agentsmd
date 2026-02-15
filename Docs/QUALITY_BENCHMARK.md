@@ -55,8 +55,8 @@ Basado en limites actuales de `src/render/validators.ts`.
 |---|---:|---:|---:|---|
 | Score minimo de rubrica | `>= 7/11` | `>= 8/11` | `>= 9/11` | Gate P0 |
 | Lineas objetivo | `30..90` | `130..190` | `200..280` | Warn P0 / Gate P1 opcional |
-| Tokens objetivo | `250..700` | `1050..1700` | `1700..2600` | Warn P0 / Gate P1 opcional |
-| Tolerancia efectiva (+-10%) | `27..99` lineas / `225..770` tokens | `117..209` lineas / `945..1870` tokens | `180..308` lineas / `1530..2860` tokens | BREACH reportado (P0 no bloqueante) |
+| Tokens objetivo | `190..700` | `1050..1700` | `1650..2600` | Warn P0 / Gate P1 opcional |
+| Tolerancia efectiva (+-10%) | `27..99` lineas / `171..770` tokens | `117..209` lineas / `945..1870` tokens | `180..308` lineas / `1485..2860` tokens | BREACH reportado (P0 no bloqueante) |
 | Placeholders bloqueantes (`undefined`, `null`) | `0` | `0` | `0` | Gate P0 |
 | Placeholders adicionales (`N/A`, `TBD`) | Warn | Warn | Warn | Warn P0 / Gate P1 opcional |
 | Secciones vacias (`##`) | `0` | `0` | `0` | Gate P0 |
@@ -238,6 +238,39 @@ Politica CI:
 
 - P2 corre en workflow dedicado semanal/manual (`benchmark-trends.yml`).
 - No modifica `ci.yml` de PR; los gates bloqueantes siguen en P0/P1.
+- P2 se mantiene no bloqueante para merges (observabilidad operativa).
+
+### 9.1 Runbook P2 (operacion)
+
+Comandos locales recomendados:
+
+```bash
+# Operacion local sin llamadas a GitHub Issues
+npm run benchmark:p2 -- --no-issues
+
+# Corrida deterministica local para comparacion byte a byte
+npm run benchmark:p2 -- --json-only --no-issues --now 2026-02-15T00:00:00.000Z
+```
+
+Comando CI/semanal:
+
+```bash
+npm run benchmark:p2
+```
+
+Lectura minima de reportes:
+
+- `artifacts/benchmark-p2/report.json`: estado estructurado de benchmark/alerts/issues.
+- `artifacts/benchmark-p2/report.md`: resumen publicable en `GITHUB_STEP_SUMMARY`.
+
+### 9.2 Matriz de respuesta a alertas P2
+
+| Alert ID | Condicion | Accion recomendada |
+|---|---|---|
+| `determinism_rate` | `determinismRate < 1.0` | Ejecutar doble corrida en fixtures afectados, identificar orden no estable y corregir en render/deteccion. |
+| `invalid_command_rate` | `invalidCommandRate > 0` | Revisar extraccion en `## Comandos canonicos`, validar contra scripts reales y allowlist. |
+| `score_vs_baseline` | `scoreVsBaselineAvg < 0` | Comparar contra baseline P1, validar si drift es intencional; corregir o actualizar baseline con justificacion. |
+| `p1_status` | `benchmark:p1` en `fail` | Ejecutar `npm run benchmark:p1`, corregir drift/regresion y solo actualizar baseline si el cambio fue intencional. |
 
 ## 10. Reporte minimo esperado del benchmark
 

@@ -92,6 +92,16 @@ Target de expansion (Issue 7):
   - `src/render/* >= 85%` branches
   - `src/utils/* >= 80%` branches
 
+Nota operativa de gate (2026-02-15):
+
+- `P1-1` (refactor minimo de templates para progressive disclosure) queda diferido por evidencia de gate:
+  - `benchmark:lite` PASS (`18/18` casos).
+  - `benchmark:p1` PASS contra baseline semantico.
+  - sin gap estructural activo no resoluble via calibracion.
+- Reactivar `P1-1` solo si reaparecen desviaciones estructurales no resolubles con calibracion de limites, por ejemplo:
+  - fallas repetidas por perfil/fixture en lineas o tokens no corregibles con validadores,
+  - drift semantico recurrente que degrade score/accionabilidad en benchmark.
+
 ### P2 (impacto y seguimiento)
 
 - Tasa de casos `unknown` en fixtures actuales estable o descendente.

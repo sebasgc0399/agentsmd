@@ -127,6 +127,40 @@ describe('validateOutput', () => {
     ).toBe(true);
   });
 
+  it('does not warn for compact output around recalibrated minimum token threshold', () => {
+    const content = `# AGENTS\n\n${'word '.repeat(180)}`;
+    const result = validateOutput(content, 'compact');
+
+    expect(result.estimatedTokens).toBeGreaterThanOrEqual(190);
+    expect(result.estimatedTokens).toBeLessThan(250);
+    expect(
+      result.warnings.some(
+        w => w.startsWith('Only ') && w.includes('target for compact')
+      )
+    ).toBe(false);
+    expect(
+      result.warnings.some(w =>
+        w.includes('[BREACH] Token count outside tolerated range for compact')
+      )
+    ).toBe(false);
+  });
+
+  it('does not warn for full output around recalibrated minimum token threshold', () => {
+    const content = `# AGENTS\n\n${'a'.repeat(6640)}`;
+    const result = validateOutput(content, 'full');
+
+    expect(result.estimatedTokens).toBeGreaterThanOrEqual(1650);
+    expect(result.estimatedTokens).toBeLessThan(1700);
+    expect(
+      result.warnings.some(w => w.startsWith('Only ') && w.includes('target for full'))
+    ).toBe(false);
+    expect(
+      result.warnings.some(w =>
+        w.includes('[BREACH] Token count outside tolerated range for full')
+      )
+    ).toBe(false);
+  });
+
   it('keeps estimatedTokens stable when content only differs by trailing newlines', () => {
     const base = '# AGENTS\n\nToken baseline text';
     const withoutTrailing = validateOutput(base, 'compact');
@@ -149,6 +183,22 @@ describe('validateOutput', () => {
     const content = `# AGENTS\n\n${'a'.repeat(5000)}`;
     const result = validateOutput(content, 'compact');
 
+    expect(
+      result.warnings.some(w =>
+        w.includes('[BREACH] Token count outside tolerated range for compact')
+      )
+    ).toBe(true);
+  });
+
+  it('keeps compact low-token warning and breach below tolerated minimum', () => {
+    const content = `# AGENTS\n\n${'a'.repeat(640)}`;
+    const result = validateOutput(content, 'compact');
+
+    expect(
+      result.warnings.some(
+        w => w.startsWith('Only ') && w.includes('target for compact')
+      )
+    ).toBe(true);
     expect(
       result.warnings.some(w =>
         w.includes('[BREACH] Token count outside tolerated range for compact')

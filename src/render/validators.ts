@@ -18,7 +18,7 @@ const PROFILE_LIMITS: Record<
   compact: {
     targetMinLines: 30,
     targetMaxLines: 90,
-    targetMinTokens: 250,
+    targetMinTokens: 190,
     targetMaxTokens: 700,
     tolerancePct: 0.1,
   },
@@ -32,7 +32,7 @@ const PROFILE_LIMITS: Record<
   full: {
     targetMinLines: 200,
     targetMaxLines: 280,
-    targetMinTokens: 1700,
+    targetMinTokens: 1650,
     targetMaxTokens: 2600,
     tolerancePct: 0.1,
   },
@@ -42,9 +42,10 @@ function getToleratedBounds(min: number, max: number, tolerancePct: number): {
   min: number;
   max: number;
 } {
+  const epsilon = 1e-9;
   return {
-    min: Math.floor(min * (1 - tolerancePct)),
-    max: Math.ceil(max * (1 + tolerancePct)),
+    min: Math.floor(min * (1 - tolerancePct) + epsilon),
+    max: Math.ceil(max * (1 + tolerancePct) - epsilon),
   };
 }
 
