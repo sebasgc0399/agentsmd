@@ -18,15 +18,12 @@ Restricciones operativas (bloqueantes):
 - No sobrescribir `AGENTS.md` sin `--force`.
 - Los e2e del CLI deben usar `--dry-run` y fixtures sinteticos del repo (`tests/fixtures/*`), nunca repos reales.
 
-Baseline de cobertura (fuente: `coverage/coverage-summary.json`):
+Baseline de cobertura:
 
-- Global branches: `78.11%`.
-- Puntos debiles de branch coverage:
-  - `src/detect/framework-detector.ts`: `62.5%`.
-  - `src/render/data-builder.ts`: `71.87%`.
-  - `src/render/validators.ts`: `71.42%`.
-  - `src/utils/fs-utils.ts`: `74.28%`.
-  - `src/utils/logger.ts`: `0%` (sin tests directos).
+- Fuente de verdad: `coverage/coverage-summary.json` (consultar en cada PR).
+- Nota: los porcentajes cambian con frecuencia; este documento evita hardcodear cifras como estado permanente.
+- Si se requiere referencia puntual, registrar `snapshot a fecha YYYY-MM-DD`.
+- Foco sugerido para analisis de riesgo: `src/detect/framework-detector.ts`, `src/render/data-builder.ts`, `src/render/validators.ts`, `src/utils/fs-utils.ts`, `src/utils/logger.ts`.
 
 ## 2) Matriz de riesgos por componente
 
@@ -85,6 +82,12 @@ Objetivos por carpeta (fase P1):
 - `src/utils/fs-utils.ts`
   - Traversal `../`, prefijo enganoso, symlink interno/externo, metadata no legible.
 
+Symlinks en Windows:
+
+- Los tests de symlink pueden depender de permisos o Developer Mode.
+- Siempre cubrir traversal (`../`) y paths absolutos fuera de raiz.
+- Ejecutar casos de symlink solo cuando el entorno lo soporte (skip condicional).
+
 ### 4.2 Ramas objetivo (P1)
 
 - `src/detect/index.ts`: `applyFolderSignals` (firebase sin `functions/` => unknown).
@@ -96,15 +99,11 @@ Objetivos por carpeta (fase P1):
 
 Subir coverage por ramas en codigo de decision real, no por volumen de asserts:
 
-- P0 target minimo:
-  - `src/detect/framework-detector.ts` >= `75%` branches.
-  - `src/render/data-builder.ts` >= `80%` branches.
-  - `src/render/validators.ts` >= `80%` branches.
-  - `src/utils/logger.ts` >= `80%` lines.
-- P1 target consolidado:
-  - `src/detect/*` >= `85%` branches.
-  - `src/render/*` >= `85%` branches.
-  - `src/utils/*` >= `80%` branches.
+- P0: targets por archivo como objetivo interno (no gate duro de CI).
+- P1: gates por carpeta (CI bloqueante):
+  - `src/detect/* >= 85%` branches.
+  - `src/render/* >= 85%` branches.
+  - `src/utils/* >= 80%` branches.
 
 ## 5) Smoke tests del CLI compilado
 
@@ -113,6 +112,7 @@ Comandos base (sobre binario compilado):
 ```bash
 npm run build
 node dist/cli.js --help
+node dist/cli.js init --help
 node dist/cli.js --version
 node dist/cli.js init tests/fixtures/react-vite --dry-run --profile compact
 node dist/cli.js init tests/fixtures/runtime-npm --dry-run --profile compact
@@ -122,8 +122,9 @@ node dist/cli.js init tests/fixtures/react-vite --dry-run --out ../AGENTS.md
 
 Asserts estables recomendados (sin snapshots gigantes):
 
-- `--help`: exit code `0` y contiene `Generate AGENTS.md files for AI coding agents`.
-- `--version`: exit code `0` y formato semver (`x.y.z`).
+- `--help`: exit code `0` y contiene el comando `init`.
+- `init --help`: exit code `0` y contiene `--dry-run`, `--profile`, `--force`, `--out`.
+- `--version`: exit code `0` y matchea `^v?\d+\.\d+\.\d+`.
 - `init ... --dry-run --profile compact`: exit code `0`, contiene `# AGENTS`, contiene `## Comandos`, no contiene `undefined`, no contiene `null`, no contiene `{{`.
 - `--profile invalid`: exit code `!= 0` y contiene `Invalid profile`.
 - `--out ../AGENTS.md`: exit code `!= 0` y contiene `Output path must be within the project directory`.
@@ -141,7 +142,7 @@ Asserts estables recomendados (sin snapshots gigantes):
 
 | Fase | Ventana | Foco | DoD | Metricas |
 |---|---|---|---|---|
-| P0 | 1-2 semanas | Quick wins en rutas criticas y errores | Smoke CLI compilado + ramas criticas cubiertas en detect/render/validators/utils | Branch global >= `80%`; targets de archivos criticos cumplidos; e2e dry-run estable |
+| P0 | 1-2 semanas | Quick wins en rutas criticas y errores | Smoke CLI compilado + cobertura en rutas criticas de detect/render/validators/utils | Metas internas por archivo reportadas sin bloqueo; e2e dry-run estable |
 | P1 | 2-4 semanas | Matriz de fixtures e integracion robusta | Flujo Detect->Render->Validate validado por fixture/perfil con asserts estructurales | `src/detect/*` y `src/render/*` >= `85%` branches; `src/utils/*` >= `80%`; determinismo `run1==run2` en matriz |
 | P2 | 4-6 semanas | Hardening y prevencion de regresiones | Gates estables + edge cases de largo plazo sin deuda de tests fragiles | Branch global >= `88-90%`; 0 placeholders en smoke suite; regresiones criticas detectadas en PR |
 
@@ -220,14 +221,14 @@ Asserts estables recomendados (sin snapshots gigantes):
   - `npm test`
   - `(si aplica) node dist/cli.js init tests/fixtures/react-vite --dry-run --profile compact`
 
-#### Issue P0-5: Gate de cobertura por ramas en carpetas criticas
+#### Issue P0-5: Seguimiento de cobertura por ramas en carpetas criticas
 
 - Contexto: la cobertura global oculta deficits en archivos clave de decision.
 - Alcance minimo:
   - Definir targets de branches por carpeta critica en CI.
   - Reporte visible en PR (detect/render/validators/utils).
 - DoD:
-  - El PR falla si cae por debajo de los minimos P0.
+  - El PR reporta desvios de metas P0 sin bloqueo.
   - Targets y excepciones documentadas en `Docs/TEST_STRATEGY.md`.
 - Tests esperados:
   - Corrida positiva con baseline actual mejorado.

@@ -173,4 +173,22 @@ describe('CLI init --dry-run', () => {
     expect(verboseResult.status).toBe(0);
     expect(extractPreview(verboseResult.stdout)).toBe(extractPreview(normalResult.stdout));
   });
+
+  it('prints the package.json version for --version', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf-8')
+    ) as { version: string };
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, '--version'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout.trim()).toBe(packageJson.version);
+  });
 });

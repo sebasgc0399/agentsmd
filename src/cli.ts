@@ -12,6 +12,7 @@ import { renderAgentsMd } from './render/index.js';
 import { Profile } from './types.js';
 import { Logger } from './utils/logger.js';
 import { directoryExists, isPathSafe } from './utils/fs-utils.js';
+import { getPackageVersion } from './utils/version.js';
 
 const program = new Command();
 const VALID_PROFILES: Profile[] = ['compact', 'standard', 'full'];
@@ -19,7 +20,7 @@ const VALID_PROFILES: Profile[] = ['compact', 'standard', 'full'];
 program
   .name('agents-md')
   .description('Generate AGENTS.md files for AI coding agents')
-  .version('0.1.0');
+  .version(getPackageVersion());
 
 program
   .command('init')

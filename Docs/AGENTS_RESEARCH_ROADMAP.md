@@ -22,8 +22,9 @@ Decision concreta:
 
 Evidencia local:
 
-- Cobertura total actual: lineas `86.8%`, ramas `78.11%` (`coverage/coverage-summary.json`).
-- Punto principal sin cobertura directa: `src/utils/logger.ts` (`0%`).
+- Cobertura actual: consultar `coverage/coverage-summary.json` en cada PR.
+- Evitar cifras hardcodeadas como estado permanente; usar snapshots fechados cuando aplique.
+- Punto principal de seguimiento: `src/utils/logger.ts` sin cobertura directa dedicada.
 - CLI ya protege sobreescritura: no escribe si existe archivo sin `--force`.
 - CLI ya soporta `--dry-run`, util para benchmark determinista.
 - Proyecto compila en `ESM/NodeNext` (`tsconfig.json`).
@@ -42,8 +43,8 @@ Documento de referencia: [`Docs/TEST_STRATEGY.md`](./TEST_STRATEGY.md).
 
 | Fase | Ventana | Plan ejecutable | Criterios medibles |
 |---|---|---|---|
-| P0 | 1-2 semanas | Quick wins en rutas criticas (`CLI`, `detect`, `render`, `validators`, `utils`) + smoke e2e del CLI compilado | `src/detect/framework-detector.ts >= 75%` branches, `src/render/data-builder.ts >= 80%`, `src/render/validators.ts >= 80%`, `src/utils/logger.ts` deja `0%`, smoke `--help/--version/init --dry-run` verde |
-| P1 | 2-4 semanas | Consolidar matriz de fixtures sinteticos y casos edge con flujo Detect->Render->Validate | `src/detect/* >= 85%` branches, `src/render/* >= 85%`, `src/utils/* >= 80%`, determinismo `run1 == run2` en matriz, `0` placeholders bloqueantes (`undefined`, `null`) |
+| P0 | 1-2 semanas | Quick wins en rutas criticas (`CLI`, `detect`, `render`, `validators`, `utils`) + smoke e2e del CLI compilado | Metas internas por archivo (sin gate bloqueante): `src/detect/framework-detector.ts >= 75%`, `src/render/data-builder.ts >= 80%`, `src/render/validators.ts >= 80%`, `src/utils/logger.ts` deja `0%`; smoke `--help`, `init --help`, `--version`, `init --dry-run` verde |
+| P1 | 2-4 semanas | Consolidar matriz de fixtures sinteticos y casos edge con flujo Detect->Render->Validate | Gates por carpeta (bloqueantes): `src/detect/* >= 85%` branches, `src/render/* >= 85%`, `src/utils/* >= 80%`; determinismo `run1 == run2` en matriz; `0` placeholders bloqueantes (`undefined`, `null`) |
 
 ## 4) Matriz de fixtures (P0 vs target)
 

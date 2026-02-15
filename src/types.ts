@@ -89,6 +89,7 @@ export interface DetectionResult {
 export interface TemplateContext {
   project_name: string;
   project_description: string;
+  generator_version: string;
   profile: Profile;
   stacks: string[];
   commands: {
