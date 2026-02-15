@@ -73,6 +73,24 @@ describe('detectCommands', () => {
     expect(yarnCommands.test).toBe('yarn test');
   });
 
+  it('uses yarn syntax for non-builtin scripts', () => {
+    const packageInfo = createPackageInfo({
+      build: 'vite build',
+    });
+    const commands = detectCommands(packageInfo, createRuntime('yarn'));
+
+    expect(commands.build).toBe('yarn build');
+  });
+
+  it('uses run syntax for non npm/yarn package managers', () => {
+    const packageInfo = createPackageInfo({
+      build: 'tsc -p .',
+    });
+    const commands = detectCommands(packageInfo, createRuntime('pnpm'));
+
+    expect(commands.build).toBe('pnpm run build');
+  });
+
   it('returns null when canonical scripts are missing', () => {
     const packageInfo = createPackageInfo({
       custom: 'echo custom',

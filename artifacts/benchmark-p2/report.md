@@ -1,6 +1,6 @@
 # Benchmark P2 Trends Report
 
-Generated at: 2026-02-15T02:25:16.846Z
+Generated at: 2026-02-15T21:34:43.041Z
 Repository: n/a
 Fixtures: react-vite, vue-vite, runtime-npm, firebase-with-functions, monorepo-turbo, monorepo-pnpm-workspace
 Profiles: compact, standard, full
@@ -18,7 +18,7 @@ Window days: 28
 | scoreVsBaselineAvg | 0.00 |
 | invalidCommandRate | 0.00% |
 | unknownTokenCaseRate | 0.00% |
-| lineTokenWarningRate | 44.44% |
+| lineTokenWarningRate | 0.00% |
 | p1Status | pass |
 
 ## Issues by label

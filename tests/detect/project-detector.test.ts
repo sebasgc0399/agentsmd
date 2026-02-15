@@ -1,4 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import fs from 'fs';
+import os from 'os';
+import { afterEach, describe, expect, it } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { detectProject } from '../../src/detect/index.js';
@@ -7,6 +9,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const fixturesDir = path.join(repoRoot, 'tests', 'fixtures');
+const tempDirs: string[] = [];
+
+function createTempDir(): string {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'agents-md-project-detector-'));
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterEach(() => {
+  while (tempDirs.length > 0) {
+    const dir = tempDirs.pop();
+    if (dir) {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+});
 
 describe('detectProject', () => {
   it('detects monorepo from workspaces array', async () => {
@@ -105,5 +123,36 @@ describe('detectProject', () => {
 
     expect(result.folderStructure.hasPackages).toBe(true);
     expect(result.folderStructure.isMonorepo).toBe(true);
+  });
+
+  it('returns high confidence when high framework signal has description and >=2 folders', async () => {
+    const projectPath = createTempDir();
+    fs.mkdirSync(path.join(projectPath, 'src'), { recursive: true });
+    fs.mkdirSync(path.join(projectPath, 'tests'), { recursive: true });
+    fs.writeFileSync(
+      path.join(projectPath, 'package.json'),
+      JSON.stringify(
+        {
+          name: 'tmp-high-confidence',
+          description: 'Temp fixture to hit high confidence branch',
+          scripts: {},
+          dependencies: {
+            react: '^18.3.0',
+            'react-dom': '^18.3.0',
+          },
+        },
+        null,
+        2
+      ),
+      'utf-8'
+    );
+
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.framework.confidence).toBe('high');
+    expect(result.folderStructure.folders.length).toBeGreaterThanOrEqual(2);
+    expect(Boolean(result.packageInfo?.description)).toBe(true);
+    expect(result.confidence).toBe('high');
   });
 });

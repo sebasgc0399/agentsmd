@@ -33,7 +33,7 @@ Evidencia local:
 
 | Fase | Ventana | Objetivo | Entregables minimos |
 |---|---|---|---|
-| P0 | 1-2 semanas | Tener benchmark lite ejecutable en local y CI | rubrica versionada, harness lite sin deps nuevas, chequeo determinismo, chequeo exactitud de comandos, job CI bloqueante |
+| P0 | 1-2 semanas | Tener benchmark lite ejecutable en local y CI | rubrica versionada, harness lite, chequeo determinismo, chequeo exactitud de comandos, calibracion real de tokens (`benchmark:limits`), job CI bloqueante |
 | P1 | 2-4 semanas | Hacer robusta la evaluacion de calidad | snapshots por fixture/perfil, validacion semantica markdown, score automatico por criterio, expansion de fixtures |
 | P2 | 4-8 semanas | Medir tendencia de calidad sin telemetria de usuarios | script `benchmark:p2`, reportes semanales CI (md/json), metricas derivadas de benchmark e issues etiquetados, alerts no bloqueantes |
 
@@ -87,7 +87,20 @@ Target de expansion (Issue 7):
   - `full >= 9/11`
 - Tolerancia de regresion: no peor que `-1.0` punto vs baseline.
 - Lineas/tokens pueden pasar de warn a gate (solo con baseline estable).
-- Al menos `80%` de cobertura de ramas en `src/render/*` y `src/detect/*`.
+- Gates por carpeta (bloqueantes):
+  - `src/detect/* >= 85%` branches
+  - `src/render/* >= 85%` branches
+  - `src/utils/* >= 80%` branches
+
+Nota operativa de gate (2026-02-15):
+
+- `P1-1` (refactor minimo de templates para progressive disclosure) queda diferido por evidencia de gate:
+  - `benchmark:lite` PASS (`18/18` casos).
+  - `benchmark:p1` PASS contra baseline semantico.
+  - sin gap estructural activo no resoluble via calibracion.
+- Reactivar `P1-1` solo si reaparecen desviaciones estructurales no resolubles con calibracion de limites, por ejemplo:
+  - fallas repetidas por perfil/fixture en lineas o tokens no corregibles con validadores,
+  - drift semantico recurrente que degrade score/accionabilidad en benchmark.
 
 ### P2 (impacto y seguimiento)
 
@@ -100,7 +113,7 @@ Target de expansion (Issue 7):
   - `benchmark:invalid-command`
   - `benchmark:regression`
 
-## 6) Plan minimo de implementacion (sin dependencias nuevas)
+## 6) Plan minimo de implementacion (sin dependencias de runtime nuevas)
 
 ### CLI
 
@@ -119,6 +132,7 @@ Target de expansion (Issue 7):
 ### Tests y harness
 
 - Implementar runner `scripts/benchmark/lite.mjs` usando solo Node built-in (`fs`, `path`, `child_process`, `assert`).
+- Mantener `scripts/benchmark/profile-limits.mjs` para calibracion real de tokens; se permiten dependencias dev-only justificadas (ejemplo: `js-tiktoken`) sin impacto en runtime.
 - Checks minimos:
   - presencia de secciones minimas,
   - ausencia de placeholders bloqueantes y secciones vacias,
@@ -135,14 +149,14 @@ Target de expansion (Issue 7):
 
 ## 7) Backlog ejecutable (issues propuestos)
 
-### Issue 1 - benchmark: crear harness lite sin dependencias nuevas
+### Issue 1 - benchmark: crear harness lite y calibracion real de tokens
 
 - Contexto: falta benchmark automatizado por fixture/perfil.
-- Alcance minimo: crear `scripts/benchmark/lite.mjs` con score y reglas gate P0.
+- Alcance minimo: crear `scripts/benchmark/lite.mjs` con score y reglas gate P0, y mantener `benchmark:limits` para comparacion estimado vs real.
 - DoD:
   - genera reporte por fixture/perfil,
   - devuelve exit code `1` si no cumple gate P0,
-  - corre en Node 18+ sin deps nuevas.
+  - corre en Node 18+ sin deps de runtime nuevas (dev-only permitidas si estan justificadas).
 - Tests esperados:
   - test de runner con fixture controlado,
   - test de fallo por placeholder bloqueante,
@@ -242,6 +256,7 @@ Para cambios de benchmark/harness (cuando exista):
 
 ```bash
 npm run benchmark:lite
+npm run benchmark:limits
 npm run benchmark:p1
 npm run benchmark:p2
 ```

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { estimateTokens, validateTokenCount } from '../../src/utils/token-counter.js';
+import { validateOutput } from '../../src/render/validators.js';
 
 describe('token-counter', () => {
   it('estimateTokens() uses ceil(contentLength / 4) for plain text', () => {
@@ -57,5 +58,18 @@ describe('token-counter', () => {
     expect(result.tokens).toBe(1500);
     expect(result.withinBudget).toBe(true);
     expect(result.warning).toBeUndefined();
+  });
+
+  it('validateTokenCount() is legacy — validateOutput() is the profile-aware alternative', () => {
+    // validateTokenCount uses fixed 800/1500 limits (legacy global budget).
+    // validateOutput(content, profile) uses profile-specific limits.
+    const content = 'a'.repeat(3200); // exactly 800 tokens
+    const legacy = validateTokenCount(content);
+    expect(legacy.tokens).toBe(800);
+    expect(legacy.withinBudget).toBe(true); // legacy: 800 is at the min boundary
+
+    // compact max is 700 tokens — 800 tokens exceeds it
+    const profileAware = validateOutput(content, 'compact');
+    expect(profileAware.warnings.some(w => w.includes('exceeds budget'))).toBe(true);
   });
 });

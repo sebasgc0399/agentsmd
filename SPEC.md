@@ -368,24 +368,26 @@ const DEFAULTS = {
 
 ### Output Profiles & Soft Limits
 
-- `compact`: 50-110 lines, max ~900 tokens
-- `standard`: 150-230 lines, max ~1600 tokens
-- `full`: 220-360 lines, max ~2400 tokens
+- `compact`: 30-90 lines, 190-700 tokens
+- `standard`: 130-190 lines, 1050-1700 tokens
+- `full`: 200-280 lines, 1650-2600 tokens
+
+Tolerancia: ±10% sobre cada borde del rango. Ver `Docs/PROFILE_LIMITS.md` para detalles de calibración.
 
 Exceder estos rangos genera **warnings** y no bloquea la generación.
 La generación solo se bloquea cuando existen **errors** de validación.
 
 ### 8.1 Métricas
 
-| Métrica | Target | Warning |
-|---------|--------|---------|
-| **Líneas (compact)** | 50-110 | <50 o >110 |
-| **Tokens (compact)** | <= 900 | >900 |
-| **Líneas (standard)** | 150-230 | <150 o >230 |
-| **Tokens (standard)** | <= 1600 | >1600 |
-| **Líneas (full)** | 220-360 | <220 o >360 |
-| **Tokens (full)** | <= 2400 | >2400 |
-| **Secciones vacías** | 0 | >0 |
+| Métrica | Target | Warning | Breach (±10%) |
+|---------|--------|---------|---------------|
+| **Líneas (compact)** | 30-90 | <30 o >90 | <27 o >99 |
+| **Tokens (compact)** | 190-700 | <190 o >700 | <171 o >770 |
+| **Líneas (standard)** | 130-190 | <130 o >190 | <117 o >209 |
+| **Tokens (standard)** | 1050-1700 | <1050 o >1700 | <945 o >1870 |
+| **Líneas (full)** | 200-280 | <200 o >280 | <180 o >308 |
+| **Tokens (full)** | 1650-2600 | <1650 o >2600 | <1485 o >2860 |
+| **Secciones vacías** | 0 | >0 | — |
 
 ### 8.2 Estimación de Tokens
 

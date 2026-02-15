@@ -98,17 +98,18 @@ Nota: actualmente las flags `-y/--yes` y `-i/--interactive` estan reservadas y n
 
 ## Perfiles de salida
 
-- `compact` (default): salida corta y directa (hasta ~110 lineas)
-- `standard`: salida mas completa para equipos (~150-230 lineas)
-- `full`: salida mas detallada para handoff y CI (~220-360 lineas)
+- `compact` (default): salida corta y directa (~30-90 lineas objetivo)
+- `standard`: salida mas completa para equipos (~130-190 lineas objetivo)
+- `full`: salida mas detallada para handoff y CI (~200-280 lineas objetivo)
 
 ## Limites de salida (soft limits)
 
-- `compact`: 50-110 lines, max ~900 tokens
-- `standard`: 150-230 lines, max ~1600 tokens
-- `full`: 220-360 lines, max ~2400 tokens
+- `compact`: 190-700 tokens, 30-90 lines
+- `standard`: 1050-1700 tokens, 130-190 lines
+- `full`: 1650-2600 tokens, 200-280 lines
 
-Exceder estos rangos genera warnings y no bloquea la generacion. La generacion solo se bloquea cuando hay errors de validacion.
+Se aplica tolerancia de +-10% por perfil. Fuera del rango base genera warning; fuera de tolerancia se reporta breach no bloqueante en P0.
+La generacion solo se bloquea cuando hay errors de validacion.
 
 ## Proyectos soportados
 
@@ -130,6 +131,7 @@ Exceder estos rangos genera warnings y no bloquea la generacion. La generacion s
 Cambios en esta version actual:
 
 - Benchmark de calidad P0/P1/P2 integrado (`benchmark:lite`, `benchmark:p1`, `benchmark:p2`)
+- Baseline reproducible de limites por perfil (`benchmark:limits`)
 - Gates de calidad en CI para benchmark lite + baseline semantico P1
 - Workflow semanal/manual de tendencias (`benchmark-trends`) con reporte JSON/Markdown
 
@@ -165,6 +167,9 @@ npm run lint
 # Benchmark lite (P0 quality gate)
 npm run benchmark:lite
 
+# Benchmark de limites por perfil (estimado vs token real)
+npm run benchmark:limits
+
 # Benchmark P1 (semantic baseline + regression budget)
 npm run benchmark:p1
 
@@ -174,9 +179,35 @@ npm run benchmark:p1:update
 # Benchmark P2 (weekly trends report, non-blocking)
 npm run benchmark:p2
 
+# Benchmark P2 local (sin GitHub Issues)
+npm run benchmark:p2:local
+
+# Benchmark P2 deterministico (json-only, fecha fija)
+npm run benchmark:p2:deterministic
+
 # Smoke del CLI compilado
 node dist/cli.js init --dry-run
 ```
+
+### Runbook P2 (operacion)
+
+Comandos de operacion:
+
+- Local sin red/issues: `npm run benchmark:p2:local`
+- Deterministico local: `npm run benchmark:p2:deterministic`
+- CI/semanal: `npm run benchmark:p2`
+
+Lectura minima de reportes:
+
+- `artifacts/benchmark-p2/report.json`: estado estructurado (`metrics`, `issues`, `alerts`).
+- `artifacts/benchmark-p2/report.md`: resumen para `GITHUB_STEP_SUMMARY`.
+
+Respuesta a alertas P2:
+
+- `determinism_rate`: revisar salida no estable (doble corrida por fixture/perfil).
+- `invalid_command_rate`: validar comandos contra scripts reales + allowlist.
+- `score_vs_baseline`: revisar drift contra baseline P1; corregir o justificar update.
+- `p1_status`: ejecutar `npm run benchmark:p1` y resolver drift/regresion antes de continuar.
 
 ## Contribuciones
 

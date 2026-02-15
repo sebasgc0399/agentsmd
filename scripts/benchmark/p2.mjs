@@ -604,7 +604,7 @@ async function main() {
       fixtures: [...liteReport.fixtures],
       profiles: [...liteReport.profiles],
       windowDays: args.windowDays,
-      baselinePath: args.baselinePath,
+      baselinePath: path.relative(repoRoot, args.baselinePath).split(path.sep).join('/'),
     },
     benchmark: {
       p1: {

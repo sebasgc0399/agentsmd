@@ -188,7 +188,7 @@ function buildReport(args, summary, errors) {
     mode: 'coverage-p1-gate',
     generatedAt: (args.now ?? new Date()).toISOString(),
     source: {
-      coverageSummary: args.coverageSummary,
+      coverageSummary: path.relative(repoRoot, args.coverageSummary).split(path.sep).join('/'),
     },
     strict: args.strict,
     status,

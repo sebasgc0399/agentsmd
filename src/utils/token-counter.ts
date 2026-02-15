@@ -25,7 +25,16 @@ export function estimateTokens(content: string): number {
 }
 
 /**
- * Validate token count is within budget
+ * Validate token count against a legacy global budget (800-1500 tokens).
+ *
+ * @deprecated Use {@link validateOutput} from `@sebasgc0399/agents-md` for
+ * profile-aware validation with current limits. This function uses a fixed
+ * budget that does not correspond to current profile-specific limits.
+ *
+ * @example
+ * // Preferred: profile-aware validation
+ * import { validateOutput } from '@sebasgc0399/agents-md';
+ * const result = validateOutput(content, 'compact');
  */
 export function validateTokenCount(content: string): {
   tokens: number;

@@ -9,24 +9,29 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 
 const MAX_LINES = {
-  compact: 110,
-  standard: 230,
-  full: 360,
+  compact: 90,
+  standard: 190,
+  full: 280,
 } as const;
 
 const MIN_LINES = {
-  standard: 150,
-  full: 220,
+  standard: 130,
+  full: 200,
 } as const;
-
-function countLines(content: string): number {
-  return content.split('\n').length;
-}
 
 function getLengthWarnings(warnings: string[]): string[] {
   return warnings.filter(
     warning =>
       warning.startsWith('Output is quite short') || warning.startsWith('Output is too long')
+  );
+}
+
+function getTokenWarnings(warnings: string[]): string[] {
+  return warnings.filter(
+    warning =>
+      warning.startsWith('Only ') ||
+      warning.includes('exceeds budget') ||
+      warning.startsWith('[BREACH] Token count')
   );
 }
 
@@ -44,9 +49,9 @@ describe('renderAgentsMd profiles', () => {
     expect(standardResult.content).toContain('# AGENTS');
     expect(fullResult.content).toContain('# AGENTS');
 
-    const compactLines = countLines(compactResult.content);
-    const standardLines = countLines(standardResult.content);
-    const fullLines = countLines(fullResult.content);
+    const compactLines = compactResult.validation.lineCount;
+    const standardLines = standardResult.validation.lineCount;
+    const fullLines = fullResult.validation.lineCount;
 
     expect(compactLines).toBeLessThanOrEqual(MAX_LINES.compact);
     expect(standardLines).toBeLessThanOrEqual(MAX_LINES.standard);
@@ -71,7 +76,7 @@ describe('renderAgentsMd profiles', () => {
     const standardResult = renderAgentsMd(detection, 'standard');
     const fullResult = renderAgentsMd(detection, 'full');
 
-    expect(standardResult.validation.lineCount).toBeGreaterThanOrEqual(160);
+    expect(standardResult.validation.lineCount).toBeGreaterThanOrEqual(MIN_LINES.standard);
     expect(standardResult.validation.lineCount).toBeLessThanOrEqual(MAX_LINES.standard);
     expect(fullResult.validation.lineCount).toBeGreaterThanOrEqual(MIN_LINES.full);
     expect(fullResult.validation.lineCount).toBeLessThanOrEqual(MAX_LINES.full);
@@ -99,6 +104,20 @@ describe('renderAgentsMd profiles', () => {
 
     expect(reactStandard.content).toContain('React delivery checklist');
     expect(monorepoStandard.content).toContain('Monorepo delivery checklist');
+  });
+
+  it('keeps representative calibrated profiles free of token warning regressions', async () => {
+    const runtimePath = path.join(repoRoot, 'tests', 'fixtures', 'runtime-npm');
+    const vuePath = path.join(repoRoot, 'tests', 'fixtures', 'vue-vite');
+
+    const runtimeDetection = await detectProject(runtimePath);
+    const vueDetection = await detectProject(vuePath);
+
+    const runtimeCompact = renderAgentsMd(runtimeDetection, 'compact');
+    const vueFull = renderAgentsMd(vueDetection, 'full');
+
+    expect(getTokenWarnings(runtimeCompact.validation.warnings)).toEqual([]);
+    expect(getTokenWarnings(vueFull.validation.warnings)).toEqual([]);
   });
 
   it('does not leak unknown generic block into vue projects using base template', async () => {

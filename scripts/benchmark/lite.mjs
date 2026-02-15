@@ -16,17 +16,10 @@ const DEFAULT_FIXTURES = [
 ];
 const VALID_PROFILES = ['compact', 'standard', 'full'];
 
-const SCORE_THRESHOLDS = {
-  compact: 7,
-  standard: 8,
-  full: 9,
-};
-
-const COMMAND_PRECISION_THRESHOLDS = {
-  compact: 0.9,
-  standard: 0.95,
-  full: 0.95,
-};
+import {
+  SCORE_THRESHOLDS,
+  COMMAND_PRECISION_THRESHOLDS,
+} from './shared-constants.mjs';
 
 const REQUIRED_SECTIONS = [
   'proposito del repositorio',

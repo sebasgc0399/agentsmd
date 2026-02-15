@@ -208,6 +208,18 @@ describe('detectFramework', () => {
     expect(framework.type).toBe('unknown');
     expect(framework.confidence).toBe('low');
   });
+
+  it('should handle missing dependency maps defensively', () => {
+    const packageInfo = {
+      name: 'test',
+      scripts: {},
+    } as PackageInfo;
+
+    const framework = detectFramework(packageInfo);
+
+    expect(framework.type).toBe('unknown');
+    expect(framework.confidence).toBe('low');
+  });
 });
 
 describe('detectBuildTools', () => {
