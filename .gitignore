@@ -8,3 +8,4 @@ coverage/
 .idea/
 .claude/
 .env
+LOCAL_RELEASE_CHECKLIST.md
