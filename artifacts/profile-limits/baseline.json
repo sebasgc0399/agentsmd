@@ -1,0 +1,620 @@
+{
+  "mode": "profile-limits",
+  "fixtures": [
+    "react-vite",
+    "vue-vite",
+    "runtime-npm",
+    "firebase-with-functions",
+    "monorepo-turbo",
+    "monorepo-pnpm-workspace"
+  ],
+  "profiles": [
+    "compact",
+    "standard",
+    "full"
+  ],
+  "encodings": [
+    "cl100k_base",
+    "o200k_base"
+  ],
+  "summary": {
+    "totalCases": 18,
+    "byProfile": {
+      "compact": {
+        "cases": 6,
+        "lineCount": {
+          "min": 32,
+          "max": 88,
+          "avg": 61.333333333333336
+        },
+        "estimatedTokens": {
+          "min": 195,
+          "max": 687,
+          "avg": 451.5
+        }
+      },
+      "standard": {
+        "cases": 6,
+        "lineCount": {
+          "min": 130,
+          "max": 168,
+          "avg": 150.83333333333334
+        },
+        "estimatedTokens": {
+          "min": 1050,
+          "max": 1609,
+          "avg": 1288.8333333333333
+        }
+      },
+      "full": {
+        "cases": 6,
+        "lineCount": {
+          "min": 201,
+          "max": 250,
+          "avg": 223
+        },
+        "estimatedTokens": {
+          "min": 1695,
+          "max": 2380,
+          "avg": 1943.6666666666667
+        }
+      }
+    },
+    "byEncoding": {
+      "cl100k_base": {
+        "cases": 18,
+        "absPctError": {
+          "mean": 11.571238705639193,
+          "p50": 12.860152468301095,
+          "p95": 20.44734876773711,
+          "max": 22.05128205128205
+        },
+        "deltaTokens": {
+          "mean": 141.22222222222223,
+          "min": -35,
+          "max": 430
+        }
+      },
+      "o200k_base": {
+        "cases": 18,
+        "absPctError": {
+          "mean": 14.180225144895088,
+          "p50": 16.70113761147988,
+          "p95": 22.946217904233173,
+          "max": 23.636363636363637
+        },
+        "deltaTokens": {
+          "mean": 178.38888888888889,
+          "min": -10,
+          "max": 455
+        }
+      }
+    },
+    "byFixture": {
+      "react-vite": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 9.443214526724601,
+              "p50": 9.75609756097561,
+              "p95": 14.112255718830479,
+              "max": 14.596273291925465
+            },
+            "deltaTokens": {
+              "mean": 107.33333333333333,
+              "min": -21,
+              "max": 235
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 10.748966676080705,
+              "p50": 13.445378151260504,
+              "p95": 16.639401480313115,
+              "max": 16.994292961318962
+            },
+            "deltaTokens": {
+              "mean": 140.33333333333334,
+              "min": 9,
+              "max": 268
+            }
+          }
+        }
+      },
+      "vue-vite": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 13.278197911086826,
+              "p50": 12.660944206008583,
+              "p95": 16.83702867665622,
+              "max": 17.301038062283737
+            },
+            "deltaTokens": {
+              "mean": 112.33333333333333,
+              "min": -31,
+              "max": 250
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 13.090422889884328,
+              "p50": 16.4079822616408,
+              "p95": 19.146083638426234,
+              "max": 19.45031712473573
+            },
+            "deltaTokens": {
+              "mean": 138,
+              "min": -10,
+              "max": 276
+            }
+          }
+        }
+      },
+      "runtime-npm": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 15.385490156163073,
+              "p50": 20.164301717699775,
+              "p95": 21.862584017923822,
+              "max": 22.05128205128205
+            },
+            "deltaTokens": {
+              "mean": 230.66666666666666,
+              "min": -8,
+              "max": 430
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 17.672722722153335,
+              "p50": 22.824427480916032,
+              "p95": 23.555170020818874,
+              "max": 23.636363636363637
+            },
+            "deltaTokens": {
+              "mean": 255.33333333333334,
+              "min": 12,
+              "max": 455
+            }
+          }
+        }
+      },
+      "firebase-with-functions": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 11.570225651236106,
+              "p50": 14.634146341463413,
+              "p95": 17.879230960676953,
+              "max": 18.239795918367346
+            },
+            "deltaTokens": {
+              "mean": 150.33333333333334,
+              "min": 9,
+              "max": 286
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 15.565398640678296,
+              "p50": 18.29622458857696,
+              "p95": 20.39175648618366,
+              "max": 20.624593363695514
+            },
+            "deltaTokens": {
+              "mean": 180.66666666666666,
+              "min": 36,
+              "max": 317
+            }
+          }
+        }
+      },
+      "monorepo-turbo": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 9.281686885556601,
+              "p50": 9.041309431021045,
+              "p95": 13.464626159759392,
+              "max": 13.956105796285875
+            },
+            "deltaTokens": {
+              "mean": 109.66666666666667,
+              "min": -35,
+              "max": 248
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 11.730130020458942,
+              "p50": 14.390842191332789,
+              "p95": 17.460026627510242,
+              "max": 17.801047120418847
+            },
+            "deltaTokens": {
+              "mean": 167.33333333333334,
+              "min": 20,
+              "max": 306
+            }
+          }
+        }
+      },
+      "monorepo-pnpm-workspace": {
+        "cases": 3,
+        "byEncoding": {
+          "cl100k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 10.468617103067968,
+              "p50": 13.059360730593609,
+              "p95": 16.8251305349851,
+              "max": 17.24354940213971
+            },
+            "deltaTokens": {
+              "mean": 137,
+              "min": -6,
+              "max": 274
+            }
+          },
+          "o200k_base": {
+            "cases": 3,
+            "absPctError": {
+              "mean": 16.27370992011493,
+              "p50": 18.924111431316042,
+              "p95": 20.981545821075652,
+              "max": 21.210149642160054
+            },
+            "deltaTokens": {
+              "mean": 188.66666666666666,
+              "min": 43,
+              "max": 326
+            }
+          }
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "fixture": "react-vite",
+      "profile": "compact",
+      "lineCount": 70,
+      "estimatedTokens": 507,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 528,
+          "delta": -21,
+          "absPctError": 3.977272727272727
+        },
+        "o200k_base": {
+          "realTokens": 498,
+          "delta": 9,
+          "absPctError": 1.8072289156626504
+        }
+      }
+    },
+    {
+      "fixture": "react-vite",
+      "profile": "standard",
+      "lineCount": 150,
+      "estimatedTokens": 1215,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1107,
+          "delta": 108,
+          "absPctError": 9.75609756097561
+        },
+        "o200k_base": {
+          "realTokens": 1071,
+          "delta": 144,
+          "absPctError": 13.445378151260504
+        }
+      }
+    },
+    {
+      "fixture": "react-vite",
+      "profile": "full",
+      "lineCount": 220,
+      "estimatedTokens": 1845,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1610,
+          "delta": 235,
+          "absPctError": 14.596273291925465
+        },
+        "o200k_base": {
+          "realTokens": 1577,
+          "delta": 268,
+          "absPctError": 16.994292961318962
+        }
+      }
+    },
+    {
+      "fixture": "vue-vite",
+      "profile": "compact",
+      "lineCount": 47,
+      "estimatedTokens": 283,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 314,
+          "delta": -31,
+          "absPctError": 9.872611464968154
+        },
+        "o200k_base": {
+          "realTokens": 293,
+          "delta": -10,
+          "absPctError": 3.4129692832764507
+        }
+      }
+    },
+    {
+      "fixture": "vue-vite",
+      "profile": "standard",
+      "lineCount": 130,
+      "estimatedTokens": 1050,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 932,
+          "delta": 118,
+          "absPctError": 12.660944206008583
+        },
+        "o200k_base": {
+          "realTokens": 902,
+          "delta": 148,
+          "absPctError": 16.4079822616408
+        }
+      }
+    },
+    {
+      "fixture": "vue-vite",
+      "profile": "full",
+      "lineCount": 201,
+      "estimatedTokens": 1695,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1445,
+          "delta": 250,
+          "absPctError": 17.301038062283737
+        },
+        "o200k_base": {
+          "realTokens": 1419,
+          "delta": 276,
+          "absPctError": 19.45031712473573
+        }
+      }
+    },
+    {
+      "fixture": "runtime-npm",
+      "profile": "compact",
+      "lineCount": 32,
+      "estimatedTokens": 195,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 203,
+          "delta": -8,
+          "absPctError": 3.9408866995073892
+        },
+        "o200k_base": {
+          "realTokens": 183,
+          "delta": 12,
+          "absPctError": 6.557377049180328
+        }
+      }
+    },
+    {
+      "fixture": "runtime-npm",
+      "profile": "standard",
+      "lineCount": 168,
+      "estimatedTokens": 1609,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1339,
+          "delta": 270,
+          "absPctError": 20.164301717699775
+        },
+        "o200k_base": {
+          "realTokens": 1310,
+          "delta": 299,
+          "absPctError": 22.824427480916032
+        }
+      }
+    },
+    {
+      "fixture": "runtime-npm",
+      "profile": "full",
+      "lineCount": 250,
+      "estimatedTokens": 2380,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1950,
+          "delta": 430,
+          "absPctError": 22.05128205128205
+        },
+        "o200k_base": {
+          "realTokens": 1925,
+          "delta": 455,
+          "absPctError": 23.636363636363637
+        }
+      }
+    },
+    {
+      "fixture": "firebase-with-functions",
+      "profile": "compact",
+      "lineCount": 61,
+      "estimatedTokens": 499,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 490,
+          "delta": 9,
+          "absPctError": 1.8367346938775513
+        },
+        "o200k_base": {
+          "realTokens": 463,
+          "delta": 36,
+          "absPctError": 7.775377969762419
+        }
+      }
+    },
+    {
+      "fixture": "firebase-with-functions",
+      "profile": "standard",
+      "lineCount": 140,
+      "estimatedTokens": 1222,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1066,
+          "delta": 156,
+          "absPctError": 14.634146341463413
+        },
+        "o200k_base": {
+          "realTokens": 1033,
+          "delta": 189,
+          "absPctError": 18.29622458857696
+        }
+      }
+    },
+    {
+      "fixture": "firebase-with-functions",
+      "profile": "full",
+      "lineCount": 210,
+      "estimatedTokens": 1854,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1568,
+          "delta": 286,
+          "absPctError": 18.239795918367346
+        },
+        "o200k_base": {
+          "realTokens": 1537,
+          "delta": 317,
+          "absPctError": 20.624593363695514
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-turbo",
+      "profile": "compact",
+      "lineCount": 88,
+      "estimatedTokens": 687,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 722,
+          "delta": -35,
+          "absPctError": 4.847645429362881
+        },
+        "o200k_base": {
+          "realTokens": 667,
+          "delta": 20,
+          "absPctError": 2.998500749625187
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-turbo",
+      "profile": "standard",
+      "lineCount": 168,
+      "estimatedTokens": 1399,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1283,
+          "delta": 116,
+          "absPctError": 9.041309431021045
+        },
+        "o200k_base": {
+          "realTokens": 1223,
+          "delta": 176,
+          "absPctError": 14.390842191332789
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-turbo",
+      "profile": "full",
+      "lineCount": 238,
+      "estimatedTokens": 2025,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1777,
+          "delta": 248,
+          "absPctError": 13.956105796285875
+        },
+        "o200k_base": {
+          "realTokens": 1719,
+          "delta": 306,
+          "absPctError": 17.801047120418847
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-pnpm-workspace",
+      "profile": "compact",
+      "lineCount": 70,
+      "estimatedTokens": 538,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 544,
+          "delta": -6,
+          "absPctError": 1.1029411764705883
+        },
+        "o200k_base": {
+          "realTokens": 495,
+          "delta": 43,
+          "absPctError": 8.686868686868687
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-pnpm-workspace",
+      "profile": "standard",
+      "lineCount": 149,
+      "estimatedTokens": 1238,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1095,
+          "delta": 143,
+          "absPctError": 13.059360730593609
+        },
+        "o200k_base": {
+          "realTokens": 1041,
+          "delta": 197,
+          "absPctError": 18.924111431316042
+        }
+      }
+    },
+    {
+      "fixture": "monorepo-pnpm-workspace",
+      "profile": "full",
+      "lineCount": 219,
+      "estimatedTokens": 1863,
+      "tokenMetrics": {
+        "cl100k_base": {
+          "realTokens": 1589,
+          "delta": 274,
+          "absPctError": 17.24354940213971
+        },
+        "o200k_base": {
+          "realTokens": 1537,
+          "delta": 326,
+          "absPctError": 21.210149642160054
+        }
+      }
+    }
+  ]
+}

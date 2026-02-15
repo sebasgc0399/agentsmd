@@ -84,6 +84,16 @@ describe('detectFolderStructure', () => {
     expect(result.isMonorepo).toBe(true);
   });
 
+  it('does not detect monorepo from invalid workspaces object shape', () => {
+    const rootPath = createTempDir();
+    const packageInfo = createPackageInfo({
+      workspaces: { packages: 'apps/*' } as unknown as PackageInfo['workspaces'],
+    });
+
+    const result = detectFolderStructure(rootPath, packageInfo);
+    expect(result.isMonorepo).toBe(false);
+  });
+
   it('detects monorepo from marker files', () => {
     const markerFiles = [
       'pnpm-workspace.yaml',

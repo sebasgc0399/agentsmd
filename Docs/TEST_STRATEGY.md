@@ -14,9 +14,10 @@ Restricciones operativas (bloqueantes):
 
 - Mantener `ESM + TypeScript NodeNext`.
 - Mantener salida determinista entre ejecuciones.
-- No agregar dependencias nuevas salvo necesidad estricta y justificada en PR.
+- No agregar dependencias de runtime nuevas; dependencias dev-only se permiten solo con necesidad estricta y justificacion en PR.
 - No sobrescribir `AGENTS.md` sin `--force`.
 - Los e2e del CLI deben usar `--dry-run` y fixtures sinteticos del repo (`tests/fixtures/*`), nunca repos reales.
+- Normalizar EOL (`\\r\\n` -> `\\n`) en scripts de benchmark para evitar drift de metricas entre Windows/Linux.
 
 Baseline de cobertura:
 
@@ -24,6 +25,11 @@ Baseline de cobertura:
 - Nota: los porcentajes cambian con frecuencia; este documento evita hardcodear cifras como estado permanente.
 - Si se requiere referencia puntual, registrar `snapshot a fecha YYYY-MM-DD`.
 - Foco sugerido para analisis de riesgo: `src/detect/framework-detector.ts`, `src/render/data-builder.ts`, `src/render/validators.ts`, `src/utils/fs-utils.ts`, `src/utils/logger.ts`.
+
+Riesgo adicional para benchmark de calibracion:
+
+- Riesgo: drift de conteo de tokens por diferencias de EOL o trailing newlines en salida capturada desde CLI.
+- Mitigacion: normalizar contenido antes de tokenizar y mantener pruebas de determinismo en `benchmark:limits`.
 
 ## 2) Matriz de riesgos por componente
 
@@ -120,6 +126,13 @@ node dist/cli.js init tests/fixtures/react-vite --dry-run --profile invalid
 node dist/cli.js init tests/fixtures/react-vite --dry-run --out ../AGENTS.md
 ```
 
+Comandos adicionales para calibracion de limites (cuando aplique):
+
+```bash
+npm run benchmark:lite
+npm run benchmark:limits
+```
+
 Asserts estables recomendados (sin snapshots gigantes):
 
 - `--help`: exit code `0` y contiene el comando `init`.
@@ -203,6 +216,7 @@ Asserts estables recomendados (sin snapshots gigantes):
   - `npm run build`
   - `npm test`
   - `node dist/cli.js init tests/fixtures/runtime-npm --dry-run --profile compact`
+  - `npm run benchmark:limits` (cuando el cambio afecte calibracion de lineas/tokens)
 
 #### Issue P0-4: Utils - logger y token-counter con cobertura util
 

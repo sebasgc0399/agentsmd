@@ -25,7 +25,13 @@ export {
 } from './render/index.js';
 
 // Export utilities
-export { estimateTokens, validateTokenCount } from './utils/token-counter.js';
+export { estimateTokens } from './utils/token-counter.js';
+/**
+ * @deprecated Use {@link validateOutput} with a profile parameter instead.
+ * This function uses a legacy global budget (800-1500 tokens) that does not
+ * correspond to current profile-specific limits.
+ */
+export { validateTokenCount } from './utils/token-counter.js';
 export { Logger } from './utils/logger.js';
 
 // Export types

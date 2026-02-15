@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { detectRuntime } from '../../src/detect/runtime-detector.js';
 import { detectPackageInfo } from '../../src/detect/package-detector.js';
+import { PackageInfo } from '../../src/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,5 +59,20 @@ describe('detectRuntime', () => {
     expect(runtime.type).toBe('bun');
     expect(runtime.packageManager).toBe('bun');
     expect(runtime.version).toBe('1.1.3');
+  });
+
+  it('handles missing dependency maps without throwing', () => {
+    const rootPath = path.join(fixturesDir, 'runtime-npm');
+    const packageInfo = {
+      name: 'partial-runtime-info',
+      scripts: {},
+      engines: { node: '>=18.0.0' },
+    } as unknown as PackageInfo;
+
+    const runtime = detectRuntime(rootPath, packageInfo);
+
+    expect(runtime.type).toBe('node');
+    expect(runtime.packageManager).toBe('npm');
+    expect(runtime.version).toBe('>=18.0.0');
   });
 });

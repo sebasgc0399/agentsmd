@@ -5,17 +5,10 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const SCORE_THRESHOLDS = {
-  compact: 7,
-  standard: 8,
-  full: 9,
-};
-
-const PRECISION_THRESHOLDS = {
-  compact: 0.9,
-  standard: 0.95,
-  full: 0.95,
-};
+import {
+  SCORE_THRESHOLDS,
+  COMMAND_PRECISION_THRESHOLDS,
+} from './shared-constants.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -126,7 +119,7 @@ function toCanonicalBaseline(liteReport) {
   const canonicalCases = liteReport.cases
     .map(item => {
       const scoreThreshold = SCORE_THRESHOLDS[item.profile];
-      const precisionThreshold = PRECISION_THRESHOLDS[item.profile];
+      const precisionThreshold = COMMAND_PRECISION_THRESHOLDS[item.profile];
       return {
         fixture: item.fixture,
         profile: item.profile,
@@ -212,7 +205,7 @@ function runCheckMode(args, liteReport) {
     }
 
     const scoreThreshold = SCORE_THRESHOLDS[actualCase.profile];
-    const precisionThreshold = PRECISION_THRESHOLDS[actualCase.profile];
+    const precisionThreshold = COMMAND_PRECISION_THRESHOLDS[actualCase.profile];
 
     if (!compareSemantic(actualCase.semantic, baselineCase.semantic)) {
       failures.push(`[${key}] semantic snapshot drift detected`);

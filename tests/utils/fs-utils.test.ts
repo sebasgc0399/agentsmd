@@ -2,7 +2,12 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { isPathSafe } from '../../src/utils/fs-utils.js';
+import {
+  directoryExists,
+  fileExists,
+  isPathSafe,
+  readPackageJson,
+} from '../../src/utils/fs-utils.js';
 
 const tempDirs: string[] = [];
 
@@ -19,6 +24,65 @@ afterEach(() => {
       fs.rmSync(dir, { recursive: true, force: true });
     }
   }
+  vi.restoreAllMocks();
+});
+
+describe('readPackageJson', () => {
+  it('rejects package.json larger than 1MB', async () => {
+    const root = createTempDir();
+    const oversizedJson = JSON.stringify({
+      name: 'oversized',
+      payload: 'x'.repeat(1024 * 1024 + 64),
+    });
+    fs.writeFileSync(path.join(root, 'package.json'), oversizedJson, 'utf-8');
+
+    await expect(readPackageJson(root)).rejects.toThrow(/package\.json is too large/i);
+  });
+
+  it('rejects invalid JSON in package.json', async () => {
+    const root = createTempDir();
+    fs.writeFileSync(path.join(root, 'package.json'), '{"name":"broken",', 'utf-8');
+
+    await expect(readPackageJson(root)).rejects.toThrow('Invalid JSON in package.json');
+  });
+});
+
+describe('directoryExists', () => {
+  it('returns false when statSync throws only for the target directory path', () => {
+    const root = createTempDir();
+    const targetDir = path.join(root, 'target-dir');
+    fs.mkdirSync(targetDir, { recursive: true });
+
+    const originalStatSync = fs.statSync.bind(fs);
+    vi.spyOn(fs, 'statSync').mockImplementation((p: fs.PathLike, options?: fs.StatSyncOptions) => {
+      const resolved = path.resolve(String(p));
+      if (resolved === path.resolve(targetDir)) {
+        throw new Error('forced directory stat failure');
+      }
+      return originalStatSync(p, options);
+    });
+
+    expect(directoryExists(targetDir)).toBe(false);
+  });
+});
+
+describe('fileExists', () => {
+  it('returns false when statSync throws only for the target file path', () => {
+    const root = createTempDir();
+    const targetFile = path.join(root, 'target-file.txt');
+    fs.writeFileSync(targetFile, 'ok', 'utf-8');
+
+    const originalStatSync = fs.statSync.bind(fs);
+    vi.spyOn(fs, 'statSync').mockImplementation((p: fs.PathLike, options?: fs.StatSyncOptions) => {
+      const resolved = path.resolve(String(p));
+      if (resolved === path.resolve(targetFile)) {
+        throw new Error('forced file stat failure');
+      }
+      return originalStatSync(p, options);
+    });
+
+    expect(fileExists(targetFile)).toBe(false);
+  });
 });
 
 describe('isPathSafe', () => {
@@ -58,6 +122,11 @@ describe('isPathSafe', () => {
   it('resolves relative target paths against base path regardless of process.cwd', () => {
     const root = createTempDir();
     expect(isPathSafe(root, 'AGENTS.md')).toBe(true);
+  });
+
+  it('allows target path equal to base path', () => {
+    const root = createTempDir();
+    expect(isPathSafe(root, root)).toBe(true);
   });
 
   it('blocks sibling paths that share a misleading prefix', () => {

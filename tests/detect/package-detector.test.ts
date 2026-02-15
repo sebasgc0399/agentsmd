@@ -1,4 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import fs from 'fs';
+import os from 'os';
+import { afterEach, describe, it, expect } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { detectPackageInfo } from '../../src/detect/package-detector.js';
@@ -7,6 +9,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const fixturesDir = path.join(repoRoot, 'tests', 'fixtures');
+const tempDirs: string[] = [];
+
+function createTempDir(): string {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'agents-md-package-detector-'));
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterEach(() => {
+  while (tempDirs.length > 0) {
+    const dir = tempDirs.pop();
+    if (dir) {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+});
 
 describe('detectPackageInfo', () => {
   it('should detect React + Vite project', async () => {
@@ -51,6 +69,31 @@ describe('detectPackageInfo', () => {
     expect(info.workspaces).toEqual({
       packages: ['apps/*', 'packages/*'],
     });
+  });
+
+  it('should normalize invalid workspaces object to undefined', async () => {
+    const projectPath = createTempDir();
+    fs.writeFileSync(
+      path.join(projectPath, 'package.json'),
+      JSON.stringify(
+        {
+          name: 'invalid-workspaces',
+          scripts: {},
+          dependencies: {},
+          devDependencies: {},
+          workspaces: {
+            packages: 'apps/*',
+          },
+        },
+        null,
+        2
+      ),
+      'utf-8'
+    );
+
+    const info = await detectPackageInfo(projectPath);
+
+    expect(info.workspaces).toBeUndefined();
   });
 
   it('should throw error when package.json not found', async () => {

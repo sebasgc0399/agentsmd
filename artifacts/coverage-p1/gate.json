@@ -1,8 +1,8 @@
 {
   "mode": "coverage-p1-gate",
-  "generatedAt": "2026-02-15T05:03:45.541Z",
+  "generatedAt": "2026-02-15T20:34:59.720Z",
   "source": {
-    "coverageSummary": "D:\\Proyectos VS CODE\\AGENTS_MD\\agents-md\\coverage\\coverage-summary.json"
+    "coverageSummary": "coverage/coverage-summary.json"
   },
   "strict": true,
   "status": "ok",
@@ -34,9 +34,9 @@
     {
       "folder": "src/render",
       "expectedMinBranches": 85,
-      "actualBranches": 95.06,
-      "branchesCovered": 77,
-      "branchesTotal": 81,
+      "actualBranches": 97.67,
+      "branchesCovered": 84,
+      "branchesTotal": 86,
       "measuredFiles": 4,
       "fileCount": 4,
       "pass": true

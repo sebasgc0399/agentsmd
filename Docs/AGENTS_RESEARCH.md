@@ -445,3 +445,33 @@ services/payments/
 - Evaluaciones: Vercel reporta mejoras medibles ajustando instrucciones en AGENTS.md para disparar “skills”. 
 - Seguridad: investigación de ["company","Pillar Security","cybersecurity company"]  sobre “Rules File Backdoor”; cheat sheet de ["organization","OWASP","security foundation"]  sobre prompt injection; referencia industrial sobre prompt injection invisible con Unicode. 
 - Evidencia académica sobre limitaciones de largo contexto (“lost in the middle”) y sobre RAG como técnica de grounding y reducción de alucinación/errores factuales. 
+## Calibración de límites por perfil y progressive disclosure
+
+Decisiones aplicadas a `agents-md`:
+
+1. Separar el objetivo de perfil del enforcement tecnico.
+   - Los limites quedan como rangos suaves con tolerancia.
+   - En P0, salir del rango genera warning y salir de tolerancia genera un breach reportado, sin bloqueo.
+
+2. Medir tokens reales con tokenizadores oficiales en un script dev-only.
+   - Se compara `estimatedTokens` contra conteo real (`cl100k_base`, `o200k_base`).
+   - Esta medicion no afecta el runtime del CLI ni el contrato publico.
+
+3. Mantener P0 sin refactor estructural de templates.
+   - Primero se mide y se calibra.
+   - Los cambios de disclosure de contenido se reservan para P1 si la data muestra gap estructural.
+
+4. Aplicar progressive disclosure en tres capas ya presentes en el repo.
+   - always-on: secciones nucleares para cualquier perfil.
+   - condicional por stack: bloques monorepo/firebase/testing/generic segun deteccion.
+   - solo full: secciones extendidas de operacion, riesgo y handoff.
+
+5. Tratar limites como contrato versionado.
+   - Cada ajuste requiere baseline por fixture/perfil, explicacion del gap y actualizacion de tests.
+   - Se prioriza compatibilidad: sin cambios de API CLI (`init`, `--profile`, `--dry-run`) ni del default `compact`.
+
+Resumen aplicado al estado actual del repo:
+
+- El baseline actual de `benchmark:lite` muestra warnings por minimos de lineas en varios fixtures.
+- No se observan sobrepasos de maximos de tokens en la matriz base.
+- La primera accion efectiva es calibrar rangos por perfil con datos reales antes de expandir templates.
