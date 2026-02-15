@@ -1,0 +1,58 @@
+{
+  "mode": "p2",
+  "generatedAt": "2026-02-15T02:25:16.846Z",
+  "context": {
+    "repository": null,
+    "fixtures": [
+      "react-vite",
+      "vue-vite",
+      "runtime-npm",
+      "firebase-with-functions",
+      "monorepo-turbo",
+      "monorepo-pnpm-workspace"
+    ],
+    "profiles": [
+      "compact",
+      "standard",
+      "full"
+    ],
+    "windowDays": 28,
+    "baselinePath": "D:\\Proyectos VS CODE\\AGENTS_MD\\agents-md\\tests\\benchmark\\baselines\\p1.semantic.json"
+  },
+  "benchmark": {
+    "p1": {
+      "status": "pass",
+      "exitCode": 0
+    },
+    "metrics": {
+      "totalCases": 18,
+      "passedCases": 18,
+      "failedCases": 0,
+      "passRate": 1,
+      "determinismRate": 1,
+      "avgScore": 11,
+      "minScore": 11,
+      "baselineAvgScore": 11,
+      "scoreVsBaselineAvg": 0,
+      "invalidCommandRate": 0,
+      "invalidCommandCount": 0,
+      "extractedCommandCount": 60,
+      "unknownTokenCaseRate": 0,
+      "unknownTokenCaseCount": 0,
+      "lineTokenWarningRate": 0.4444444444444444,
+      "lineTokenWarningCaseCount": 8
+    },
+    "liteSummary": {
+      "totalCases": 18,
+      "passedCases": 18,
+      "failedCases": 0,
+      "gatePassed": true
+    }
+  },
+  "issues": {
+    "status": "skipped",
+    "reason": "missing_repo",
+    "labels": {}
+  },
+  "alerts": []
+}

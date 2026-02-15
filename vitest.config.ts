@@ -18,6 +18,8 @@ export default defineConfig({
         'node_modules/',
         'dist/',
         'scripts/benchmark/',
+        'scripts/coverage/',
+        'scripts/coverage-p1-gate.mjs',
         'tests/fixtures/',
         '**/*.test.ts',
         'vitest.config.ts',

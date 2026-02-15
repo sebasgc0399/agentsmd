@@ -4,6 +4,8 @@ dist/
 .DS_Store
 *.tsbuildinfo
 coverage/
+!scripts/coverage/
+!scripts/coverage/*.mjs
 .vscode/
 .idea/
 .claude/

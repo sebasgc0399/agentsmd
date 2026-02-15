@@ -4,6 +4,7 @@
 
 import { DetectionResult, TemplateContext, PackageInfo, Profile } from '../types.js';
 import { detectBuildTools } from '../detect/framework-detector.js';
+import { getPackageVersion } from '../utils/version.js';
 
 /**
  * Default values when data is missing
@@ -150,6 +151,7 @@ export function buildTemplateContext(
   return {
     project_name: packageInfo?.name || 'unknown-project',
     project_description: description,
+    generator_version: getPackageVersion(),
     profile,
     stacks,
     commands: {

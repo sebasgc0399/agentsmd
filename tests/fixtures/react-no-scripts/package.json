@@ -1,0 +1,13 @@
+{
+  "name": "react-no-scripts",
+  "version": "1.0.0",
+  "description": "React fixture without npm scripts",
+  "dependencies": {
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "scripts": {}
+}

@@ -94,7 +94,7 @@ agents-md init --verbose
 agents-md init --out ./docs/AGENTS.md
 ```
 
-Nota: en la version `v0.2.x`, las flags `-y/--yes` y `-i/--interactive` estan reservadas y actualmente no cambian el comportamiento del comando.
+Nota: actualmente las flags `-y/--yes` y `-i/--interactive` estan reservadas y no cambian el comportamiento del comando.
 
 ## Perfiles de salida
 
@@ -127,9 +127,7 @@ Exceder estos rangos genera warnings y no bloquea la generacion. La generacion s
 
 ## Releases y novedades
 
-Version actual: `v0.2.0`
-
-Cambios en esta version:
+Cambios en esta version actual:
 
 - Benchmark de calidad P0/P1/P2 integrado (`benchmark:lite`, `benchmark:p1`, `benchmark:p2`)
 - Gates de calidad en CI para benchmark lite + baseline semantico P1

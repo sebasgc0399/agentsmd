@@ -1,0 +1,57 @@
+{
+  "mode": "coverage-p1-gate",
+  "generatedAt": "2026-02-15T05:03:45.541Z",
+  "source": {
+    "coverageSummary": "D:\\Proyectos VS CODE\\AGENTS_MD\\agents-md\\coverage\\coverage-summary.json"
+  },
+  "strict": true,
+  "status": "ok",
+  "thresholds": [
+    {
+      "folder": "src/detect",
+      "minBranches": 85
+    },
+    {
+      "folder": "src/render",
+      "minBranches": 85
+    },
+    {
+      "folder": "src/utils",
+      "minBranches": 80
+    }
+  ],
+  "folders": [
+    {
+      "folder": "src/detect",
+      "expectedMinBranches": 85,
+      "actualBranches": 89.31,
+      "branchesCovered": 117,
+      "branchesTotal": 131,
+      "measuredFiles": 6,
+      "fileCount": 6,
+      "pass": true
+    },
+    {
+      "folder": "src/render",
+      "expectedMinBranches": 85,
+      "actualBranches": 95.06,
+      "branchesCovered": 77,
+      "branchesTotal": 81,
+      "measuredFiles": 4,
+      "fileCount": 4,
+      "pass": true
+    },
+    {
+      "folder": "src/utils",
+      "expectedMinBranches": 80,
+      "actualBranches": 87.72,
+      "branchesCovered": 50,
+      "branchesTotal": 57,
+      "measuredFiles": 4,
+      "fileCount": 4,
+      "pass": true
+    }
+  ],
+  "deviations": [],
+  "errors": []
+}

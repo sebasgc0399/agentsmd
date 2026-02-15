@@ -1,0 +1,12 @@
+{
+  "name": "ambiguous-express-fastify",
+  "version": "1.0.0",
+  "description": "Backend fixture with express and fastify together",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "fastify": "^4.28.0"
+  }
+}

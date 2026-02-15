@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
+      - dev
   pull_request:
+    branches:
+      - main
+      - dev
 
 jobs:
   quality:
@@ -37,6 +41,38 @@ jobs:
 
       - name: Test coverage
         run: npm run test:coverage
+
+      - name: Coverage P1 gate (blocking by folder)
+        run: npm run coverage:p1:gate -- --json-file artifacts/coverage-p1/gate.json --markdown-file artifacts/coverage-p1/gate.md
+
+      - name: Publish Coverage P1 summary
+        if: always()
+        run: node -e "const fs=require('fs');const summary=process.env.GITHUB_STEP_SUMMARY;const report='artifacts/coverage-p1/gate.md';if(fs.existsSync(report)&&summary){fs.appendFileSync(summary,fs.readFileSync(report,'utf8'));}else{console.log('Coverage P1 summary not available');}"
+
+      - name: Upload Coverage P1 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-p1-${{ matrix.os }}-node${{ matrix.node }}
+          path: artifacts/coverage-p1/*
+          if-no-files-found: warn
+
+      - name: Coverage P0 report (non-blocking)
+        if: always()
+        continue-on-error: true
+        run: npm run coverage:p0:report -- --json-file artifacts/coverage-p0/report.json --markdown-file artifacts/coverage-p0/report.md
+
+      - name: Publish Coverage P0 summary
+        if: always()
+        run: node -e "const fs=require('fs');const summary=process.env.GITHUB_STEP_SUMMARY;const report='artifacts/coverage-p0/report.md';if(fs.existsSync(report)&&summary){fs.appendFileSync(summary,fs.readFileSync(report,'utf8'));}else{console.log('Coverage P0 summary not available');}"
+
+      - name: Upload Coverage P0 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-p0-${{ matrix.os }}-node${{ matrix.node }}
+          path: artifacts/coverage-p0/*
+          if-no-files-found: warn
 
       - name: Benchmark lite
         run: npm run benchmark:lite

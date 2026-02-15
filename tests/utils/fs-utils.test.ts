@@ -1,7 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { isPathSafe } from '../../src/utils/fs-utils.js';
 
 const tempDirs: string[] = [];
@@ -22,6 +22,11 @@ afterEach(() => {
 });
 
 describe('isPathSafe', () => {
+  it('returns false when base path does not exist', () => {
+    const root = path.join(createTempDir(), 'missing-base');
+    expect(isPathSafe(root, 'AGENTS.md')).toBe(false);
+  });
+
   it('allows output paths inside the project root', () => {
     const root = createTempDir();
     const target = path.join(root, 'docs', 'AGENTS.md');
@@ -41,6 +46,13 @@ describe('isPathSafe', () => {
     const target = '../AGENTS.md';
 
     expect(isPathSafe(root, target)).toBe(false);
+  });
+
+  it('blocks nested traversal attempts', () => {
+    const root = createTempDir();
+    fs.mkdirSync(path.join(root, 'safe'), { recursive: true });
+
+    expect(isPathSafe(root, path.join('safe', '..', '..', 'outside', 'AGENTS.md'))).toBe(false);
   });
 
   it('resolves relative target paths against base path regardless of process.cwd', () => {
@@ -104,6 +116,27 @@ describe('isPathSafe', () => {
 
     const target = path.join(linkDir, 'AGENTS.md');
     expect(isPathSafe(root, target)).toBe(false);
+  });
+
+  it('fails closed when symlink metadata cannot be read', () => {
+    const root = createTempDir();
+    const docsDir = path.join(root, 'docs');
+    fs.mkdirSync(docsDir, { recursive: true });
+
+    const originalLstatSync = fs.lstatSync.bind(fs);
+    const spy = vi.spyOn(fs, 'lstatSync').mockImplementation((filePath: fs.PathLike) => {
+      const normalizedPath = path.resolve(String(filePath));
+      if (normalizedPath === path.resolve(docsDir)) {
+        throw new Error('metadata read failure');
+      }
+      return originalLstatSync(filePath);
+    });
+
+    try {
+      expect(isPathSafe(root, path.join('docs', 'AGENTS.md'))).toBe(false);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 

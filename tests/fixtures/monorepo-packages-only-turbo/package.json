@@ -1,0 +1,11 @@
+{
+  "name": "monorepo-packages-only-turbo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build"
+  },
+  "devDependencies": {
+    "turbo": "^1.11.0"
+  }
+}

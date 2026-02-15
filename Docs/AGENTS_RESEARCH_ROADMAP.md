@@ -2,20 +2,29 @@
 
 ## 1) Decision de ejecucion
 
-Se adopta la linea de investigacion **Benchmark de calidad de AGENTS.md** como gate principal de calidad para releases, con despliegue en fases `P0/P1/P2`.
+Se adoptan dos lineas complementarias de ejecucion para calidad de release:
+
+- **Opcion 1 (activa):** Benchmark de calidad de `AGENTS.md` como gate principal.
+- **Opcion 2 (nueva linea ejecutable):** Testing dirigido por riesgo para endurecer `CLI`, `detect`, `render`, `validators` y `utils`.
 
 Decision concreta:
 
-- `P0`: quick wins obligatorios (determinismo + benchmark lite + gate en CI).
-- `P1`: consolidar score automatico, snapshots y checks semanticos.
-- `P2`: seguimiento no bloqueante con metricas derivadas del benchmark + issues etiquetados via GitHub API.
+- Opcion 1:
+  - `P0`: quick wins obligatorios (determinismo + benchmark lite + gate en CI).
+  - `P1`: consolidar score automatico, snapshots y checks semanticos.
+  - `P2`: seguimiento no bloqueante con metricas derivadas del benchmark + issues etiquetados via GitHub API.
+- Opcion 2:
+  - `P0`: cubrir rutas criticas y errores (incluye smoke e2e CLI compilado en `--dry-run`).
+  - `P1`: consolidar matriz de fixtures + edge cases y elevar branch coverage util en carpetas criticas.
+  - `P2`: hardening de largo plazo y estabilizacion de gates por carpeta.
 
 ## 2) Baseline tecnico (estado actual)
 
 Evidencia local:
 
-- Cobertura total actual: lineas `72.07%`, ramas `68.77%` (`coverage/coverage-summary.json`).
-- Archivos sin cobertura: `src/cli.ts`, `src/index.ts`, `src/utils/logger.ts` (0%).
+- Cobertura actual: consultar `coverage/coverage-summary.json` en cada PR.
+- Evitar cifras hardcodeadas como estado permanente; usar snapshots fechados cuando aplique.
+- Punto principal de seguimiento: `src/utils/logger.ts` sin cobertura directa dedicada.
 - CLI ya protege sobreescritura: no escribe si existe archivo sin `--force`.
 - CLI ya soporta `--dry-run`, util para benchmark determinista.
 - Proyecto compila en `ESM/NodeNext` (`tsconfig.json`).
@@ -27,6 +36,15 @@ Evidencia local:
 | P0 | 1-2 semanas | Tener benchmark lite ejecutable en local y CI | rubrica versionada, harness lite sin deps nuevas, chequeo determinismo, chequeo exactitud de comandos, job CI bloqueante |
 | P1 | 2-4 semanas | Hacer robusta la evaluacion de calidad | snapshots por fixture/perfil, validacion semantica markdown, score automatico por criterio, expansion de fixtures |
 | P2 | 4-8 semanas | Medir tendencia de calidad sin telemetria de usuarios | script `benchmark:p2`, reportes semanales CI (md/json), metricas derivadas de benchmark e issues etiquetados, alerts no bloqueantes |
+
+### 3.1) Opcion 2 (Testing dirigido por riesgo) - linea ejecutable
+
+Documento de referencia: [`Docs/TEST_STRATEGY.md`](./TEST_STRATEGY.md).
+
+| Fase | Ventana | Plan ejecutable | Criterios medibles |
+|---|---|---|---|
+| P0 | 1-2 semanas | Quick wins en rutas criticas (`CLI`, `detect`, `render`, `validators`, `utils`) + smoke e2e del CLI compilado | Metas internas por archivo (sin gate bloqueante): `src/detect/framework-detector.ts >= 75%`, `src/render/data-builder.ts >= 80%`, `src/render/validators.ts >= 80%`, `src/utils/logger.ts` deja `0%`; smoke `--help`, `init --help`, `--version`, `init --dry-run` verde; reporte `coverage:p0:report` visible en CI (summary + artifact) |
+| P1 | 2-4 semanas | Consolidar matriz de fixtures sinteticos y casos edge con flujo Detect->Render->Validate | Gates por carpeta (bloqueantes): `src/detect/* >= 85%` branches, `src/render/* >= 85%`, `src/utils/* >= 80%`; determinismo `run1 == run2` en matriz; `0` placeholders bloqueantes (`undefined`, `null`) |
 
 ## 4) Matriz de fixtures (P0 vs target)
 

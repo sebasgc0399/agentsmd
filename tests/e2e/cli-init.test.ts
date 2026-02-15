@@ -40,9 +40,46 @@ function cleanupTempDirs(): void {
   }
 }
 
+function normalizeVersionPrefix(version: string): string {
+  return version.trim().replace(/^v/, '');
+}
+
 describe('CLI init --dry-run', () => {
   afterEach(() => {
     cleanupTempDirs();
+  });
+
+  it('prints root help with init command', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, '--help'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('init');
+  });
+
+  it('prints init help with stable flags', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', '--help'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('--dry-run');
+    expect(result.stdout).toContain('--profile');
+    expect(result.stdout).toContain('--force');
+    expect(result.stdout).toContain('--out');
   });
 
   it('renders AGENTS.md for the react-vite fixture', () => {
@@ -115,6 +152,55 @@ describe('CLI init --dry-run', () => {
     expect(result.stderr).toContain('Output path must be within the project directory');
   });
 
+  it('blocks absolute output path outside project directory in dry-run', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'react-vite');
+    const outsidePath = path.resolve(fixturePath, '..', '..', 'AGENTS.md');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', fixturePath, '--dry-run', '--out', outsidePath],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('Output path must be within the project directory');
+  });
+
+  it('fails when project directory does not exist', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const missingPath = path.join(repoRoot, 'tests', 'fixtures', 'missing-fixture-does-not-exist');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', missingPath, '--dry-run'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('Directory not found:');
+  });
+
+  it('fails with invalid profile in dry-run mode', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'react-vite');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', fixturePath, '--dry-run', '--profile', 'invalid'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('Invalid profile');
+  });
+
   it('fails when AGENTS.md exists and --force is not provided', () => {
     const cliPath = path.join(repoRoot, 'dist', 'cli.js');
     const fixturePath = createTempFixtureProject();
@@ -130,6 +216,26 @@ describe('CLI init --dry-run', () => {
 
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain('already exists. Use --force to overwrite.');
+  });
+
+  it('does not overwrite existing AGENTS.md in dry-run without --force', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const fixturePath = createTempFixtureProject();
+    const outputPath = path.join(fixturePath, 'AGENTS.md');
+    const sentinel = 'existing content';
+    fs.writeFileSync(outputPath, sentinel, 'utf-8');
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, 'init', fixturePath, '--dry-run'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('--- Preview (--dry-run mode) ---');
+    expect(fs.readFileSync(outputPath, 'utf-8')).toBe(sentinel);
   });
 
   it('overwrites existing AGENTS.md when --force is provided', () => {
@@ -172,5 +278,25 @@ describe('CLI init --dry-run', () => {
     expect(normalResult.status).toBe(0);
     expect(verboseResult.status).toBe(0);
     expect(extractPreview(verboseResult.stdout)).toBe(extractPreview(normalResult.stdout));
+  });
+
+  it('prints the package.json version for --version', () => {
+    const cliPath = path.join(repoRoot, 'dist', 'cli.js');
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf-8')
+    ) as { version: string };
+
+    const result = spawnSync(
+      process.execPath,
+      [cliPath, '--version'],
+      {
+        encoding: 'utf-8',
+      }
+    );
+
+    const stdoutVersion = result.stdout.trim();
+    expect(result.status).toBe(0);
+    expect(stdoutVersion).toMatch(/^v?\d+\.\d+\.\d+/);
+    expect(normalizeVersionPrefix(stdoutVersion)).toBe(packageJson.version);
   });
 });

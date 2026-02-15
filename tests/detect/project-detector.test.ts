@@ -77,4 +77,33 @@ describe('detectProject', () => {
     expect(result.framework.type).toBe('firebase-functions');
     expect(result.framework.confidence).toBe('high');
   });
+
+  it('detects express over fastify in ambiguous backend fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'ambiguous-express-fastify');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('express');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('detects react framework even when scripts are empty', async () => {
+    const projectPath = path.join(fixturesDir, 'react-no-scripts');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.commands.install).toBe('npm install');
+    expect(result.commands.dev).toBeNull();
+    expect(result.commands.build).toBeNull();
+    expect(result.commands.test).toBeNull();
+    expect(result.commands.lint).toBeNull();
+    expect(result.commands.format).toBeNull();
+  });
+
+  it('detects monorepo from turbo dependency plus packages folder hint', async () => {
+    const projectPath = path.join(fixturesDir, 'monorepo-packages-only-turbo');
+    const result = await detectProject(projectPath);
+
+    expect(result.folderStructure.hasPackages).toBe(true);
+    expect(result.folderStructure.isMonorepo).toBe(true);
+  });
 });

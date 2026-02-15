@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { validateOutput } from '../../src/render/validators.js';
 
 describe('validateOutput', () => {
+  // NOTE: The branch `limits.minTokens > 0 && estimatedTokens < minTokens`
+  // is currently inactive because all profiles set minTokens=0 by design.
   it('counts lines without trailing newline off-by-one', () => {
     const result = validateOutput('a\nb\n');
 
@@ -109,5 +111,43 @@ describe('validateOutput', () => {
     expect(
       result.warnings.some(w => w === 'Section "## X" appears to be empty')
     ).toBe(false);
+  });
+
+  it('warns when compact output exceeds max line limit', () => {
+    const content = Array.from({ length: 111 }, (_, i) => `line ${i}`).join('\n');
+    const result = validateOutput(content, 'compact');
+
+    expect(result.warnings.some(w => w.includes('Output is too long'))).toBe(true);
+  });
+
+  it('warns when token count exceeds profile budget', () => {
+    const content = `# AGENTS\n\n${'a'.repeat(4000)}`;
+    const result = validateOutput(content, 'compact');
+
+    expect(
+      result.warnings.some(w => w.includes('exceeds budget for compact'))
+    ).toBe(true);
+  });
+
+  it('warns and counts multiple N/A placeholders', () => {
+    const content = '# AGENTS\n\n`N/A`\n`N/A`\n`N/A`';
+    const result = validateOutput(content, 'compact');
+
+    expect(result.warnings).toContain(
+      'Found 3 N/A placeholder(s). Consider hiding missing commands.'
+    );
+  });
+
+  it('warns when final level-2 section is empty', () => {
+    const result = validateOutput('# AGENTS\n## Final section');
+
+    expect(result.warnings).toContain('Section "## Final section" appears to be empty');
+  });
+
+  it('handles empty content input consistently', () => {
+    const result = validateOutput('');
+
+    expect(result.lineCount).toBe(1);
+    expect(result.valid).toBe(true);
   });
 });
