@@ -10,6 +10,23 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const scriptPath = path.join(repoRoot, 'scripts', 'coverage-p1-gate.mjs');
 
+type CoverageP1Folder = {
+  folder: string;
+  expectedMinBranches: number;
+  actualBranches: number | null;
+  branchesCovered: number;
+  branchesTotal: number;
+  measuredFiles: number;
+  fileCount: number;
+  pass: boolean;
+};
+
+type CoverageP1Report = {
+  status: 'ok' | 'warn' | 'error';
+  folders: CoverageP1Folder[];
+  deviations: unknown[];
+};
+
 function runCoverageGate(args: string[]) {
   return spawnSync(process.execPath, [scriptPath, ...args], {
     cwd: repoRoot,
@@ -94,7 +111,7 @@ describe('coverage p1 gate', () => {
     ]);
 
     expect(result.status).toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP1Report;
     expect(parsed.status).toBe('ok');
     expect(parsed.deviations).toHaveLength(0);
 
@@ -119,7 +136,7 @@ describe('coverage p1 gate', () => {
     ]);
 
     expect(result.status).not.toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP1Report;
     expect(parsed.status).toBe('warn');
     expect(parsed.deviations.length).toBeGreaterThan(0);
 
@@ -145,7 +162,7 @@ describe('coverage p1 gate', () => {
     ]);
 
     expect(result.status).toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP1Report;
     expect(parsed.status).toBe('warn');
 
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -201,14 +218,9 @@ describe('coverage p1 gate', () => {
     ]);
 
     expect(result.status).toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
-    const folderMap = new Map(
-      parsed.folders.map(
-        (folder: { folder: string; actualBranches: number | null; pass: boolean }) => [
-          folder.folder,
-          folder,
-        ]
-      )
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP1Report;
+    const folderMap = new Map<string, CoverageP1Folder>(
+      parsed.folders.map((folder) => [folder.folder, folder] as const)
     );
 
     expect(folderMap.get('src/detect')?.actualBranches).toBe(90);

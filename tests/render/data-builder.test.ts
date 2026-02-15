@@ -12,15 +12,19 @@ type DetectionOverrides = {
 };
 
 function createPackageInfo(overrides: Partial<PackageInfo> = {}): PackageInfo {
+  const {
+    scripts,
+    dependencies,
+    devDependencies,
+    ...rest
+  } = overrides;
+
   return {
     name: 'demo-project',
-    scripts: {},
-    dependencies: {},
-    devDependencies: {},
-    ...overrides,
-    scripts: overrides.scripts ?? {},
-    dependencies: overrides.dependencies ?? {},
-    devDependencies: overrides.devDependencies ?? {},
+    ...rest,
+    scripts: scripts ?? {},
+    dependencies: dependencies ?? {},
+    devDependencies: devDependencies ?? {},
   };
 }
 

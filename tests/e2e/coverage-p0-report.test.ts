@@ -11,6 +11,19 @@ const repoRoot = path.resolve(__dirname, '..', '..');
 const scriptPath = path.join(repoRoot, 'scripts', 'coverage', 'p0-report.mjs');
 const defaultCoverageSummaryPath = path.join(repoRoot, 'coverage', 'coverage-summary.json');
 
+type CoverageP0Target = {
+  target: string;
+  expectedMinBranches: number;
+  actualBranches: number | null;
+  pass: boolean;
+};
+
+type CoverageP0Report = {
+  status: 'ok' | 'warn' | 'error';
+  targets: CoverageP0Target[];
+  deviations: unknown[];
+};
+
 function runCoverageReport(args: string[]) {
   return spawnSync(process.execPath, [scriptPath, ...args], {
     cwd: repoRoot,
@@ -98,9 +111,9 @@ describe('coverage p0 report', () => {
       expect(fs.existsSync(reportJson)).toBe(true);
       expect(fs.existsSync(reportMd)).toBe(true);
 
-      const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+      const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP0Report;
       expect(parsed.targets).toHaveLength(4);
-      expect(parsed.targets.map((item: { target: string }) => item.target)).toEqual([
+      expect(parsed.targets.map((item) => item.target)).toEqual([
         'src/detect/framework-detector.ts',
         'src/render/data-builder.ts',
         'src/render/validators.ts',
@@ -135,7 +148,7 @@ describe('coverage p0 report', () => {
     ]);
 
     expect(result.status).toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP0Report;
     expect(parsed.status).toBe('warn');
     expect(parsed.deviations.length).toBeGreaterThan(0);
 
@@ -161,7 +174,7 @@ describe('coverage p0 report', () => {
     ]);
 
     expect(result.status).not.toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP0Report;
     expect(parsed.status).toBe('warn');
 
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -217,15 +230,10 @@ describe('coverage p0 report', () => {
     ]);
 
     expect(result.status).toBe(0);
-    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(reportJson, 'utf-8')) as CoverageP0Report;
 
-    const targetMap = new Map(
-      parsed.targets.map(
-        (item: { target: string; actualBranches: number | null; pass: boolean }) => [
-          item.target,
-          item,
-        ]
-      )
+    const targetMap = new Map<string, CoverageP0Target>(
+      parsed.targets.map((item) => [item.target, item] as const)
     );
 
     expect(targetMap.get('src/detect/framework-detector.ts')?.actualBranches).toBe(93);

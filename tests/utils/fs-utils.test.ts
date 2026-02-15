@@ -1,7 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { isPathSafe } from '../../src/utils/fs-utils.js';
 
 const tempDirs: string[] = [];
@@ -124,19 +124,18 @@ describe('isPathSafe', () => {
     fs.mkdirSync(docsDir, { recursive: true });
 
     const originalLstatSync = fs.lstatSync.bind(fs);
-    const lstatSpy = ((filePath: fs.PathLike) => {
+    const spy = vi.spyOn(fs, 'lstatSync').mockImplementation((filePath: fs.PathLike) => {
       const normalizedPath = path.resolve(String(filePath));
       if (normalizedPath === path.resolve(docsDir)) {
         throw new Error('metadata read failure');
       }
       return originalLstatSync(filePath);
-    }) as typeof fs.lstatSync;
+    });
 
     try {
-      fs.lstatSync = lstatSpy;
       expect(isPathSafe(root, path.join('docs', 'AGENTS.md'))).toBe(false);
     } finally {
-      fs.lstatSync = originalLstatSync;
+      spy.mockRestore();
     }
   });
 });
