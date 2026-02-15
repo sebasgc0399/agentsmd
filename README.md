@@ -1,52 +1,68 @@
 # agents-md
 
-CLI para generar archivos AGENTS.md automáticamente para proyectos Node.js.
+CLI para generar archivos `AGENTS.md` automaticamente para proyectos Node.js.
 
-## ¿Qué es AGENTS.md?
+## Tabla de contenido
 
-AGENTS.md es un "README para AI agents" que reduce las alucinaciones de agentes de IA (Claude, Copilot, Windsurf, etc.) al proporcionar:
-- Comandos canónicos (setup, test, build, lint)
-- Convenciones de código y estilo
-- Guías de testing
+- [¿Que es AGENTS.md?](#que-es-agentsmd)
+- [Quickstart](#quickstart)
+- [Instalacion](#instalacion)
+- [Uso](#uso)
+- [Perfiles de salida](#perfiles-de-salida)
+- [Proyectos soportados](#proyectos-soportados)
+- [Releases y novedades](#releases-y-novedades)
+- [Desarrollo](#desarrollo)
+- [Contribuciones](#contribuciones)
+- [Soporte](#soporte)
+- [Licencia](#licencia)
+
+## ¿Que es AGENTS.md?
+
+`AGENTS.md` es un "README para AI agents" que reduce alucinaciones al proporcionar:
+
+- Comandos canonicos (setup, test, build, lint)
+- Convenciones de codigo y estilo
+- Guias de testing
 - Reglas de seguridad
 - Definition of Done
 
 ## Quickstart
 
-**Nombres importantes (evitar confusiones):**
-- **Package en npm:** `@sebasgc0399/agents-md`
-- **Bin/command instalado:** `agents-md`
-- No usar `npx agents-md ...` (sin scope), porque puede ejecutar otro paquete distinto en npm.
+Nombres importantes para evitar confusion:
 
-**Uso sin instalación** (recomendado):
+- Package en npm: `@sebasgc0399/agents-md`
+- Comando instalado: `agents-md`
+- No usar `npx agents-md ...` sin scope
+
+Uso sin instalacion (recomendado):
 
 ```bash
-# Generar AGENTS.md en el directorio actual
 npx -p @sebasgc0399/agents-md agents-md init
-
-# Preview sin escribir archivo
 npx -p @sebasgc0399/agents-md agents-md init --dry-run
-
-# Elegir perfil de salida
-npx -p @sebasgc0399/agents-md agents-md init --profile compact    # ~70 líneas (default)
-npx -p @sebasgc0399/agents-md agents-md init --profile standard   # ~150 líneas
-npx -p @sebasgc0399/agents-md agents-md init --profile full       # ~220 líneas
+npx -p @sebasgc0399/agents-md agents-md init --profile compact
+npx -p @sebasgc0399/agents-md agents-md init --profile standard
+npx -p @sebasgc0399/agents-md agents-md init --profile full
 ```
 
-## Instalación
+## Instalacion
 
-**Opción 1: Sin instalación (npx)**
+Opcion 1: sin instalacion (npx)
+
 ```bash
 npx -p @sebasgc0399/agents-md agents-md init
 ```
 
-**Opción 2: Instalación global**
+Opcion 2: instalacion global
+
 ```bash
 npm install -g @sebasgc0399/agents-md
 agents-md init
 ```
 
-**Requisitos**: Node.js ≥18
+Requisitos:
+
+- Node.js >= 18
+- `package.json` en la raiz del proyecto
 
 ## Uso
 
@@ -65,67 +81,61 @@ agents-md init --profile full
 # Sobrescribir archivo existente
 agents-md init --force
 
-# Modo verbose (mostrar detalles de detección)
+# Modo verbose (mostrar detalles de deteccion)
 agents-md init --verbose
 
 # Especificar ruta de salida
 agents-md init --out ./docs/AGENTS.md
 ```
 
-Nota: en la version `v0.2.x`, las flags `-y/--yes` y `-i/--interactive`
-estan reservadas y actualmente no cambian el comportamiento del comando.
+Nota: en la version `v0.2.x`, las flags `-y/--yes` y `-i/--interactive` estan reservadas y actualmente no cambian el comportamiento del comando.
 
-## Proyectos Soportados
+## Perfiles de salida
 
-- React (con Vite, CRA, o Next.js)
-- Vue (con Vite o Nuxt)
-- Firebase Functions
-- Proyectos Node.js genéricos
-- Monorepos (Turborepo/Nx)
+- `compact` (default): salida corta y directa (hasta ~110 lineas)
+- `standard`: salida mas completa para equipos (~150-230 lineas)
+- `full`: salida mas detallada para handoff y CI (~220-360 lineas)
 
-## Cómo Funciona
-
-1. Lee tu `package.json`
-2. Detecta framework y estructura de carpetas
-3. Extrae comandos canónicos desde scripts
-4. Genera un AGENTS.md limpio y conciso según el profile seleccionado
-
-## Profiles de salida
-
-- `compact` (default): salida corta y directa (hasta ~110 líneas)
-- `standard`: salida más completa para equipos (~150-230 líneas)
-- `full`: salida más detallada para handoff y CI (~220-360 líneas)
-
-## Output Profiles & Soft Limits
+## Limites de salida (soft limits)
 
 - `compact`: 50-110 lines, max ~900 tokens
 - `standard`: 150-230 lines, max ~1600 tokens
 - `full`: 220-360 lines, max ~2400 tokens
 
-Exceder estos rangos genera **warnings** y no bloquea la generación.
-La generación solo se bloquea cuando hay **errors** de validación.
+Exceder estos rangos genera warnings y no bloquea la generacion. La generacion solo se bloquea cuando hay errors de validacion.
 
-## Requisitos
+## Proyectos soportados
 
-- Node.js 18+
-- `package.json` en la raíz del proyecto
+- React (Vite, CRA, Next.js)
+- Vue (Vite, Nuxt)
+- Firebase Functions
+- Proyectos Node.js genericos
+- Monorepos (Turborepo/Nx)
 
-## 📦 Releases y Novedades
+## Como funciona
 
-**Version actual: v0.2.0**
+1. Lee `package.json`.
+2. Detecta framework y estructura de carpetas.
+3. Extrae comandos canonicos desde scripts.
+4. Genera un `AGENTS.md` limpio y conciso segun el perfil seleccionado.
 
-### Cambios en esta versión:
+## Releases y novedades
+
+Version actual: `v0.2.0`
+
+Cambios en esta version:
+
 - Benchmark de calidad P0/P1/P2 integrado (`benchmark:lite`, `benchmark:p1`, `benchmark:p2`)
 - Gates de calidad en CI para benchmark lite + baseline semantico P1
 - Workflow semanal/manual de tendencias (`benchmark-trends`) con reporte JSON/Markdown
 
-> **💡 Actualizar a la última versión:**
-> Si tienes instalada una versión anterior globalmente, actualiza con:
-> ```bash
-> npm update -g @sebasgc0399/agents-md
-> ```
+Actualizar a la ultima version global:
 
-[Ver el historial completo de versiones](https://github.com/sebasgc0399/agents-md/releases)
+```bash
+npm update -g @sebasgc0399/agents-md
+```
+
+[Ver historial completo de versiones](https://github.com/sebasgc0399/agents-md/releases)
 
 ## Desarrollo
 
@@ -166,38 +176,28 @@ node dist/cli.js init --dry-run
 
 ## Contribuciones
 
-Gracias por ayudar a mejorar **agents-md**: las contribuciones son bienvenidas.
+Gracias por ayudar a mejorar `agents-md`.
 
-Para mantener el proyecto de alta calidad y fácil de mantener, por favor:
+Para mantener el proyecto de alta calidad:
 
-- **Abre un issue primero** para cambios no triviales (nuevas funcionalidades, cambios de comportamiento, expansiones de templates).
-- Incluye un **planteamiento claro del problema**, una **solución propuesta** y **por qué** es el mejor trade-off.
-- Si usaste un asistente de IA, está perfecto: asegúrate de que el resultado esté **revisado por ti**, probado en local y alineado con las convenciones del repo.  
-  En otras palabras: la IA puede ayudarte a ir más rápido, pero el PR debe reflejar **tu criterio de ingeniería**.
-- Mantén los PRs **pequeños y enfocados** cuando sea posible.
-- Agrega o actualiza **tests** cuando cambie el comportamiento.
+- Abre un issue primero para cambios no triviales.
+- Incluye problema, solucion propuesta y trade-off tecnico.
+- Si usaste IA, revisa manualmente el resultado antes de abrir PR.
+- Manten los PRs pequenos y enfocados.
+- Agrega o actualiza tests cuando cambie el comportamiento.
 - Ejecuta `npm test` antes de enviar.
 
-### Desarrollo
-
-- Instalar: `npm install`
-- Build: `npm run build`
-- Test: `npm test`
-- Coverage: `npm run test:coverage`
-- Benchmark lite: `npm run benchmark:lite`
-- Benchmark P1: `npm run benchmark:p1`
-- Update baseline P1: `npm run benchmark:p1:update`
-- Benchmark P2 trends (no gate de PR): `npm run benchmark:p2`
+Comandos de desarrollo y validacion: ver seccion `## Desarrollo`.
 
 ## Soporte
 
-Si esta herramienta te resulta útil, puedes apoyar el proyecto de estas formas:
+Si esta herramienta te resulta util, puedes apoyar el proyecto de estas formas:
 
 - Dar estrella al repo
 - Compartirlo con tu equipo
 - Reportar bugs con pasos reproducibles
-- Proponer mejoras vía issues o PRs bien acotados
+- Proponer mejoras via issues o PRs acotados
 
-## License
+## Licencia
 
 MIT © 2026 sebasgc0399
