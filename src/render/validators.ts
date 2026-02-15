@@ -141,6 +141,7 @@ export function validateOutput(
   for (let i = 0; i < headings.length; i++) {
     const heading = headings[i];
     const headingIndex = heading.index;
+    /* c8 ignore next 3 -- Defensive guard: standard String.prototype.matchAll() on strings yields match objects with numeric index; this branch is for non-standard iterables only. */
     if (headingIndex === undefined) {
       continue;
     }
