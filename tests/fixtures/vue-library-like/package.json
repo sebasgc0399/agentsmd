@@ -1,0 +1,9 @@
+{
+  "name": "vue-library-like-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {}
+}

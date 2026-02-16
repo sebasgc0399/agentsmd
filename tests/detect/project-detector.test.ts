@@ -203,6 +203,54 @@ describe('detectProject', () => {
     expect(result.framework.confidence).toBe('high');
   });
 
+  it('keeps legacy vue detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'vue-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('vue');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('keeps legacy express detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'express-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('express');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('keeps legacy fastify detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'fastify-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('fastify');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('documents no app-likeness differentiation for express fixtures yet', async () => {
+    const libraryPath = path.join(fixturesDir, 'express-library-like');
+    const appLikePath = path.join(fixturesDir, 'express-app-like-minimal');
+
+    const libraryResult = await detectProject(libraryPath);
+    const appLikeResult = await detectProject(appLikePath);
+
+    expect(libraryResult.framework.type).toBe('express');
+    expect(appLikeResult.framework.type).toBe('express');
+    expect(libraryResult.framework.confidence).toBe(appLikeResult.framework.confidence);
+  });
+
+  it('documents no app-likeness differentiation for fastify fixtures yet', async () => {
+    const libraryPath = path.join(fixturesDir, 'fastify-library-like');
+    const appLikePath = path.join(fixturesDir, 'fastify-app-like-minimal');
+
+    const libraryResult = await detectProject(libraryPath);
+    const appLikeResult = await detectProject(appLikePath);
+
+    expect(libraryResult.framework.type).toBe('fastify');
+    expect(appLikeResult.framework.type).toBe('fastify');
+    expect(libraryResult.framework.confidence).toBe(appLikeResult.framework.confidence);
+  });
+
   it('detects monorepo from turbo dependency plus packages folder hint', async () => {
     const projectPath = path.join(fixturesDir, 'monorepo-packages-only-turbo');
     const result = await detectProject(projectPath);

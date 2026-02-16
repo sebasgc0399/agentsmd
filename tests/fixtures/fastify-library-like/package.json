@@ -1,0 +1,9 @@
+{
+  "name": "fastify-library-like-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "fastify": "^5.0.0"
+  },
+  "devDependencies": {}
+}
