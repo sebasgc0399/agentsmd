@@ -1,0 +1,10 @@
+{
+  "name": "unresolved-tie-cross-family-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "express": "^4.19.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {}
+}

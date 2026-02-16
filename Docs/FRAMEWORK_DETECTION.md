@@ -201,6 +201,16 @@ La precedencia es solo desempate sobre candidatos con puntuación máxima y **nu
 - Objetivo: revisar pesos/umbrales solo si se justifica por evidencia de regresión y benchmarks.
 - DoD: informe de impacto en benchmarks y fixtures.
 
-### P1-4: Fixtures adicionales de ambigüedad
-- Objetivo: expandir cobertura de fixtures de empate y casi-empate para estabilidad a largo plazo del detector.
-- DoD: nuevos fixtures + suite de regresión verde.
+### P1-4: Robustez tie/near-tie (unit-first, sin algoritmo)
+- Objetivo: ampliar cobertura de empates y casi-empates sin cambiar el detector.
+- Enfoque principal: tests unit sinteticos con inputs controlados.
+- Integracion minima con fixtures:
+  - `tie-next-react-equal-score`
+  - `tie-nuxt-vue-equal-score`
+  - `unresolved-tie-cross-family`
+- Cobertura esperada:
+  - tie real: precedencia resuelve,
+  - near-tie: gana score mayor,
+  - tie sin regla: `unknown`,
+  - config-strict sin `rootPath`: modo conservador (`unknown`).
+- Decision P1-4: `GO` (robustez cerrada con tests/fixtures, sin cambios en `src/detect/*`).
