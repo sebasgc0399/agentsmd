@@ -43,6 +43,12 @@ const matrix: MatrixCase[] = [
     expectedMonorepo: false,
     requiredSpecificSections: ['## environment variables', '## deployment'],
   },
+  {
+    fixture: 'vue-vite',
+    expectedFramework: 'vue',
+    expectedMonorepo: false,
+    requiredSpecificSections: ['## testing guidelines'],
+  },
 ];
 
 function fixturePath(name: string): string {

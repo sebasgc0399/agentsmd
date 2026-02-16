@@ -1,0 +1,9 @@
+{
+  "name": "express-library-like-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {}
+}

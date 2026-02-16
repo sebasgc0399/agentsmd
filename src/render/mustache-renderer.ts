@@ -56,7 +56,10 @@ export function selectTemplate(context: TemplateContext): string {
 
     case 'vue':
     case 'nuxt':
-      return 'base.mustache'; // Use base for now, can create vue.mustache later
+      return 'vue.mustache';
+
+    case 'angular':
+      return 'angular.mustache';
 
     case 'firebase-functions':
       return 'firebase.mustache';

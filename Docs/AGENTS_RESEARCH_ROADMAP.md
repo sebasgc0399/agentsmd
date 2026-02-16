@@ -22,6 +22,10 @@ Decision concreta:
 
 Evidencia local:
 
+- Contrato tecnico unico para deteccion de frameworks:
+  `Docs/FRAMEWORK_DETECTION.md` (senales, umbrales, guardas anti-FP y precedencia).
+- Este roadmap referencia dicho contrato y evita duplicar reglas de deteccion para prevenir drift.
+
 - Cobertura actual: consultar `coverage/coverage-summary.json` en cada PR.
 - Evitar cifras hardcodeadas como estado permanente; usar snapshots fechados cuando aplique.
 - Punto principal de seguimiento: `src/utils/logger.ts` sin cobertura directa dedicada.

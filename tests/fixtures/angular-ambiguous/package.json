@@ -1,0 +1,10 @@
+{
+  "name": "angular-ambiguous-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "ng serve"
+  },
+  "dependencies": {
+    "@angular/core": "^17.0.0"
+  }
+}

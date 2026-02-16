@@ -44,6 +44,9 @@ export type FrameworkType =
   | 'vue'
   | 'angular'
   | 'svelte'
+  | 'sveltekit'
+  | 'astro'
+  | 'nestjs'
   | 'next'
   | 'nuxt'
   | 'express'
@@ -114,6 +117,7 @@ export interface TemplateContext {
   isFull: boolean;
   isStandardOrFull: boolean;
   is_unknown_generic?: boolean;
+  is_nuxt?: boolean;
   framework_type: string;
   runtime_type: string;
 }

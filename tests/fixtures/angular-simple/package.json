@@ -1,0 +1,12 @@
+{
+  "name": "angular-simple-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "ng serve",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/core": "^17.0.0",
+    "@angular/cli": "^17.0.0"
+  }
+}

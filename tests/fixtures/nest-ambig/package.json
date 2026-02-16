@@ -1,0 +1,12 @@
+{
+  "name": "nest-ambiguous-fixture",
+  "private": true,
+  "scripts": {
+    "start": "nest start"
+  },
+  "dependencies": {
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/cli": "^10.0.0"
+  }
+}

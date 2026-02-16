@@ -1,0 +1,10 @@
+{
+  "name": "astro-simple-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev"
+  },
+  "dependencies": {
+    "astro": "^4.0.0"
+  }
+}

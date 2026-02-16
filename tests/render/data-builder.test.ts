@@ -296,6 +296,149 @@ describe('buildTemplateContext', () => {
     expect(context.project_description).toContain('Proyecto sin descripcion');
   });
 
+  // --- Framework-specific style notes ---
+
+  it('adds angular-specific style notes for angular', () => {
+    const detection = createDetection({
+      framework: { type: 'angular', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('Standalone Components');
+    expect(context.style_notes).toContain('providedIn');
+  });
+
+  it('adds nuxt-specific style notes for nuxt', () => {
+    const detection = createDetection({
+      framework: { type: 'nuxt', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('Auto-imports');
+    expect(context.style_notes).toContain('useFetch');
+  });
+
+  it('adds sveltekit-specific style notes for sveltekit', () => {
+    const detection = createDetection({
+      framework: { type: 'sveltekit', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('$state()');
+    expect(context.style_notes).toContain('src/routes/');
+  });
+
+  it('adds astro-specific style notes for astro', () => {
+    const detection = createDetection({
+      framework: { type: 'astro', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('Islands');
+    expect(context.style_notes).toContain('client:*');
+  });
+
+  it('adds nestjs-specific style notes for nestjs', () => {
+    const detection = createDetection({
+      framework: { type: 'nestjs', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('@Controller');
+    expect(context.style_notes).toContain('ValidationPipe');
+  });
+
+  it('adds express-specific style notes for express', () => {
+    const detection = createDetection({
+      framework: { type: 'express', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('express.Router()');
+    expect(context.style_notes).toContain('error handler');
+  });
+
+  it('adds fastify-specific style notes for fastify', () => {
+    const detection = createDetection({
+      framework: { type: 'fastify', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('fastify.register()');
+    expect(context.style_notes).toContain('JSON Schema');
+  });
+
+  // --- Framework-specific testing notes ---
+
+  it('adds angular testing notes for angular', () => {
+    const detection = createDetection({
+      framework: { type: 'angular', confidence: 'high' },
+      packageInfo: { devDependencies: {} },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.testing_notes).toContain('TestBed');
+    expect(context.testing_notes).toContain('useClass/useValue');
+  });
+
+  it('adds nestjs testing notes when @nestjs/testing is present', () => {
+    const detection = createDetection({
+      framework: { type: 'nestjs', confidence: 'high' },
+      packageInfo: { devDependencies: { '@nestjs/testing': '^10.0.0' } },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.testing_notes).toContain('createTestingModule');
+    expect(context.testing_notes).toContain('supertest');
+  });
+
+  it('adds fastify testing notes for fastify', () => {
+    const detection = createDetection({
+      framework: { type: 'fastify', confidence: 'high' },
+      packageInfo: { devDependencies: {} },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.testing_notes).toContain('fastify.inject()');
+  });
+
+  it('adds express+supertest testing notes when supertest is present', () => {
+    const detection = createDetection({
+      framework: { type: 'express', confidence: 'high' },
+      packageInfo: { devDependencies: { supertest: '^6.0.0' } },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.testing_notes).toContain('supertest');
+  });
+
+  // --- Framework-specific security notes ---
+
+  it('adds vue-specific security notes for vue', () => {
+    const detection = createDetection({
+      framework: { type: 'vue', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.security_notes).toContain('v-html');
+    expect(context.security_notes).toContain('XSS');
+  });
+
+  it('adds angular-specific security notes for angular', () => {
+    const detection = createDetection({
+      framework: { type: 'angular', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.security_notes).toContain('bypassSecurityTrust');
+    expect(context.security_notes).toContain('ngCspNonce');
+  });
+
+  // --- is_nuxt flag ---
+
+  it('sets is_nuxt to true for nuxt framework', () => {
+    const detection = createDetection({
+      framework: { type: 'nuxt', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.is_nuxt).toBe(true);
+  });
+
+  it('sets is_nuxt to false for vue framework', () => {
+    const detection = createDetection({
+      framework: { type: 'vue', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.is_nuxt).toBe(false);
+  });
+
   it('sets is_unknown_generic to true only for unknown non-monorepo projects', () => {
     const unknownSingle = createDetection({
       framework: { type: 'unknown', confidence: 'low' },

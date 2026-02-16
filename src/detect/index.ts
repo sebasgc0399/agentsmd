@@ -17,7 +17,7 @@ export async function detectProject(rootPath: string): Promise<DetectionResult> 
   const folderStructure = detectFolderStructure(rootPath, packageInfo);
 
   // 3. Detect framework
-  const rawFramework = detectFramework(packageInfo);
+  const rawFramework = detectFramework(packageInfo, rootPath);
   const framework = applyFolderSignals(rawFramework, folderStructure);
 
   // 4. Detect runtime and package manager
