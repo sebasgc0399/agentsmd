@@ -41,8 +41,8 @@ function createContext(
 }
 
 describe('selectTemplate', () => {
-  it('uses base template for new framework types in P0', () => {
-    const frameworkTypes = ['angular', 'sveltekit', 'astro', 'nestjs'];
+  it('uses base template for frameworks without dedicated template', () => {
+    const frameworkTypes = ['sveltekit', 'astro', 'nestjs', 'svelte', 'express', 'fastify'];
 
     for (const frameworkType of frameworkTypes) {
       const template = selectTemplate(createContext(frameworkType));
@@ -54,6 +54,15 @@ describe('selectTemplate', () => {
     expect(selectTemplate(createContext('react'))).toBe('react.mustache');
     expect(selectTemplate(createContext('next'))).toBe('react.mustache');
     expect(selectTemplate(createContext('firebase-functions'))).toBe('firebase.mustache');
+  });
+
+  it('selects vue template for vue and nuxt frameworks', () => {
+    expect(selectTemplate(createContext('vue'))).toBe('vue.mustache');
+    expect(selectTemplate(createContext('nuxt'))).toBe('vue.mustache');
+  });
+
+  it('selects angular template for angular framework', () => {
+    expect(selectTemplate(createContext('angular'))).toBe('angular.mustache');
   });
 
   it('keeps monorepo template priority over framework', () => {

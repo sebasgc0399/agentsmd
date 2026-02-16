@@ -46,9 +46,70 @@ function buildStyleNotes(framework: DetectionResult['framework']): string {
     case 'vue':
       return (
         DEFAULTS.style_notes +
-        '\n- Usar Composition API (setup script)\n' +
+        '\n- Usar <script setup> (Composition API) como sintaxis recomendada\n' +
         '- Props con defineProps, eventos con defineEmits\n' +
-        '- Componentes en PascalCase'
+        '- Componentes en PascalCase, un componente por archivo\n' +
+        '- Composables en composables/ con prefijo use'
+      );
+
+    case 'nuxt':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Usar Composition API (<script setup>) y defineProps/defineEmits\n' +
+        '- Auto-imports de Nuxt: components/, composables/, utils/\n' +
+        '- Páginas en pages/, layouts, middleware, server routes en server/api/\n' +
+        '- Data fetching con useFetch/useAsyncData'
+      );
+
+    case 'angular':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Standalone Components preferidos sobre NgModules (Angular 17+)\n' +
+        '- Archivos: dash-case con sufijos (.component.ts, .service.ts)\n' +
+        '- DI con providedIn: root; Signals para estado local, RxJS para streams async\n' +
+        '- OnPush change detection; control flow con @if, @for, @switch'
+      );
+
+    case 'svelte':
+    case 'sveltekit':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Svelte 5 runes: $state(), $derived(), $effect() para reactividad\n' +
+        '- Estructura SvelteKit: src/routes/, src/lib/ ($lib alias)\n' +
+        '- Stores con writable()/derived() en src/lib/stores.ts'
+      );
+
+    case 'astro':
+      return (
+        DEFAULTS.style_notes +
+        '\n- src/pages/ para rutas, src/components/, src/layouts/, src/content/\n' +
+        '- Componentes estáticos por defecto; usar client:* para interactividad (Islands)\n' +
+        '- Content Collections via getCollection() en archivos de ruta'
+      );
+
+    case 'nestjs':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Decoradores: @Controller, @Injectable, @Module, @Get/@Post\n' +
+        '- Módulos por feature con controllers, services, exports\n' +
+        '- Pipes (ValidationPipe), Guards, Interceptors para cross-cutting concerns\n' +
+        '- DI en constructor; @Inject() solo para tokens custom'
+      );
+
+    case 'express':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Agrupar rutas con express.Router() por área\n' +
+        '- Orden de middleware importa: genéricos antes de rutas, error handler al final\n' +
+        '- Error handler: función de 4 parámetros (err, req, res, next)'
+      );
+
+    case 'fastify':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Sistema de plugins con fastify.register(); cada plugin tiene scope encapsulado\n' +
+        '- JSON Schema validation en rutas (schema.body, schema.querystring)\n' +
+        '- Usar logger integrado (fastify.log), no console.log'
       );
 
     case 'firebase-functions':
@@ -81,6 +142,35 @@ function buildTestingNotes(
     notes += '- Preferir queries por rol y texto sobre testIds';
   }
 
+  if ((framework.type === 'vue' || framework.type === 'nuxt') && devDeps['@testing-library/vue']) {
+    notes += '\n- Usar @testing-library/vue para tests de componentes';
+  }
+  if ((framework.type === 'vue' || framework.type === 'nuxt') && devDeps['@vue/test-utils']) {
+    notes += '\n- Vue Test Utils (VTU) para tests de componentes';
+  }
+
+  if (framework.type === 'angular') {
+    notes += '\n- TestBed.configureTestingModule para setup de tests\n';
+    notes += '- Mock services con useClass/useValue en providers';
+  }
+
+  if ((framework.type === 'svelte' || framework.type === 'sveltekit') && devDeps['@testing-library/svelte']) {
+    notes += '\n- @testing-library/svelte para tests de componentes';
+  }
+
+  if (framework.type === 'nestjs' && devDeps['@nestjs/testing']) {
+    notes += '\n- Test.createTestingModule para setup; module.get() para extraer servicios\n';
+    notes += '- E2E con createNestApplication() + supertest';
+  }
+
+  if (framework.type === 'express' && devDeps['supertest']) {
+    notes += '\n- supertest para tests HTTP sin levantar servidor real';
+  }
+
+  if (framework.type === 'fastify') {
+    notes += '\n- fastify.inject() para tests de rutas sin servidor real';
+  }
+
   if (devDeps.vitest) {
     notes += '\n- Framework de testing: Vitest';
   } else if (devDeps.jest) {
@@ -88,6 +178,52 @@ function buildTestingNotes(
   }
 
   return notes;
+}
+
+/**
+ * Build framework-specific security notes
+ */
+function buildSecurityNotes(framework: DetectionResult['framework']): string {
+  switch (framework.type) {
+    case 'vue':
+    case 'nuxt':
+      return (
+        DEFAULTS.security_notes +
+        '\n- No usar v-html con contenido no sanitizado (riesgo XSS)\n' +
+        '- No exponer variables sensibles en código cliente'
+      );
+
+    case 'angular':
+      return (
+        DEFAULTS.security_notes +
+        '\n- bypassSecurityTrust* solo tras validar seguridad del contenido\n' +
+        '- CSP con ngCspNonce o autoCsp para scripts/estilos'
+      );
+
+    case 'nestjs':
+      return (
+        DEFAULTS.security_notes +
+        '\n- ValidationPipe global (transform: true, whitelist: true)\n' +
+        '- No exponer stack traces en respuestas de producción'
+      );
+
+    case 'express':
+      return (
+        DEFAULTS.security_notes +
+        '\n- Usar helmet() para headers de seguridad\n' +
+        '- express-rate-limit para prevenir abuso'
+      );
+
+    case 'fastify':
+      return (
+        DEFAULTS.security_notes +
+        '\n- @fastify/helmet para headers de seguridad\n' +
+        '- @fastify/rate-limit para prevenir abuso'
+      );
+
+    default:
+      return DEFAULTS.security_notes;
+  }
 }
 
 /**
@@ -147,6 +283,7 @@ export function buildTemplateContext(
   const description = packageInfo?.description || DEFAULTS.project_description;
   const styleNotes = buildStyleNotes(framework);
   const testingNotes = buildTestingNotes(framework, packageInfo);
+  const securityNotes = buildSecurityNotes(framework);
 
   return {
     project_name: packageInfo?.name || 'unknown-project',
@@ -164,7 +301,7 @@ export function buildTemplateContext(
     },
     style_notes: styleNotes,
     testing_notes: testingNotes,
-    security_notes: DEFAULTS.security_notes,
+    security_notes: securityNotes,
     has_dev: commands.dev !== null,
     has_tests: commands.test !== null,
     has_lint: commands.lint !== null,
@@ -176,6 +313,7 @@ export function buildTemplateContext(
     isFull: profile === 'full',
     isStandardOrFull: profile === 'standard' || profile === 'full',
     is_unknown_generic: framework.type === 'unknown' && !folderStructure.isMonorepo,
+    is_nuxt: framework.type === 'nuxt',
     framework_type: framework.type,
     runtime_type: runtime.type,
   };

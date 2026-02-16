@@ -120,7 +120,7 @@ describe('renderAgentsMd profiles', () => {
     expect(getTokenWarnings(vueFull.validation.warnings)).toEqual([]);
   });
 
-  it('does not leak unknown generic block into vue projects using base template', async () => {
+  it('does not leak unknown generic block into vue projects', async () => {
     const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'vue-vite');
     const detection = await detectProject(fixturePath);
 
@@ -130,5 +130,33 @@ describe('renderAgentsMd profiles', () => {
     const standardResult = renderAgentsMd(detection, 'standard');
 
     expect(standardResult.content).not.toContain('## Generic project execution playbook');
+  });
+
+  it('vue template includes Vue delivery checklist in standard', async () => {
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'vue-vite');
+    const detection = await detectProject(fixturePath);
+    const standardResult = renderAgentsMd(detection, 'standard');
+
+    expect(standardResult.content).toContain('Vue delivery checklist');
+    expect(standardResult.content).not.toContain('React delivery checklist');
+  });
+
+  it('angular fixture stays within profile limits', async () => {
+    const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'angular-simple');
+    const detection = await detectProject(fixturePath);
+
+    const compactResult = renderAgentsMd(detection, 'compact');
+    const standardResult = renderAgentsMd(detection, 'standard');
+    const fullResult = renderAgentsMd(detection, 'full');
+
+    expect(compactResult.validation.lineCount).toBeLessThanOrEqual(MAX_LINES.compact);
+    expect(standardResult.validation.lineCount).toBeLessThanOrEqual(MAX_LINES.standard);
+    expect(standardResult.validation.lineCount).toBeGreaterThanOrEqual(MIN_LINES.standard);
+    expect(fullResult.validation.lineCount).toBeLessThanOrEqual(MAX_LINES.full);
+    expect(fullResult.validation.lineCount).toBeGreaterThanOrEqual(MIN_LINES.full);
+
+    expect(getLengthWarnings(compactResult.validation.warnings)).toEqual([]);
+    expect(getLengthWarnings(standardResult.validation.warnings)).toEqual([]);
+    expect(getLengthWarnings(fullResult.validation.warnings)).toEqual([]);
   });
 });

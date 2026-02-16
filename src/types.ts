@@ -117,6 +117,7 @@ export interface TemplateContext {
   isFull: boolean;
   isStandardOrFull: boolean;
   is_unknown_generic?: boolean;
+  is_nuxt?: boolean;
   framework_type: string;
   runtime_type: string;
 }
