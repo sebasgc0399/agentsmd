@@ -226,9 +226,19 @@ La precedencia es solo desempate sobre candidatos con puntuación máxima y **nu
   - precedencia tie-break-only,
   - fallback de render a `base.mustache`.
 
-### P1-3: Ajuste de umbrales con evidencia
-- Objetivo: revisar pesos/umbrales solo si se justifica por evidencia de regresion y benchmarks.
-- DoD: informe de impacto en benchmarks y fixtures.
+### P1-3: Ajuste de umbrales con evidencia (docs-only)
+- Objetivo: registrar el resultado del gate de tuning sin tocar codigo del detector.
+- Gate requerido para habilitar tuning en un PR futuro:
+  1. `0` drift en `tests/detect/framework-regression.test.ts`.
+  2. Grupo B (`unknown` esperado) no aumenta falsos positivos.
+  3. Grupo A (positivos) no aumenta `unknown`.
+  4. Ademas, cumplir una:
+     - reducir `unknown` en Grupo A al menos en 1, o
+     - mejorar `confidence` (`medium -> high`) en al menos 2 fixtures de Grupo A sin cambiar `type`.
+  5. Determinismo intacto.
+- Resultado del ciclo actual: `NO-GO`.
+- Razon: no hay candidato con mejora medible bajo gate completo sin elevar riesgo de drift.
+- Proximo paso: mantener algoritmo actual y re-evaluar con evidencia adicional.
 
 ### P1-4: Robustez tie/near-tie (unit-first, sin algoritmo)
 - Objetivo: ampliar cobertura de empates y casi-empates sin cambiar el detector.
