@@ -189,18 +189,31 @@ La precedencia es solo desempate sobre candidatos con puntuación máxima y **nu
 
 ## P1 - Backlog (Referencia)
 
-### P1-1: Evaluación de app-likeness legacy
-- Objetivo: evaluar guardas opcionales para `react/vue/express/fastify` sin romper compatibilidad.
-- DoD: propuesta + evidencia de tests segura contra regresión.
+### P1-1: Evaluacion de app-likeness legacy (sin cambio de algoritmo)
+- Objetivo: documentar `library-like` vs `app-like` para `react/vue/express/fastify` sin enforcement nuevo.
+- Definiciones operativas (solo evaluacion):
+  - `library-like`: dep de framework presente, sin scripts `dev|start|serve` utiles, sin config fuerte, sin entrypoint de app conocido.
+  - `app-like`: dep de framework + al menos una senal adicional permitida (`script`, config o ruta conocida via `existsSync`).
+- Evidencia de fixtures:
+  - `vue-library-like` => `vue`
+  - `express-library-like` => `express`
+  - `fastify-library-like` => `fastify`
+  - `express-app-like-minimal` => `express`
+  - `fastify-app-like-minimal` => `fastify`
+- Decision P1-1: `NO-GO` para cambio de heuristica legacy en este ciclo.
+- Condicion para PR futuro:
+  - solo senales permitidas,
+  - `framework-regression` sin drift,
+  - mejora medible en FP legacy sin subir `unknown` en fixtures positivos actuales.
 
-### P1-2: Evaluación de Redwood
-- Objetivo: evaluar viabilidad de detección de `redwood` e impacto en compatibilidad.
-- DoD: memo de decisión + plan de implementación P1 opcional.
+### P1-2: Evaluacion de Redwood
+- Objetivo: evaluar viabilidad de deteccion de `redwood` e impacto en compatibilidad.
+- DoD: memo de decision + plan de implementacion P1 opcional.
 
 ### P1-3: Ajuste de umbrales con evidencia
-- Objetivo: revisar pesos/umbrales solo si se justifica por evidencia de regresión y benchmarks.
+- Objetivo: revisar pesos/umbrales solo si se justifica por evidencia de regresion y benchmarks.
 - DoD: informe de impacto en benchmarks y fixtures.
 
-### P1-4: Fixtures adicionales de ambigüedad
+### P1-4: Fixtures adicionales de ambiguedad
 - Objetivo: expandir cobertura de fixtures de empate y casi-empate para estabilidad a largo plazo del detector.
-- DoD: nuevos fixtures + suite de regresión verde.
+- DoD: nuevos fixtures + suite de regresion verde.
