@@ -203,6 +203,118 @@ describe('detectProject', () => {
     expect(result.framework.confidence).toBe('high');
   });
 
+  it('keeps legacy vue detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'vue-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('vue');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('keeps legacy express detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'express-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('express');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('keeps legacy fastify detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'fastify-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('fastify');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('documents no app-likeness differentiation for express fixtures yet', async () => {
+    const libraryPath = path.join(fixturesDir, 'express-library-like');
+    const appLikePath = path.join(fixturesDir, 'express-app-like-minimal');
+
+    const libraryResult = await detectProject(libraryPath);
+    const appLikeResult = await detectProject(appLikePath);
+
+    expect(libraryResult.framework.type).toBe('express');
+    expect(appLikeResult.framework.type).toBe('express');
+    expect(libraryResult.framework.confidence).toBe(appLikeResult.framework.confidence);
+  });
+
+  it('documents no app-likeness differentiation for fastify fixtures yet', async () => {
+    const libraryPath = path.join(fixturesDir, 'fastify-library-like');
+    const appLikePath = path.join(fixturesDir, 'fastify-app-like-minimal');
+
+    const libraryResult = await detectProject(libraryPath);
+    const appLikeResult = await detectProject(appLikePath);
+
+    expect(libraryResult.framework.type).toBe('fastify');
+    expect(appLikeResult.framework.type).toBe('fastify');
+    expect(libraryResult.framework.confidence).toBe(appLikeResult.framework.confidence);
+  });
+
+  it('documents current unknown behavior for redwood viability simple fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('documents current unknown behavior for redwood viability ambiguous fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-ambiguous');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('documents current react behavior for redwood + react overlap fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-react-overlap');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('applies tie-break precedence for tie-next-react-equal-score fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'tie-next-react-equal-score');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('next');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('keeps higher-score framework for near-tie-next-react-react-higher fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'near-tie-next-react-react-higher');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('applies tie-break precedence for tie-nuxt-vue-equal-score fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'tie-nuxt-vue-equal-score');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('nuxt');
+    expect(result.framework.confidence).toBe('medium');
+  });
+
+  it('keeps higher-score framework for near-tie-nuxt-vue-vue-higher fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'near-tie-nuxt-vue-vue-higher');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('vue');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('returns unknown for unresolved tie cross-family fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'unresolved-tie-cross-family');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
   it('detects monorepo from turbo dependency plus packages folder hint', async () => {
     const projectPath = path.join(fixturesDir, 'monorepo-packages-only-turbo');
     const result = await detectProject(projectPath);

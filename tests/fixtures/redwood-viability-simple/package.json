@@ -1,0 +1,11 @@
+{
+  "name": "redwood-viability-simple-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "rw dev"
+  },
+  "dependencies": {
+    "@redwoodjs/core": "^7.0.0"
+  },
+  "devDependencies": {}
+}

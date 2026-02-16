@@ -1,0 +1,12 @@
+{
+  "name": "express-app-like-minimal-fixture",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {}
+}

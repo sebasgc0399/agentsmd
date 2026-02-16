@@ -1,0 +1,12 @@
+{
+  "name": "near-tie-next-react-react-higher-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {}
+}

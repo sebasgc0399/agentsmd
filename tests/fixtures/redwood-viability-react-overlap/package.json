@@ -1,0 +1,13 @@
+{
+  "name": "redwood-viability-react-overlap-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "rw dev"
+  },
+  "dependencies": {
+    "@redwoodjs/core": "^7.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {}
+}
