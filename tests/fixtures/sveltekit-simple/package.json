@@ -1,0 +1,11 @@
+{
+  "name": "sveltekit-simple-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "svelte-kit dev"
+  },
+  "dependencies": {
+    "@sveltejs/kit": "^2.0.0",
+    "svelte": "^5.0.0"
+  }
+}

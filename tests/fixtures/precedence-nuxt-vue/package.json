@@ -1,0 +1,11 @@
+{
+  "name": "precedence-nuxt-vue-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev"
+  },
+  "dependencies": {
+    "nuxt": "^3.12.0",
+    "vue": "^3.4.0"
+  }
+}

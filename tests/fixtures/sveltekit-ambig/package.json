@@ -1,0 +1,8 @@
+{
+  "name": "sveltekit-ambiguous-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "svelte": "^5.0.0"
+  }
+}

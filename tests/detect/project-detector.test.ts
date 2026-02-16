@@ -77,6 +77,84 @@ describe('detectProject', () => {
     expect(result.framework.confidence).toBe('high');
   });
 
+  it('detects angular fixture using config + deps signals', async () => {
+    const projectPath = path.join(fixturesDir, 'angular-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('angular');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('returns unknown for ambiguous angular fixture without angular.json', async () => {
+    const projectPath = path.join(fixturesDir, 'angular-ambiguous');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('detects sveltekit fixture when config is present', async () => {
+    const projectPath = path.join(fixturesDir, 'sveltekit-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('sveltekit');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('returns unknown for ambiguous svelte fixture without config', async () => {
+    const projectPath = path.join(fixturesDir, 'sveltekit-ambig');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('detects astro fixture when config and dependency exist', async () => {
+    const projectPath = path.join(fixturesDir, 'astro-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('astro');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('returns unknown for ambiguous astro fixture without config', async () => {
+    const projectPath = path.join(fixturesDir, 'astro-ambig');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('detects nestjs fixture when nest-cli.json is present', async () => {
+    const projectPath = path.join(fixturesDir, 'nest-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('nestjs');
+    expect(result.framework.confidence).toBe('high');
+  });
+
+  it('returns unknown for ambiguous nest fixture without nest-cli.json', async () => {
+    const projectPath = path.join(fixturesDir, 'nest-ambig');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('applies precedence next > react in mixed fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'precedence-next-react');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('next');
+  });
+
+  it('applies precedence nuxt > vue in mixed fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'precedence-nuxt-vue');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('nuxt');
+  });
+
   it('downgrades firebase framework when functions folder is missing', async () => {
     const projectPath = path.join(fixturesDir, 'node-firebase');
     const result = await detectProject(projectPath);
@@ -117,12 +195,37 @@ describe('detectProject', () => {
     expect(result.commands.format).toBeNull();
   });
 
+  it('keeps legacy react detection for library-like fixture (dependency-only)', async () => {
+    const projectPath = path.join(fixturesDir, 'react-library-like');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.framework.confidence).toBe('high');
+  });
+
   it('detects monorepo from turbo dependency plus packages folder hint', async () => {
     const projectPath = path.join(fixturesDir, 'monorepo-packages-only-turbo');
     const result = await detectProject(projectPath);
 
     expect(result.folderStructure.hasPackages).toBe(true);
     expect(result.folderStructure.isMonorepo).toBe(true);
+  });
+
+  it('keeps monorepo fixtures as unknown framework types', async () => {
+    const monorepoFixtures = [
+      'monorepo-nx',
+      'monorepo-packages-only-turbo',
+      'monorepo-pnpm-workspace',
+      'monorepo-turbo',
+      'monorepo-workspaces-object',
+    ];
+
+    for (const fixture of monorepoFixtures) {
+      const projectPath = path.join(fixturesDir, fixture);
+      const result = await detectProject(projectPath);
+      expect(result.folderStructure.isMonorepo).toBe(true);
+      expect(result.framework.type).toBe('unknown');
+    }
   });
 
   it('returns high confidence when high framework signal has description and >=2 folders', async () => {
