@@ -251,6 +251,30 @@ describe('detectProject', () => {
     expect(libraryResult.framework.confidence).toBe(appLikeResult.framework.confidence);
   });
 
+  it('documents current unknown behavior for redwood viability simple fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('documents current unknown behavior for redwood viability ambiguous fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-ambiguous');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('unknown');
+    expect(result.framework.confidence).toBe('low');
+  });
+
+  it('documents current react behavior for redwood + react overlap fixture', async () => {
+    const projectPath = path.join(fixturesDir, 'redwood-viability-react-overlap');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('react');
+    expect(result.framework.confidence).toBe('high');
+  });
+
   it('detects monorepo from turbo dependency plus packages folder hint', async () => {
     const projectPath = path.join(fixturesDir, 'monorepo-packages-only-turbo');
     const result = await detectProject(projectPath);

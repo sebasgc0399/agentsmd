@@ -455,6 +455,16 @@ describe('detectFramework', () => {
     expect(framework.type).toBe('fastify');
     expect(framework.confidence).toBe('medium');
   });
+
+  it('documents current behavior for redwood-like fixture without redwood support', () => {
+    const framework = detectFramework(
+      fixturePackageInfo('redwood-viability-simple'),
+      fixturePath('redwood-viability-simple')
+    );
+
+    expect(framework.type).toBe('unknown');
+    expect(framework.confidence).toBe('low');
+  });
 });
 
 describe('detectBuildTools', () => {

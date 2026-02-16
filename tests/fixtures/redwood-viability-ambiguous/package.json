@@ -1,0 +1,9 @@
+{
+  "name": "redwood-viability-ambiguous-fixture",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@redwoodjs/core": "^7.0.0"
+  },
+  "devDependencies": {}
+}
