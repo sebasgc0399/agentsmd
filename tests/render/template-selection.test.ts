@@ -65,6 +65,10 @@ describe('selectTemplate', () => {
     expect(selectTemplate(createContext('angular'))).toBe('angular.mustache');
   });
 
+  it('uses base template for unknown framework', () => {
+    expect(selectTemplate(createContext('unknown'))).toBe('base.mustache');
+  });
+
   it('keeps monorepo template priority over framework', () => {
     const template = selectTemplate(
       createContext('react', {

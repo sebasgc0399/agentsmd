@@ -49,6 +49,24 @@ const matrix: MatrixCase[] = [
     expectedMonorepo: false,
     requiredSpecificSections: ['## testing guidelines'],
   },
+  {
+    fixture: 'angular-simple',
+    expectedFramework: 'angular',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'sveltekit-simple',
+    expectedFramework: 'sveltekit',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'nest-simple',
+    expectedFramework: 'nestjs',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
 ];
 
 function fixturePath(name: string): string {
