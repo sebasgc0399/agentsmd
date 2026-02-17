@@ -23,9 +23,9 @@ import {
 
 const REQUIRED_SECTIONS = [
   'proposito del repositorio',
-  'tech stack',
+  'stack tecnologico',
   'comandos canonicos',
-  'definition of done',
+  'definicion de terminado',
   'estilo y convenciones',
   'seguridad',
 ];

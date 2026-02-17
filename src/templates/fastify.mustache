@@ -35,30 +35,35 @@ Antes de considerar una tarea completa:
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
 - [ ] No anadir dependencias nuevas sin confirmacion
-- [ ] Componentes sin advertencias de React
-- [ ] Documentar props de componentes exportados
+- [ ] Build sin errores y TypeScript strict
+- [ ] Schemas de validacion completos para rutas nuevas
 
 ## Estilo y convenciones
 {{style_notes}}
 
-### Estructura de componentes
-- Un componente por archivo
-- Archivo nombrado igual que el componente exportado (PascalCase)
-- Exports nombrados para componentes, predeterminado para paginas
+### Arquitectura de plugins
+- `fastify.register()` con scope encapsulado por plugin
+- Decorators (`decorate`, `decorateRequest`) para extender la instancia
+- Prefijos de ruta por plugin para agrupar endpoints relacionados
 
-### Gestion de estado
-- Estado local con `useState` para estado de UI
-- Props drilling evitado con Context API o libreria de gestion de estado
-- Side effects con `useEffect`, memoizacion con `useMemo`/`useCallback` cuando sea necesario
+### Validacion con schemas
+- JSON Schema en rutas: `schema.body`, `schema.querystring`, `schema.params`
+- Serializacion de respuesta con `schema.response` para rendimiento
+- Schemas compartidos con `$ref` y `addSchema()`
+
+### Ciclo de vida de hooks
+- `onRequest` → `preParsing` → `preValidation` → `preHandler` → handler
+- `preSerialization` → `onSend` → `onResponse`
+- Hooks encapsulados al scope del plugin que los registra
 
 {{#has_tests}}
 ## Guia de pruebas
 {{testing_notes}}
 
 ### Cobertura esperada
-- Componentes: interacciones de usuario, renderizado condicional
-- Hooks personalizados: logica de negocio
-- Utilidades: funciones puras con casos limite
+- Rutas: `fastify.inject()` para pruebas HTTP sin servidor real
+- Plugins: registro aislado y verificacion de decorators
+- Schemas: validacion de entradas invalidas y serializacion
 {{/has_tests}}
 
 {{#isStandardOrFull}}
@@ -76,16 +81,17 @@ Antes de considerar una tarea completa:
 - Pide totales de pruebas (archivos/pruebas aprobadas).
 - Pide mencion explicita de compensaciones.
 
-### Lista de entrega React
-- Manten contratos de componentes estables salvo que el alcance exija cambio.
-- Confirma que el orden de hooks se preserve.
-- Valida consistencia de nombres de props y eventos.
-- Manten comportamiento de renderizado deterministico.
+### Lista de entrega Fastify
+- Confirma que plugins tienen scope encapsulado correcto.
+- Valida schemas completos para body, querystring y params en rutas nuevas.
+- Manten hooks no bloqueantes y con manejo de errores.
+- Usar logger integrado (`fastify.log`) en lugar de `console.log`.
+- No registrar plugins con side effects fuera de su scope.
 
 ## Definicion de terminado ampliada
 - [ ] Alcance funcional completo con diff minimo.
-- [ ] No se introducen advertencias de React en salida dev/test.
-- [ ] Componentes compartidos mantienen compatibilidad hacia atras.
+- [ ] No se introducen errores de registro de plugins.
+- [ ] Plugins compartidos mantienen compatibilidad hacia atras.
 - [ ] El contenido generado de AGENTS no tiene marcadores.
 - [ ] Docs y pruebas reflejan cambios de comportamiento.
 
@@ -106,8 +112,8 @@ Antes de considerar una tarea completa:
 
 ## Haz / No hagas
 ### Haz
-- Manten componentes legibles y de alcance acotado.
-- Prefiere condiciones explicitas en templates.
+- Manten plugins legibles y de alcance acotado.
+- Prefiere schemas explicitos sobre validacion manual.
 - Reporta cambios de comportamiento con ejemplos concretos.
 - Preserva el comportamiento del perfil por defecto.
 
@@ -222,10 +228,10 @@ Antes de considerar una tarea completa:
 ## Seguridad
 {{security_notes}}
 
-### Especifico de React
-- Sanitizar inputs antes de usar `dangerouslySetInnerHTML`
-- Validar props con PropTypes o TypeScript
-- No exponer API keys en codigo cliente
+### Especifico de Fastify
+- `@fastify/helmet` para headers de seguridad
+- `@fastify/rate-limit` para prevenir abuso
+- Validacion de schema en todas las rutas expuestas
 
 ---
 *Generado por agents-md v{{generator_version}}*

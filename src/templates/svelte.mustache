@@ -35,30 +35,42 @@ Antes de considerar una tarea completa:
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
 - [ ] No anadir dependencias nuevas sin confirmacion
-- [ ] Componentes sin advertencias de React
-- [ ] Documentar props de componentes exportados
+- [ ] Sin advertencias de Svelte en consola
+- [ ] TypeScript strict sin errores
 
 ## Estilo y convenciones
 {{style_notes}}
 
 ### Estructura de componentes
-- Un componente por archivo
-- Archivo nombrado igual que el componente exportado (PascalCase)
-- Exports nombrados para componentes, predeterminado para paginas
+- Orden en archivos `.svelte`: `<script>` → markup → `<style>`
+- Un componente por archivo, nombrado en PascalCase
+- Props con `$props()`, eventos con callbacks o `createEventDispatcher`
 
-### Gestion de estado
-- Estado local con `useState` para estado de UI
-- Props drilling evitado con Context API o libreria de gestion de estado
-- Side effects con `useEffect`, memoizacion con `useMemo`/`useCallback` cuando sea necesario
+### Reactividad y estado
+- `$state()` para estado local reactivo
+- `$derived()` para valores calculados
+- `$effect()` solo para side effects (no para derivar estado)
+- Stores `writable()`/`derived()` en `src/lib/stores/` para estado compartido
 
+{{#is_sveltekit}}
+### Convenciones SvelteKit
+- Rutas basadas en archivos: `src/routes/`
+- Archivos de ruta: `+page.svelte`, `+layout.svelte`, `+page.server.ts`, `+server.ts`
+- Codigo compartido en `src/lib/` (alias `$lib`)
+- Data fetching con funciones `load()` en `+page.ts` o `+page.server.ts`
+- Form actions para mutations del servidor
+
+{{/is_sveltekit}}
 {{#has_tests}}
 ## Guia de pruebas
 {{testing_notes}}
 
 ### Cobertura esperada
 - Componentes: interacciones de usuario, renderizado condicional
-- Hooks personalizados: logica de negocio
-- Utilidades: funciones puras con casos limite
+- Stores: suscripciones y actualizaciones de estado
+{{#is_sveltekit}}
+- Load functions: respuestas y manejo de errores
+{{/is_sveltekit}}
 {{/has_tests}}
 
 {{#isStandardOrFull}}
@@ -76,15 +88,16 @@ Antes de considerar una tarea completa:
 - Pide totales de pruebas (archivos/pruebas aprobadas).
 - Pide mencion explicita de compensaciones.
 
-### Lista de entrega React
+### Lista de entrega Svelte
 - Manten contratos de componentes estables salvo que el alcance exija cambio.
-- Confirma que el orden de hooks se preserve.
-- Valida consistencia de nombres de props y eventos.
-- Manten comportamiento de renderizado deterministico.
+- Confirma que el orden de runes ($state, $derived, $effect) sea correcto.
+- Valida que la reactividad sea deterministica.
+- No mutar stores directamente fuera de su API (set/update).
+- No usar $effect() para derivar estado (usar $derived en su lugar).
 
 ## Definicion de terminado ampliada
 - [ ] Alcance funcional completo con diff minimo.
-- [ ] No se introducen advertencias de React en salida dev/test.
+- [ ] No se introducen advertencias de Svelte en salida dev/test.
 - [ ] Componentes compartidos mantienen compatibilidad hacia atras.
 - [ ] El contenido generado de AGENTS no tiene marcadores.
 - [ ] Docs y pruebas reflejan cambios de comportamiento.
@@ -222,10 +235,12 @@ Antes de considerar una tarea completa:
 ## Seguridad
 {{security_notes}}
 
-### Especifico de React
-- Sanitizar inputs antes de usar `dangerouslySetInnerHTML`
-- Validar props con PropTypes o TypeScript
+### Especifico de Svelte
+- Sanitizar contenido antes de usar `{@html}` (riesgo XSS)
 - No exponer API keys en codigo cliente
+{{#is_sveltekit}}
+- Usar `src/hooks.server.ts` para logica sensible del servidor
+{{/is_sveltekit}}
 
 ---
 *Generado por agents-md v{{generator_version}}*

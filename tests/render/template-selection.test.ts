@@ -41,13 +41,9 @@ function createContext(
 }
 
 describe('selectTemplate', () => {
-  it('uses base template for frameworks without dedicated template', () => {
-    const frameworkTypes = ['sveltekit', 'astro', 'nestjs', 'svelte', 'express', 'fastify'];
-
-    for (const frameworkType of frameworkTypes) {
-      const template = selectTemplate(createContext(frameworkType));
-      expect(template).toBe('base.mustache');
-    }
+  it('uses base template only for express and unknown', () => {
+    expect(selectTemplate(createContext('express'))).toBe('base.mustache');
+    expect(selectTemplate(createContext('unknown'))).toBe('base.mustache');
   });
 
   it('keeps existing template behavior for react and firebase', () => {
@@ -63,6 +59,23 @@ describe('selectTemplate', () => {
 
   it('selects angular template for angular framework', () => {
     expect(selectTemplate(createContext('angular'))).toBe('angular.mustache');
+  });
+
+  it('selects svelte template for svelte and sveltekit frameworks', () => {
+    expect(selectTemplate(createContext('svelte'))).toBe('svelte.mustache');
+    expect(selectTemplate(createContext('sveltekit'))).toBe('svelte.mustache');
+  });
+
+  it('selects nestjs template for nestjs framework', () => {
+    expect(selectTemplate(createContext('nestjs'))).toBe('nestjs.mustache');
+  });
+
+  it('selects astro template for astro framework', () => {
+    expect(selectTemplate(createContext('astro'))).toBe('astro.mustache');
+  });
+
+  it('selects fastify template for fastify framework', () => {
+    expect(selectTemplate(createContext('fastify'))).toBe('fastify.mustache');
   });
 
   it('keeps monorepo template priority over framework', () => {

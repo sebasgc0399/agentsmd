@@ -1,32 +1,32 @@
 # AGENTS.md
 
-## Propósito del repositorio
+## Proposito del repositorio
 {{project_description}}
 
-## Tech stack
+## Stack tecnologico
 {{#stacks}}
 - {{.}}
 {{/stacks}}
 
-## Comandos canónicos
+## Comandos canonicos
 - Instalar dependencias: `{{commands.install}}`
 {{#has_dev}}
 - Ejecutar en local: `{{commands.dev}}`
 {{/has_dev}}
 {{#has_build}}
-- Build: `{{commands.build}}`
+- Compilar: `{{commands.build}}`
 {{/has_build}}
 {{#has_lint}}
 - Lint: `{{commands.lint}}`
 {{/has_lint}}
 {{#has_format}}
-- Format: `{{commands.format}}`
+- Formato: `{{commands.format}}`
 {{/has_format}}
 {{#has_tests}}
-- Tests: `{{commands.test}}`
+- Pruebas: `{{commands.test}}`
 {{/has_tests}}
 
-## Definition of Done
+## Definicion de terminado
 Antes de considerar una tarea completa:
 {{#has_tests}}
 - [ ] `{{commands.test}}` pasa sin errores
@@ -34,258 +34,258 @@ Antes de considerar una tarea completa:
 {{#has_lint}}
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
-- [ ] No añadir dependencias nuevas sin confirmación
-- [ ] Documentar cambios en APIs públicas
+- [ ] No anadir dependencias nuevas sin confirmacion
+- [ ] Documentar cambios en APIs publicas
 
 ## Estilo y convenciones
 {{style_notes}}
 
 {{#has_tests}}
-## Testing guidelines
+## Guia de pruebas
 {{testing_notes}}
 {{/has_tests}}
 
 {{#isStandardOrFull}}
-## How to work with AI agents
+## Como trabajar con agentes de IA
 
-### Task format
-- Start with a clear goal in one sentence.
-- State exact files that can be changed.
-- Include constraints (no new deps, no feature creep, deterministic output).
-- Define explicit acceptance criteria before implementation starts.
+### Formato de tareas
+- Comienza con un objetivo claro en una sola frase.
+- Indica los archivos exactos que se pueden cambiar.
+- Incluye restricciones (sin deps nuevas, sin expansion de alcance, salida deterministica).
+- Define criterios de aceptacion explicitos antes de implementar.
 
-### Requesting diffs and verification
-- Ask for a file-by-file change summary with reasons.
-- Request exact commands executed for validation.
-- Ask for test output summary (passed/failed and counts).
-- Require explicit mention of known risks or follow-up tasks.
+### Solicitud de diffs y verificacion
+- Pide un resumen de cambios por archivo con motivos.
+- Pide los comandos exactos ejecutados para validar.
+- Pide un resumen de salida de pruebas (pasadas/fallidas y conteos).
+- Exige mencionar riesgos conocidos o tareas de seguimiento.
 
-### Execution protocol
-1. Inspect relevant files first and summarize findings.
-2. Propose the smallest safe change.
-3. Implement incrementally and run tests after each meaningful step.
-4. Report what changed, what was validated, and what remains.
+### Protocolo de ejecucion
+1. Revisa primero los archivos relevantes y resume hallazgos.
+2. Propone el cambio seguro mas pequeno.
+3. Implementa de forma incremental y ejecuta pruebas tras cada paso relevante.
+4. Reporta que cambio, que se valido y que falta.
 
-## Expanded Definition of Done
-- [ ] Scope is fully implemented with no unrelated changes.
-- [ ] Output remains deterministic for same inputs.
-- [ ] No placeholders leak into generated markdown.
-- [ ] Error paths fail with clear messages.
-- [ ] Documentation and tests are updated when behavior changes.
+## Definicion de terminado ampliada
+- [ ] El alcance queda implementado por completo sin cambios no relacionados.
+- [ ] La salida sigue siendo deterministica para las mismas entradas.
+- [ ] No se filtran marcadores al markdown generado.
+- [ ] Las rutas de error fallan con mensajes claros.
+- [ ] Se actualizan documentacion y pruebas cuando cambia el comportamiento.
 
-## Debug checklist
-- Reproduce with one deterministic command.
-- Capture expected vs actual behavior.
-- Confirm environment assumptions (Node version, package manager, cwd).
-- Check module resolution and path normalization first.
-- Validate generated content length and formatting.
-- Re-run minimal targeted tests before full suite.
+## Lista de depuracion
+- Reproduce con un comando deterministico.
+- Captura comportamiento esperado vs real.
+- Confirma supuestos de entorno (version de Node, package manager, cwd).
+- Revisa primero resolucion de modulos y normalizacion de rutas.
+- Valida longitud y formato del contenido generado.
+- Reejecuta pruebas minimas enfocadas antes de la suite completa.
 
-## Testing strategy
-- Prefer fast deterministic tests over broad flaky integration tests.
-- Keep fixtures small and representative.
-- Assert on stable output fragments, not volatile wording.
+## Estrategia de pruebas
+- Prioriza pruebas rapidas y deterministicas sobre integraciones amplias e inestables.
+- Manten fixtures pequenos y representativos.
+- Aserta fragmentos estables de salida, no redaccion volatil.
 {{#has_tests}}
-- Verify canonical test command: `{{commands.test}}`.
-- Add regression tests for every bug fix in rendering or detection.
+- Verifica el comando canonico de pruebas: `{{commands.test}}`.
+- Agrega pruebas de regresion para cada fix en render o deteccion.
 {{/has_tests}}
 {{^has_tests}}
-- If no test script exists, document manual verification steps.
+- Si no existe script de pruebas, documenta pasos de verificacion manual.
 {{/has_tests}}
 
 {{#is_unknown_generic}}
-## Generic project execution playbook
+## Guia de ejecucion para proyectos genericos
 
-### Scope and boundaries
-- Prefer minimal, reversible changes over broad refactors.
-- Keep runtime and package-manager assumptions explicit.
-- Reuse existing folder conventions before introducing new structure.
-- Document any intentional tradeoff in the final handoff notes.
-- Keep public behavior stable unless the task explicitly requires change.
+### Alcance y limites
+- Prefiere cambios minimos y reversibles sobre refactors amplios.
+- Manten explicitos los supuestos de runtime y package manager.
+- Reutiliza convenciones de carpetas existentes antes de crear estructura nueva.
+- Documenta cualquier tradeoff intencional en las notas finales de handoff.
+- Manten estable el comportamiento publico salvo que la tarea exija cambiarlo.
 
-### Baseline repository map
-- Confirm current source folders (`src`, `lib`, `app`, `scripts`) before editing.
-- Confirm test locations (`tests`, `__tests__`, `spec`) before adding files.
-- Confirm config entrypoints (`tsconfig`, linter, formatter, CI workflow) before updates.
-- Keep generated output deterministic across Windows and Linux runners.
-- Confirm output path and file ownership rules before writing AGENTS.md.
+### Mapa base del repositorio
+- Confirma carpetas de codigo fuente actuales (`src`, `lib`, `app`, `scripts`) antes de editar.
+- Confirma ubicaciones de pruebas (`tests`, `__tests__`, `spec`) antes de agregar archivos.
+- Confirma punto de entradas de configuracion (`tsconfig`, linter, formatter, flujo de CI) antes de actualizar.
+- Manten salida generada deterministica en runners Windows y Linux.
+- Confirma ruta de salida y reglas de ownership antes de escribir AGENTS.md.
 
-### Change workflow
-1. Reproduce the issue with one deterministic command.
-2. Isolate the minimal layer to update (detect, render, validate, or cli).
-3. Add or update targeted tests before broad regression checks.
-4. Report changed files, commands run, and residual risks.
+### Flujo de cambios
+1. Reproduce el problema con un comando deterministico.
+2. Aisla la capa minima a actualizar (detect, render, validate o cli).
+3. Agrega o actualiza pruebas enfocadas antes de regresion amplia.
+4. Reporta archivos cambiados, comandos ejecutados y riesgos residuales.
 
-### Validation when canonical scripts are missing
-- Run every available canonical command and capture output.
+### Validacion cuando faltan scripts canonicos
+- Ejecuta cada comando canonico disponible y captura la salida.
 {{^has_dev}}
-- If no dev script exists, describe the manual startup path in PR notes.
+- Si no existe script dev, describe el arranque manual en notas del PR.
 {{/has_dev}}
 {{^has_build}}
-- If no build script exists, validate TypeScript or bundler config syntax directly.
+- Si no existe script de build, valida directamente la sintaxis de TypeScript o del bundler.
 {{/has_build}}
 {{^has_tests}}
-- If no test script exists, add manual verification steps with deterministic inputs.
+- Si no existe script de pruebas, agrega pasos de verificacion manual con entradas deterministicas.
 {{/has_tests}}
 {{^has_lint}}
-- If no lint script exists, document style checks applied during review.
+- Si no existe script de lint, documenta chequeos de estilo aplicados en revision.
 {{/has_lint}}
 {{^has_format}}
-- If no format script exists, keep formatting changes isolated and minimal.
+- Si no existe script de formato, manten cambios de formato aislados y minimos.
 {{/has_format}}
 
-### Generic PR checklist
-- [ ] Scope and files changed match the original request.
-- [ ] Validation evidence is attached for each claimed behavior change.
-- [ ] Backward compatibility assumptions are explicit.
-- [ ] Deterministic output is preserved for the same inputs.
-- [ ] Follow-up tasks are listed when work is intentionally deferred.
+### Lista generica de PR
+- [ ] Alcance y archivos cambiados coinciden con la solicitud original.
+- [ ] Se adjunta evidencia de validacion para cada cambio de comportamiento declarado.
+- [ ] Los supuestos de compatibilidad hacia atras son explicitos.
+- [ ] Se preserva salida deterministica para las mismas entradas.
+- [ ] Se listan tareas de seguimiento cuando el trabajo se difiere intencionalmente.
 
-### Handoff notes to include (generic repos)
-- What changed: list files and why.
-- How to validate: exact commands and expected outputs.
-- Risks: what could break and how to detect it fast.
-- Rollback: safest revert path if needed.
+### Notas de handoff a incluir (repos genericos)
+- Que cambio: lista de archivos y motivo.
+- Como validar: comandos exactos y salidas esperadas.
+- Riesgos: que podria romperse y como detectarlo rapido.
+- Rollback: ruta de reversa mas segura si hace falta.
 
-### Updating scripts and docs safely
-- If a `package.json` script changes, update "Comandos canónicos".
-- For build/test/lint edits, include before/after command output.
-- Keep CI changes minimal and cross-platform.
-- Prefer reversible config updates scoped to the task.
+### Actualizacion segura de scripts y docs
+- Si un script de `package.json` cambia, actualiza "Comandos canonicos".
+- Para cambios de build/test/lint, incluye salida antes/despues de los comandos.
+- Manten cambios de CI minimos y cross-platform.
+- Prefiere cambios de configuracion reversibles y acotados a la tarea.
 
-### Pre-merge sanity checks
-- Preview headings and checklist readability.
-- Re-run command examples on a clean clone.
-- Confirm profile output stays inside limits.
-- Confirm no placeholder content leaked.
+### Verificaciones previas al merge
+- Previsualiza encabezados y legibilidad de lista de verificacion.
+- Reejecuta ejemplos de comandos en un clon limpio.
+- Confirma que la salida por perfil se mantiene dentro de limites.
+- Confirma que no se filtren marcadores.
 {{/is_unknown_generic}}
 
-## Do / Don't
-### Do
-- Do preserve existing behavior unless a change is requested.
-- Do keep commits minimal and reviewable.
-- Do fail fast on invalid user input.
-- Do prefer explicit conditions over hidden heuristics.
+## Haz / No hagas
+### Haz
+- Preserva el comportamiento existente salvo que se solicite un cambio.
+- Manten commits pequenos y revisables.
+- Falla rapido ante entrada de usuario invalida.
+- Prefiere condiciones explicitas sobre heuristicas ocultas.
 
-### Don't
-- Don't invent commands that do not exist in package scripts.
-- Don't silently ignore validation errors.
-- Don't mix unrelated refactors with feature work.
-- Don't add dependencies unless strictly necessary.
+### No hagas
+- No inventes comandos que no existen en los scripts del package.
+- No ignores silenciosamente errores de validacion.
+- No mezcles refactors no relacionados con trabajo funcional.
+- No agregues dependencias salvo necesidad estricta.
 
-## Agent handoff template
-### Required fields
-- Goal: one sentence describing expected final state.
-- Scope: exact files or folders that can change.
-- Constraints: what must not change.
-- Validation: commands that prove the change.
-- Risks: known uncertainty or follow-up items.
+## Plantilla de handoff del agente
+### Campos obligatorios
+- Objetivo: una frase que describa el estado final esperado.
+- Alcance: archivos o carpetas exactas que pueden cambiar.
+- Restricciones: lo que no debe cambiar.
+- Validacion: comandos que prueban el cambio.
+- Riesgos: incertidumbre conocida o items de seguimiento.
 
-### Status update format
-- Completed: concrete items done.
-- In progress: current active step.
-- Next: immediate next action.
-- Blockers: missing info or external dependency.
+### Formato de actualizacion de estado
+- Completado: items concretos finalizados.
+- En progreso: paso activo actual.
+- Siguiente: accion inmediata.
+- Bloqueos: informacion faltante o dependencia externa.
 
-### Review checklist
-- [ ] File-level diff is easy to follow.
-- [ ] Tests cover changed behavior.
-- [ ] Output remains deterministic.
-- [ ] No hidden behavior changes.
-- [ ] Error handling is explicit.
-- [ ] Documentation reflects new behavior.
+### Lista de revision
+- [ ] El diff por archivo es facil de seguir.
+- [ ] Las pruebas cubren el comportamiento cambiado.
+- [ ] La salida se mantiene deterministica.
+- [ ] No hay cambios de comportamiento ocultos.
+- [ ] El manejo de errores es explicito.
+- [ ] La documentacion refleja el nuevo comportamiento.
 
-### Escalation rules
-- Escalate when requirements conflict.
-- Escalate before adding dependencies.
-- Escalate before touching unrelated modules.
-- Escalate on ambiguous security implications.
+### Reglas de escalamiento
+- Escala cuando los requisitos entran en conflicto.
+- Escala antes de agregar dependencias.
+- Escala antes de tocar modulos no relacionados.
+- Escala ante implicaciones de seguridad ambiguas.
 {{/isStandardOrFull}}
 
 {{#isFull}}
-## Advanced agent protocol
+## Protocolo avanzado para agentes
 
-### Change risk matrix
-- Low risk: copy updates, docs wording, isolated tests.
-- Medium risk: template condition changes, validation thresholds.
-- High risk: command detection logic, filesystem writes, CLI argument parsing.
-- For medium/high risk, require explicit before/after examples.
+### Matriz de riesgo de cambios
+- Riesgo bajo: ajustes de texto, redaccion en docs, pruebas aisladas.
+- Riesgo medio: cambios en condiciones de template y umbrales de validacion.
+- Riesgo alto: logica de deteccion de comandos, escrituras en filesystem y parseo de argumentos CLI.
+- Para riesgo medio/alto, exige ejemplos explicitos de antes/despues.
 
-### PR handoff checklist
-- Include rationale for each changed file.
-- Include verification commands and outcomes.
-- List backward-compatibility guarantees.
-- List residual risks and mitigations.
+### Lista de handoff para PR
+- Incluye justificacion para cada archivo cambiado.
+- Incluye comandos de verificacion y resultados.
+- Lista garantias de compatibilidad hacia atras.
+- Lista riesgos residuales y mitigaciones.
 
-### Failure triage flow
-1. Confirm failing command and exact error text.
-2. Isolate if failure is detection, rendering, or validation.
-3. Reproduce with fixture before touching production paths.
-4. Add regression coverage before finalizing fix.
+### Flujo de triage de fallas
+1. Confirma el comando que falla y el texto exacto del error.
+2. Aisla si la falla es de deteccion, renderizado o validacion.
+3. Reproduce con fixture antes de tocar rutas de produccion.
+4. Agrega cobertura de regresion antes de cerrar el fix.
 
-### CI hardening notes
-- Keep path handling platform neutral (`path.join`, no shell assumptions).
-- Keep tests independent from local machine state.
-- Avoid timing-sensitive assertions.
-- Keep generated artifacts reproducible across OSes.
+### Notas de endurecimiento de CI
+- Manten manejo de rutas neutral entre plataformas (`path.join`, sin supuestos de shell).
+- Manten pruebas independientes del estado local de la maquina.
+- Evita aserciones sensibles al tiempo.
+- Manten artefactos generados reproducibles entre OS.
 
-### Verification matrix
-| Layer | Check | Evidence |
+### Matriz de verificacion
+| Capa | Verificacion | Evidencia |
 |---|---|---|
-| CLI | Arg parsing | command output |
-| Detection | scripts/framework | fixture result |
-| Rendering | profile sections | markdown preview |
-| Validation | limits/placeholders | unit tests |
-| E2E | dry-run command | test pass |
+| CLI | Parseo de argumentos | salida del comando |
+| Deteccion | scripts/framework | resultado del fixture |
+| Renderizado | secciones por perfil | vista previa markdown |
+| Validacion | limites/marcadores | pruebas unitarias |
+| E2E | comando dry-run | pruebas ok |
 
-### Rollback playbook
-1. Revert profile-specific template blocks first.
-2. Keep parser support only if backward compatible.
-3. Re-run compact profile tests and e2e.
-4. Re-introduce changes in smaller slices.
+### Guia de rollback
+1. Revierte primero bloques de template especificos por perfil.
+2. Manten soporte de parser solo si es compatible hacia atras.
+3. Reejecuta pruebas de perfil compact y e2e.
+4. Reintroduce cambios en porciones mas pequenas.
 
-### Communication protocol
-- Summarize assumptions before coding.
-- Report changed files immediately after edit step.
-- Report executed commands and outcomes.
-- Report unresolved risks before handoff.
+### Protocolo de comunicacion
+- Resume supuestos antes de codificar.
+- Reporta archivos cambiados inmediatamente despues de cada edicion.
+- Reporta comandos ejecutados y resultados.
+- Reporta riesgos no resueltos antes del handoff.
 
-### Post-merge audit
-- Verify README examples still run as documented.
-- Verify SPEC and behavior remain aligned.
-- Verify CI pass on at least one Windows runner.
-- Verify default compact output remains unchanged.
-- Verify standard/full remain within configured limits.
+### Auditoria post-merge
+- Verifica que los ejemplos del README sigan funcionando como estan documentados.
+- Verifica que SPEC y comportamiento sigan alineados.
+- Verifica CI verde en al menos un runner de Windows.
+- Verifica que la salida compact por defecto permanezca igual.
+- Verifica que standard/full se mantengan dentro de limites configurados.
 
-### Minimal failure report template
-- Command: exact failing command
-- Expected: what should happen
-- Actual: what happened
-- Suspected layer: detect/render/validate/cli
-- Reproduction fixture: path used
+### Plantilla minima de reporte de falla
+- Comando: comando exacto que falla
+- Esperado: que deberia pasar
+- Real: que paso
+- Capa sospechosa: detect/render/validate/cli
+- Fixture de reproduccion: ruta usada
 
-### Final release gate
-- Confirm profile-specific limits pass validator.
-- Confirm placeholder checks remain strict.
-- Confirm default compact output is unchanged.
-- Confirm docs match implemented flags.
-- Confirm test suite is green in CI mode.
-- Confirm no unrelated files changed.
-- Confirm generated markdown still starts with # AGENTS.
-- Confirm profile ordering full > standard > compact.
+### Puerta final de liberacion
+- Confirma que los limites por perfil pasen el validador.
+- Confirma que las validaciones de marcadores sigan estrictas.
+- Confirma que la salida compact por defecto no cambie.
+- Confirma que las docs coincidan con los flags implementados.
+- Confirma suite de pruebas en verde en modo CI.
+- Confirma que no haya archivos no relacionados modificados.
+- Confirma que el markdown generado siga iniciando con # AGENTS.
+- Confirma orden de perfiles full > standard > compact.
 
 {{#is_unknown_generic}}
-## Generic full-profile operations guide
+## Guia operativa para perfil full generico
 
-### CI and branching policy
-- Require build, lint, and tests (or documented manual checks) before merge.
-- Keep branch names tied to one task or issue identifier.
-- Add rollback notes when behavior or templates change.
+### Politica de CI y ramas
+- Exige build, lint y pruebas (o chequeos manuales documentados) antes del merge.
+- Manten nombres de rama asociados a una tarea o issue.
+- Agrega notas de rollback cuando cambie comportamiento o templates.
 
-### Extra verification for generic repos
-- Verify command paths for npm/yarn/pnpm when scripts are touched.
-- Capture before/after output for affected profile sections.
-- Include one failure-path test for validator or CLI behavior changes.
+### Verificacion extra para repos genericos
+- Verifica rutas de comandos npm/yarn/pnpm cuando se toquen scripts.
+- Captura salida antes/despues para secciones de perfil afectadas.
+- Incluye una prueba de ruta de falla para cambios en validador o CLI.
 {{/is_unknown_generic}}
 {{/isFull}}
 
@@ -293,4 +293,4 @@ Antes de considerar una tarea completa:
 {{security_notes}}
 
 ---
-*Generated by agents-md v{{generator_version}}*
+*Generado por agents-md v{{generator_version}}*

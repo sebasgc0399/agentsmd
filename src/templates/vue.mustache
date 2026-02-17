@@ -1,32 +1,32 @@
 # AGENTS.md
 
-## Propósito del repositorio
+## Proposito del repositorio
 {{project_description}}
 
-## Tech stack
+## Stack tecnologico
 {{#stacks}}
 - {{.}}
 {{/stacks}}
 
-## Comandos canónicos
+## Comandos canonicos
 - Instalar dependencias: `{{commands.install}}`
 {{#has_dev}}
 - Ejecutar en local: `{{commands.dev}}`
 {{/has_dev}}
 {{#has_build}}
-- Build: `{{commands.build}}`
+- Compilar: `{{commands.build}}`
 {{/has_build}}
 {{#has_lint}}
 - Lint: `{{commands.lint}}`
 {{/has_lint}}
 {{#has_format}}
-- Format: `{{commands.format}}`
+- Formato: `{{commands.format}}`
 {{/has_format}}
 {{#has_tests}}
-- Tests: `{{commands.test}}`
+- Pruebas: `{{commands.test}}`
 {{/has_tests}}
 
-## Definition of Done
+## Definicion de terminado
 Antes de considerar una tarea completa:
 {{#has_tests}}
 - [ ] `{{commands.test}}` pasa sin errores
@@ -34,8 +34,8 @@ Antes de considerar una tarea completa:
 {{#has_lint}}
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
-- [ ] No añadir dependencias nuevas sin confirmación
-- [ ] Componentes no tienen warnings de Vue
+- [ ] No anadir dependencias nuevas sin confirmacion
+- [ ] Componentes sin advertencias de Vue
 - [ ] TypeScript strict sin errores
 
 ## Estilo y convenciones
@@ -46,198 +46,198 @@ Antes de considerar una tarea completa:
 - Un componente por archivo, nombrado en PascalCase
 - Composables en `composables/` con prefijo `use`
 
-### Gestión de estado
+### Gestion de estado
 - `ref()` para primitivos, `reactive()` para objetos
 - `computed()` para valores derivados, no abusar de `watch`
 - Pinia para estado global; stores en `stores/`
-- Reservar `watch`/`watchEffect` para side effects
+- Reservar `watch`/`watchEffect` para efectos secundarios
 
 {{#is_nuxt}}
 ### Convenciones Nuxt
 - Auto-imports: `components/`, `composables/`, `utils/`
-- Páginas en `pages/`, layouts en `layouts/`, middleware en `middleware/`
+- Paginas en `pages/`, layouts en `layouts/`, middleware en `middleware/`
 - Server routes en `server/api/`
 - Data fetching con `useFetch`/`useAsyncData`
 
 {{/is_nuxt}}
 {{#has_tests}}
-## Testing guidelines
+## Guia de pruebas
 {{testing_notes}}
 
 ### Cobertura esperada
 - Componentes: interacciones de usuario, renderizado condicional
-- Composables: lógica de negocio
+- Composables: logica de negocio
 - Stores Pinia: acciones y getters
 {{/has_tests}}
 
 {{#isStandardOrFull}}
-## How to work with AI agents
+## Como trabajar con agentes de IA
 
-### Task format
-- Start with a short scope statement and expected result.
-- Name target files before implementation.
-- Include constraints (no extra deps, keep ESM, deterministic output).
-- Ask for acceptance criteria in testable terms.
+### Formato de tareas
+- Comienza con una declaracion corta de alcance y resultado esperado.
+- Nombra los archivos objetivo antes de implementar.
+- Incluye restricciones (sin deps extra, mantener ESM, salida deterministica).
+- Pide criterios de aceptacion en terminos comprobables.
 
-### Requesting diffs and validation
-- Request file-level summary and reason per file.
-- Ask for exact commands used for validation.
-- Ask for test totals (files/tests passed).
-- Ask for explicit mention of tradeoffs.
+### Solicitud de diffs y validacion
+- Solicita resumen por archivo y motivo por archivo.
+- Pide comandos exactos usados para validar.
+- Pide totales de pruebas (archivos/pruebas aprobadas).
+- Pide mencion explicita de compensaciones.
 
-### Vue delivery checklist
-- Keep component contracts stable unless scope requires change.
-- Confirm composables and hooks order is preserved.
-- Validate props and event naming consistency (defineProps/defineEmits).
-- Keep rendering behavior deterministic.
-- No mutate props directly; emit events to parent.
+### Lista de entrega Vue
+- Manten contratos de componentes estables salvo que el alcance exija cambio.
+- Confirma que el orden de composables y hooks se preserve.
+- Valida consistencia de nombres de props y eventos (defineProps/defineEmits).
+- Manten comportamiento de renderizado deterministico.
+- No mutar props directamente; emitir eventos al padre.
 
-## Expanded Definition of Done
-- [ ] Feature scope complete with minimal diff.
-- [ ] No Vue warnings introduced in dev/test output.
-- [ ] Shared components remain backward compatible.
-- [ ] Generated AGENTS content has no placeholders.
-- [ ] Docs and tests reflect behavior changes.
+## Definicion de terminado ampliada
+- [ ] Alcance funcional completo con diff minimo.
+- [ ] No se introducen advertencias de Vue en salida dev/test.
+- [ ] Componentes compartidos mantienen compatibilidad hacia atras.
+- [ ] El contenido generado de AGENTS no tiene marcadores.
+- [ ] Docs y pruebas reflejan cambios de comportamiento.
 
-## Debug checklist
-- Reproduce issue with the smallest fixture.
-- Verify canonical commands first (`dev`, `build`, `test`, `lint`).
-- Check path handling and platform neutrality.
-- Validate generated markdown for required sections.
-- Re-run focused tests before full test suite.
+## Lista de depuracion
+- Reproduce el problema con el fixture mas pequeno.
+- Verifica primero comandos canonicos (`dev`, `build`, `test`, `lint`).
+- Revisa manejo de rutas y neutralidad de plataforma.
+- Valida markdown generado para secciones obligatorias.
+- Reejecuta pruebas enfocadas antes de la suite completa.
 
-## Testing strategy
-- Prioritize unit tests for render and validation logic.
-- Keep e2e tests focused on one deterministic CLI flow.
-- Assert key lines, not entire snapshots.
+## Estrategia de pruebas
+- Prioriza pruebas unitarias para logica de render y validacion.
+- Manten pruebas e2e enfocadas en un flujo CLI deterministico.
+- Aserta lineas clave, no snapshots completos.
 {{#has_tests}}
-- Keep command examples aligned with `{{commands.test}}`.
+- Manten ejemplos de comandos alineados con `{{commands.test}}`.
 {{/has_tests}}
 
-## Do / Don't
-### Do
-- Do keep components readable and narrowly scoped.
-- Do prefer explicit conditions in templates.
-- Do report behavior changes with concrete examples.
-- Do preserve default profile behavior.
+## Haz / No hagas
+### Haz
+- Manten componentes legibles y de alcance acotado.
+- Prefiere condiciones explicitas en templates.
+- Reporta cambios de comportamiento con ejemplos concretos.
+- Preserva el comportamiento del perfil por defecto.
 
-### Don't
-- Don't couple tests to OS-specific path formats.
-- Don't introduce hidden side effects in renderers.
-- Don't use placeholders as runtime fallbacks in final output.
-- Don't grow scope beyond requested profile behavior.
+### No hagas
+- No acoples pruebas a formatos de ruta especificos del OS.
+- No introduzcas efectos secundarios ocultos en renderizadores.
+- No uses marcadores como fallback de runtime en la salida final.
+- No expandas el alcance mas alla del comportamiento de perfil solicitado.
 
-## Agent handoff template
-### Required fields
-- Goal: one sentence describing expected final state.
-- Scope: exact files or folders that can change.
-- Constraints: what must not change.
-- Validation: commands that prove the change.
-- Risks: known uncertainty or follow-up items.
+## Plantilla de handoff del agente
+### Campos obligatorios
+- Objetivo: una frase que describa el estado final esperado.
+- Alcance: archivos o carpetas exactas que pueden cambiar.
+- Restricciones: lo que no debe cambiar.
+- Validacion: comandos que prueban el cambio.
+- Riesgos: incertidumbre conocida o items de seguimiento.
 
-### Status update format
-- Completed: concrete items done.
-- In progress: current active step.
-- Next: immediate next action.
-- Blockers: missing info or external dependency.
+### Formato de actualizacion de estado
+- Completado: items concretos finalizados.
+- En progreso: paso activo actual.
+- Siguiente: accion inmediata.
+- Bloqueos: informacion faltante o dependencia externa.
 
-### Review checklist
-- [ ] File-level diff is easy to follow.
-- [ ] Tests cover changed behavior.
-- [ ] Output remains deterministic.
-- [ ] No hidden behavior changes.
-- [ ] Error handling is explicit.
-- [ ] Documentation reflects new behavior.
+### Lista de revision
+- [ ] El diff por archivo es facil de seguir.
+- [ ] Las pruebas cubren el comportamiento cambiado.
+- [ ] La salida se mantiene deterministica.
+- [ ] No hay cambios de comportamiento ocultos.
+- [ ] El manejo de errores es explicito.
+- [ ] La documentacion refleja el nuevo comportamiento.
 
-### Escalation rules
-- Escalate when requirements conflict.
-- Escalate before adding dependencies.
-- Escalate before touching unrelated modules.
-- Escalate on ambiguous security implications.
+### Reglas de escalamiento
+- Escala cuando los requisitos entran en conflicto.
+- Escala antes de agregar dependencias.
+- Escala antes de tocar modulos no relacionados.
+- Escala ante implicaciones de seguridad ambiguas.
 {{/isStandardOrFull}}
 
 {{#isFull}}
-## Advanced agent protocol
+## Protocolo avanzado para agentes
 
-### Review depth by risk
-- Low: wording/layout-only changes in templates.
-- Medium: profile-gated content and validator thresholds.
-- High: CLI option parsing and output file writes.
-- Require targeted regression tests for medium/high changes.
+### Profundidad de revision por riesgo
+- Bajo: cambios solo de redaccion/disposicion en templates.
+- Medio: contenido condicionado por perfil y umbrales de validador.
+- Alto: parseo de opciones CLI y escritura de archivos de salida.
+- Exige pruebas de regresion enfocadas para cambios medio/alto.
 
-### PR handoff checklist
-- Include before/after output examples for each profile.
-- Include exact commands run locally.
-- Include compatibility statement for default `compact`.
-- Include residual risk notes.
+### Lista de handoff para PR
+- Incluye ejemplos de salida antes/despues para cada perfil.
+- Incluye comandos exactos ejecutados localmente.
+- Incluye declaracion de compatibilidad para `compact` por defecto.
+- Incluye notas de riesgo residual.
 
-### Incident response quick flow
-1. Reproduce with fixture and explicit profile flag.
-2. Verify detection output before template rendering.
-3. Confirm validator behavior matches selected profile limits.
-4. Patch with minimal diff and add coverage.
+### Flujo rapido de respuesta a incidentes
+1. Reproduce con fixture y flag de perfil explicito.
+2. Verifica salida de deteccion antes de renderizar template.
+3. Confirma que el validador coincide con limites del perfil seleccionado.
+4. Aplica patch con diff minimo y agrega cobertura.
 
-### CI hardening notes
-- Avoid shell-dependent command execution in tests.
-- Use `process.execPath` and argument arrays.
-- Use `path.join`/`path.resolve` consistently.
-- Keep tests deterministic and fast.
+### Notas de endurecimiento de CI
+- Evita ejecucion de comandos dependientes de shell en pruebas.
+- Usa `process.execPath` y arreglos de argumentos.
+- Usa `path.join`/`path.resolve` de forma consistente.
+- Manten pruebas deterministicas y rapidas.
 
-### Verification matrix
-| Layer | Check | Evidence |
+### Matriz de verificacion
+| Capa | Verificacion | Evidencia |
 |---|---|---|
-| CLI | Arg parsing | command output |
-| Detection | scripts/framework | fixture result |
-| Rendering | profile sections | markdown preview |
-| Validation | limits/placeholders | unit tests |
-| E2E | dry-run command | test pass |
+| CLI | Parseo de argumentos | salida del comando |
+| Deteccion | scripts/framework | resultado del fixture |
+| Renderizado | secciones por perfil | vista previa markdown |
+| Validacion | limites/marcadores | pruebas unitarias |
+| E2E | comando dry-run | pruebas ok |
 
-### Rollback playbook
-1. Revert profile-specific template blocks first.
-2. Keep parser support only if backward compatible.
-3. Re-run compact profile tests and e2e.
-4. Re-introduce changes in smaller slices.
+### Guia de rollback
+1. Revierte primero bloques de template especificos por perfil.
+2. Manten soporte de parser solo si es compatible hacia atras.
+3. Reejecuta pruebas de perfil compact y e2e.
+4. Reintroduce cambios en porciones mas pequenas.
 
-### Communication protocol
-- Summarize assumptions before coding.
-- Report changed files immediately after edit step.
-- Report executed commands and outcomes.
-- Report unresolved risks before handoff.
+### Protocolo de comunicacion
+- Resume supuestos antes de codificar.
+- Reporta archivos cambiados inmediatamente despues de cada edicion.
+- Reporta comandos ejecutados y resultados.
+- Reporta riesgos no resueltos antes del handoff.
 
-### Post-merge audit
-- Verify README examples still run as documented.
-- Verify SPEC and behavior remain aligned.
-- Verify CI pass on at least one Windows runner.
-- Verify default compact output remains unchanged.
-- Verify standard/full remain within configured limits.
+### Auditoria post-merge
+- Verifica que los ejemplos del README sigan funcionando como estan documentados.
+- Verifica que SPEC y comportamiento sigan alineados.
+- Verifica CI verde en al menos un runner de Windows.
+- Verifica que la salida compact por defecto permanezca igual.
+- Verifica que standard/full se mantengan dentro de limites configurados.
 
-### Minimal failure report template
-- Command: exact failing command
-- Expected: what should happen
-- Actual: what happened
-- Suspected layer: detect/render/validate/cli
-- Reproduction fixture: path used
+### Plantilla minima de reporte de falla
+- Comando: comando exacto que falla
+- Esperado: que deberia pasar
+- Real: que paso
+- Capa sospechosa: detect/render/validate/cli
+- Fixture de reproduccion: ruta usada
 
-### Final release gate
-- Confirm profile-specific limits pass validator.
-- Confirm placeholder checks remain strict.
-- Confirm default compact output is unchanged.
-- Confirm docs match implemented flags.
-- Confirm test suite is green in CI mode.
-- Confirm no unrelated files changed.
-- Confirm generated markdown still starts with # AGENTS.
-- Confirm profile ordering full > standard > compact.
+### Puerta final de liberacion
+- Confirma que los limites por perfil pasen el validador.
+- Confirma que las validaciones de marcadores sigan estrictas.
+- Confirma que la salida compact por defecto no cambie.
+- Confirma que las docs coincidan con los flags implementados.
+- Confirma suite de pruebas en verde en modo CI.
+- Confirma que no haya archivos no relacionados modificados.
+- Confirma que el markdown generado siga iniciando con # AGENTS.
+- Confirma orden de perfiles full > standard > compact.
 {{/isFull}}
 
 ## Seguridad
 {{security_notes}}
 
-### Vue-specific
+### Especifico de Vue
 - Sanitizar contenido antes de usar `v-html`
-- No exponer API keys en código cliente
+- No exponer API keys en codigo cliente
 {{#is_nuxt}}
-- Usar `server/` en Nuxt para lógica sensible
+- Usar `server/` en Nuxt para logica sensible
 {{/is_nuxt}}
 
 ---
-*Generated by agents-md v{{generator_version}}*
+*Generado por agents-md v{{generator_version}}*

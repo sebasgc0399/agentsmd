@@ -35,30 +35,35 @@ Antes de considerar una tarea completa:
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
 - [ ] No anadir dependencias nuevas sin confirmacion
-- [ ] Componentes sin advertencias de React
-- [ ] Documentar props de componentes exportados
+- [ ] Build sin advertencias de Astro
+- [ ] TypeScript strict sin errores
 
 ## Estilo y convenciones
 {{style_notes}}
 
 ### Estructura de componentes
-- Un componente por archivo
-- Archivo nombrado igual que el componente exportado (PascalCase)
-- Exports nombrados para componentes, predeterminado para paginas
+- Archivos `.astro`: frontmatter (`---`) arriba, template HTML abajo
+- Componentes de framework (React, Vue, Svelte) como Islands interactivas
+- Un componente por archivo, nombrado en PascalCase
 
-### Gestion de estado
-- Estado local con `useState` para estado de UI
-- Props drilling evitado con Context API o libreria de gestion de estado
-- Side effects con `useEffect`, memoizacion con `useMemo`/`useCallback` cuando sea necesario
+### Arquitectura de Islands
+- Componentes estaticos por defecto (cero JavaScript al cliente)
+- Directivas de hidratacion: `client:load`, `client:visible`, `client:idle`, `client:media`
+- Minimizar Islands: solo hidratar componentes que requieran interactividad
+
+### Colecciones de contenido
+- Definir schemas en `src/content/config.ts` con Zod
+- Consultar con `getCollection()` y `getEntry()` en archivos de ruta
+- Referencias type-safe entre colecciones
 
 {{#has_tests}}
 ## Guia de pruebas
 {{testing_notes}}
 
 ### Cobertura esperada
-- Componentes: interacciones de usuario, renderizado condicional
-- Hooks personalizados: logica de negocio
-- Utilidades: funciones puras con casos limite
+- Componentes estaticos: verificar HTML generado
+- Islands: interactividad y directivas de hidratacion
+- Content collections: validacion de schemas y queries
 {{/has_tests}}
 
 {{#isStandardOrFull}}
@@ -76,15 +81,15 @@ Antes de considerar una tarea completa:
 - Pide totales de pruebas (archivos/pruebas aprobadas).
 - Pide mencion explicita de compensaciones.
 
-### Lista de entrega React
-- Manten contratos de componentes estables salvo que el alcance exija cambio.
-- Confirma que el orden de hooks se preserve.
-- Valida consistencia de nombres de props y eventos.
-- Manten comportamiento de renderizado deterministico.
+### Lista de entrega Astro
+- Justificar cada Island: no sobre-hidratar componentes estaticos.
+- Confirma que content collections validen contra schemas definidos.
+- Valida que rendimiento estatico se preserve (sin JS innecesario al cliente).
+- Manten directivas de hidratacion apropiadas (client:visible sobre client:load cuando posible).
 
 ## Definicion de terminado ampliada
 - [ ] Alcance funcional completo con diff minimo.
-- [ ] No se introducen advertencias de React en salida dev/test.
+- [ ] No se introducen advertencias de Astro en salida dev/build.
 - [ ] Componentes compartidos mantienen compatibilidad hacia atras.
 - [ ] El contenido generado de AGENTS no tiene marcadores.
 - [ ] Docs y pruebas reflejan cambios de comportamiento.
@@ -107,7 +112,7 @@ Antes de considerar una tarea completa:
 ## Haz / No hagas
 ### Haz
 - Manten componentes legibles y de alcance acotado.
-- Prefiere condiciones explicitas en templates.
+- Prefiere componentes estaticos sobre Islands cuando no se necesite interactividad.
 - Reporta cambios de comportamiento con ejemplos concretos.
 - Preserva el comportamiento del perfil por defecto.
 
@@ -222,10 +227,9 @@ Antes de considerar una tarea completa:
 ## Seguridad
 {{security_notes}}
 
-### Especifico de React
-- Sanitizar inputs antes de usar `dangerouslySetInnerHTML`
-- Validar props con PropTypes o TypeScript
-- No exponer API keys en codigo cliente
+### Especifico de Astro
+- Sanitizar contenido antes de usar `set:html` (riesgo XSS)
+- No exponer secrets en componentes Islands (codigo cliente)
 
 ---
 *Generado por agents-md v{{generator_version}}*

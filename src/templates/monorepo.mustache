@@ -1,11 +1,11 @@
 # AGENTS.md
 
-## Propósito del repositorio
+## Proposito del repositorio
 {{project_description}}
 
-Este es un monorepo que contiene múltiples paquetes y aplicaciones.
+Este es un monorepo que contiene multiples paquetes y aplicaciones.
 
-## Tech stack
+## Stack tecnologico
 {{#stacks}}
 - {{.}}
 {{/stacks}}
@@ -13,34 +13,34 @@ Este es un monorepo que contiene múltiples paquetes y aplicaciones.
 ## Estructura del monorepo
 ```
 .
-├── apps/         # Aplicaciones deployables
-└── packages/     # Paquetes compartidos/librerías
+|-- apps/         # Aplicaciones desplegables
+`-- packages/     # Paquetes compartidos/librerias
 ```
 
-## Comandos canónicos
+## Comandos canonicos
 - Instalar dependencias: `{{commands.install}}`
 {{#has_dev}}
 - Ejecutar todos los dev servers: `{{commands.dev}}`
 {{/has_dev}}
 {{#has_build}}
-- Build todos los paquetes: `{{commands.build}}`
+- Compilar todos los paquetes: `{{commands.build}}`
 {{/has_build}}
 {{#has_lint}}
-- Lint todo el monorepo: `{{commands.lint}}`
+- Lint de todo el monorepo: `{{commands.lint}}`
 {{/has_lint}}
 {{#has_tests}}
-- Tests de todo el monorepo: `{{commands.test}}`
+- Pruebas de todo el monorepo: `{{commands.test}}`
 {{/has_tests}}
 
-### Comandos específicos de workspace
+### Comandos especificos de workspace
 ```bash
-# Ejecutar comando en un workspace específico
+# Ejecutar comando en un workspace especifico
 npm run dev --workspace=apps/web
 pnpm --filter @myorg/api dev
 yarn workspace @myorg/shared test
 ```
 
-## Definition of Done
+## Definicion de terminado
 Antes de considerar una tarea completa:
 {{#has_tests}}
 - [ ] `{{commands.test}}` pasa en todos los paquetes afectados
@@ -53,201 +53,201 @@ Antes de considerar una tarea completa:
 {{/has_build}}
 - [ ] Cambios en packages/ no rompen apps/ que dependen de ellos
 - [ ] Versiones de dependencias sincronizadas (usar workspaces)
-- [ ] No añadir dependencias nuevas sin confirmación
+- [ ] No anadir dependencias nuevas sin confirmacion
 
 ## Estilo y convenciones
 {{style_notes}}
 
-### Organización de código
+### Organizacion de codigo
 - **apps/**: Aplicaciones completas (web, mobile, admin)
-- **packages/**: Librerías compartidas, configuraciones, utilidades
+- **packages/**: Librerias compartidas, configuraciones, utilidades
 - Naming: `@org/package-name` para scoped packages
 
 ### Dependencias
 - Dependencias compartidas declaradas en root package.json
-- Dependencias específicas en cada workspace
-- Usar workspaces protocol para dependencias internas: `"@myorg/shared": "workspace:*"`
+- Dependencias especificas en cada workspace
+- Usar protocolo workspaces para dependencias internas: `"@myorg/shared": "workspace:*"`
 
 {{#has_tests}}
-## Testing guidelines
+## Guia de pruebas
 {{testing_notes}}
 
-### Estrategia de testing en monorepo
-- Tests unitarios en cada package
-- Tests de integración para apps que consumen packages
-- Usar cache de tests para evitar re-ejecutar tests innecesarios
+### Estrategia de pruebas en monorepo
+- Pruebas unitarias en cada package
+- Pruebas de integracion para apps que consumen packages
+- Usar cache de pruebas para evitar reejecuciones innecesarias
 {{/has_tests}}
 
 {{#isStandardOrFull}}
-## How to work with AI agents
+## Como trabajar con agentes de IA
 
-### Task format
-- Define target workspaces and expected outcome.
-- List touched apps/packages before implementation.
-- Keep scope isolated to impacted graph nodes.
-- Ask for explicit verification across affected workspaces.
+### Formato de tareas
+- Define workspaces objetivo y resultado esperado.
+- Lista apps/packages afectados antes de implementar.
+- Manten alcance aislado a nodos impactados del grafo.
+- Pide verificacion explicita en workspaces afectados.
 
-### Requesting diffs and validation
-- Ask for per-workspace change summary.
-- Ask for exact commands and workspace filters used.
-- Ask for dependency-graph impact notes.
-- Ask for test/build results for impacted packages.
+### Solicitud de diffs y validacion
+- Pide resumen de cambios por workspace.
+- Pide comandos exactos y filtros de workspace usados.
+- Pide notas de impacto en el grafo de dependencias.
+- Pide resultados de test/build para packages impactados.
 
-### Monorepo delivery checklist
-- Confirm no unintended cross-workspace API breaks.
-- Confirm package boundaries are respected.
-- Confirm workspace scripts remain canonical.
-- Confirm lockfile and workspace metadata consistency.
+### Lista de entrega monorepo
+- Confirma que no haya rupturas de API entre workspaces no intencionales.
+- Confirma que se respeten limites entre packages.
+- Confirma que scripts de workspace sigan siendo canonicos.
+- Confirma consistencia de lockfile y metadatos de workspace.
 
-## Expanded Definition of Done
-- [ ] Scope complete in affected workspaces only.
-- [ ] Builds/tests pass for impacted graph nodes.
-- [ ] No placeholder values in generated markdown.
-- [ ] Consumer apps validated for shared package changes.
-- [ ] Documentation updated for workspace-level behavior changes.
+## Definicion de terminado ampliada
+- [ ] Alcance completo solo en workspaces afectados.
+- [ ] Build/pruebas pasan en nodos impactados del grafo.
+- [ ] Sin valores marcadores en markdown generado.
+- [ ] Apps consumidoras validadas para cambios en packages compartidos.
+- [ ] Documentacion actualizada para cambios de comportamiento a nivel workspace.
 
-## Debug checklist
-- Reproduce with filtered command for one workspace first.
-- Validate workspace command detection from root scripts.
-- Check generated output for required monorepo sections.
-- Confirm profile-specific size limits are respected.
-- Re-run focused tests before full repo suite.
+## Lista de depuracion
+- Reproduce primero con comando filtrado para un workspace.
+- Valida deteccion de comandos de workspace desde scripts de root.
+- Revisa salida generada para secciones obligatorias de monorepo.
+- Confirma que se respeten limites de tamano por perfil.
+- Reejecuta pruebas enfocadas antes de la suite completa del repo.
 
-## Testing strategy
-- Keep tests targeted with workspace filters where possible.
-- Prioritize regression tests on shared packages.
-- Use deterministic fixtures for command/render behavior.
+## Estrategia de pruebas
+- Manten pruebas enfocadas con filtros de workspace cuando sea posible.
+- Prioriza pruebas de regresion en packages compartidos.
+- Usa fixtures deterministicos para comportamiento de comando/render.
 {{#has_tests}}
-- Keep command references aligned with `{{commands.test}}`.
+- Manten referencias de comandos alineadas con `{{commands.test}}`.
 {{/has_tests}}
 
-## Do / Don't
-### Do
-- Do keep shared package APIs stable and explicit.
-- Do isolate changes by workspace when possible.
-- Do document dependency graph impact.
-- Do preserve default compact behavior.
+## Haz / No hagas
+### Haz
+- Manten APIs de packages compartidos estables y explicitas.
+- Aisla cambios por workspace cuando sea posible.
+- Documenta impacto en grafo de dependencias.
+- Preserva comportamiento compact por defecto.
 
-### Don't
-- Don't change root scripts without clear reason.
-- Don't introduce hidden coupling between workspaces.
-- Don't skip impacted consumer validation.
-- Don't mix unrelated workspace refactors.
+### No hagas
+- No cambies scripts de root sin motivo claro.
+- No introduzcas acoplamiento oculto entre workspaces.
+- No omitas validacion de consumidores impactados.
+- No mezcles refactors de workspace no relacionados.
 
-## Agent handoff template
-### Required fields
-- Goal: one sentence describing expected final state.
-- Scope: exact files or folders that can change.
-- Constraints: what must not change.
-- Validation: commands that prove the change.
-- Risks: known uncertainty or follow-up items.
+## Plantilla de handoff del agente
+### Campos obligatorios
+- Objetivo: una frase que describa el estado final esperado.
+- Alcance: archivos o carpetas exactas que pueden cambiar.
+- Restricciones: lo que no debe cambiar.
+- Validacion: comandos que prueban el cambio.
+- Riesgos: incertidumbre conocida o items de seguimiento.
 
-### Status update format
-- Completed: concrete items done.
-- In progress: current active step.
-- Next: immediate next action.
-- Blockers: missing info or external dependency.
+### Formato de actualizacion de estado
+- Completado: items concretos finalizados.
+- En progreso: paso activo actual.
+- Siguiente: accion inmediata.
+- Bloqueos: informacion faltante o dependencia externa.
 
-### Review checklist
-- [ ] File-level diff is easy to follow.
-- [ ] Tests cover changed behavior.
-- [ ] Output remains deterministic.
-- [ ] No hidden behavior changes.
-- [ ] Error handling is explicit.
-- [ ] Documentation reflects new behavior.
+### Lista de revision
+- [ ] El diff por archivo es facil de seguir.
+- [ ] Las pruebas cubren el comportamiento cambiado.
+- [ ] La salida se mantiene deterministica.
+- [ ] No hay cambios de comportamiento ocultos.
+- [ ] El manejo de errores es explicito.
+- [ ] La documentacion refleja el nuevo comportamiento.
 
-### Escalation rules
-- Escalate when requirements conflict.
-- Escalate before adding dependencies.
-- Escalate before touching unrelated modules.
-- Escalate on ambiguous security implications.
+### Reglas de escalamiento
+- Escala cuando los requisitos entran en conflicto.
+- Escala antes de agregar dependencias.
+- Escala antes de tocar modulos no relacionados.
+- Escala ante implicaciones de seguridad ambiguas.
 {{/isStandardOrFull}}
 
 {{#isFull}}
-## Advanced agent protocol
+## Protocolo avanzado para agentes
 
-### Risk classification
-- Low: docs/template-only edits.
-- Medium: profile-gated sections and validator ranges.
-- High: script detection, workspace command rendering, file writes.
-- Require targeted tests for medium/high changes.
+### Clasificacion de riesgos
+- Bajo: cambios solo de docs/template.
+- Medio: secciones condicionadas por perfil y rangos del validador.
+- Alto: deteccion de scripts, render de comandos de workspace y escrituras de archivo.
+- Exige pruebas enfocadas para cambios medio/alto.
 
-### PR handoff checklist
-- Include before/after output for compact/standard/full.
-- Include verification commands with workspace filters.
-- Include compatibility statement for existing root commands.
-- Include residual risk and rollback notes.
+### Lista de handoff para PR
+- Incluye salida antes/despues para compact/standard/full.
+- Incluye comandos de verificacion con filtros de workspace.
+- Incluye declaracion de compatibilidad para comandos root existentes.
+- Incluye notas de riesgo residual y rollback.
 
-### Failure triage flow
-1. Reproduce with fixture and explicit profile.
-2. Isolate detect/render/validate stage.
-3. Verify workspace command extraction assumptions.
-4. Apply minimal patch and add regression coverage.
+### Flujo de triage de fallas
+1. Reproduce con fixture y perfil explicito.
+2. Aisla la etapa detect/render/validate.
+3. Verifica supuestos de extraccion de comandos de workspace.
+4. Aplica patch minimo y agrega cobertura de regresion.
 
-### CI hardening notes
-- Keep commands shell-neutral where possible.
-- Keep path handling OS-neutral.
-- Keep tests deterministic with fixed fixtures.
-- Avoid flaky ordering assumptions in assertions.
+### Notas de endurecimiento de CI
+- Manten comandos neutrales al shell cuando sea posible.
+- Manten manejo de rutas neutral al OS.
+- Manten pruebas deterministicas con fixtures fijos.
+- Evita supuestos de orden inestables en aserciones.
 
-### Verification matrix
-| Layer | Check | Evidence |
+### Matriz de verificacion
+| Capa | Verificacion | Evidencia |
 |---|---|---|
-| CLI | Arg parsing | command output |
-| Detection | scripts/framework | fixture result |
-| Rendering | profile sections | markdown preview |
-| Validation | limits/placeholders | unit tests |
-| E2E | dry-run command | test pass |
+| CLI | Parseo de argumentos | salida del comando |
+| Deteccion | scripts/framework | resultado del fixture |
+| Renderizado | secciones por perfil | vista previa markdown |
+| Validacion | limites/marcadores | pruebas unitarias |
+| E2E | comando dry-run | pruebas ok |
 
-### Rollback playbook
-1. Revert profile-specific template blocks first.
-2. Keep parser support only if backward compatible.
-3. Re-run compact profile tests and e2e.
-4. Re-introduce changes in smaller slices.
+### Guia de rollback
+1. Revierte primero bloques de template especificos por perfil.
+2. Manten soporte de parser solo si es compatible hacia atras.
+3. Reejecuta pruebas de perfil compact y e2e.
+4. Reintroduce cambios en porciones mas pequenas.
 
-### Communication protocol
-- Summarize assumptions before coding.
-- Report changed files immediately after edit step.
-- Report executed commands and outcomes.
-- Report unresolved risks before handoff.
+### Protocolo de comunicacion
+- Resume supuestos antes de codificar.
+- Reporta archivos cambiados inmediatamente despues de cada edicion.
+- Reporta comandos ejecutados y resultados.
+- Reporta riesgos no resueltos antes del handoff.
 
-### Post-merge audit
-- Verify README examples still run as documented.
-- Verify SPEC and behavior remain aligned.
-- Verify CI pass on at least one Windows runner.
-- Verify default compact output remains unchanged.
-- Verify standard/full remain within configured limits.
+### Auditoria post-merge
+- Verifica que los ejemplos del README sigan funcionando como estan documentados.
+- Verifica que SPEC y comportamiento sigan alineados.
+- Verifica CI verde en al menos un runner de Windows.
+- Verifica que la salida compact por defecto permanezca igual.
+- Verifica que standard/full se mantengan dentro de limites configurados.
 
-### Minimal failure report template
-- Command: exact failing command
-- Expected: what should happen
-- Actual: what happened
-- Suspected layer: detect/render/validate/cli
-- Reproduction fixture: path used
+### Plantilla minima de reporte de falla
+- Comando: comando exacto que falla
+- Esperado: que deberia pasar
+- Real: que paso
+- Capa sospechosa: detect/render/validate/cli
+- Fixture de reproduccion: ruta usada
 
-### Final release gate
-- Confirm profile-specific limits pass validator.
-- Confirm placeholder checks remain strict.
-- Confirm default compact output is unchanged.
-- Confirm docs match implemented flags.
-- Confirm test suite is green in CI mode.
-- Confirm no unrelated files changed.
-- Confirm generated markdown still starts with # AGENTS.
-- Confirm profile ordering full > standard > compact.
+### Puerta final de liberacion
+- Confirma que los limites por perfil pasen el validador.
+- Confirma que las validaciones de marcadores sigan estrictas.
+- Confirma que la salida compact por defecto no cambie.
+- Confirma que las docs coincidan con los flags implementados.
+- Confirma suite de pruebas en verde en modo CI.
+- Confirma que no haya archivos no relacionados modificados.
+- Confirma que el markdown generado siga iniciando con # AGENTS.
+- Confirma orden de perfiles full > standard > compact.
 {{/isFull}}
 
 ## Seguridad
 {{security_notes}}
 
-### Monorepo-specific
+### Especifico de monorepo
 - Revisar todas las dependencias transitivas (usar `npm audit` o `pnpm audit`)
 - Lockfile sincronizado en root (yarn.lock, pnpm-lock.yaml)
 - No exponer secrets entre workspaces innecesariamente
 
-## Build y Deploy
-- Build incremental: solo rebuilds paquetes modificados
-- Topological ordering: packages se buildan en orden de dependencias
+## Build y despliegue
+- Build incremental: solo rebuilds de paquetes modificados
+- Orden topologico: packages se compilan en orden de dependencias
 - Cache de builds para optimizar CI/CD
 
 ---
-*Generated by agents-md v{{generator_version}}*
+*Generado por agents-md v{{generator_version}}*

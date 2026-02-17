@@ -42,28 +42,28 @@ Politica de severidad:
 ## Reglas de progressive disclosure
 
 ### Secciones always-on (semántica obligatoria)
-Estas secciones deben existir siempre, aunque el heading exacto pueda variar por template o idioma.
+Estas secciones deben existir siempre y en forma canonica en espanol para benchmark:
 
-- Proposito del repositorio (ej: `## Purpose` / `## Proposito del repositorio`).
-- Tech stack (ej: `## Tech stack`).
-- Comandos canonicos (ej: `## Commands` / `## Comandos canonicos`).
-- Definition of Done (ej: `## Definition of Done`).
-- Estilo y convenciones (ej: `## Conventions` / `## Estilo y convenciones`).
-- Seguridad (ej: `## Security` / `## Seguridad`).
+- `## Proposito del repositorio`.
+- `## Stack tecnologico`.
+- `## Comandos canonicos`.
+- `## Definicion de terminado`.
+- `## Estilo y convenciones`.
+- `## Seguridad`.
 
 ### Secciones condicionales por stack
-- Monorepo (`is_monorepo`): `## Estructura del monorepo`, `## Build y Deploy`.
-- Firebase Functions (`framework_type` con valor `firebase-functions`): `## Environment variables`, `## Deployment`.
-- Testing (`has_tests`): `## Testing guidelines`.
-- Generic unknown no-monorepo (`is_unknown_generic`): `## Generic project execution playbook`.
+- Monorepo (`is_monorepo`): `## Estructura del monorepo`, `## Build y despliegue`.
+- Firebase Functions (`framework_type` con valor `firebase-functions`): `## Variables de entorno`, `## Despliegue`.
+- Testing (`has_tests`): `## Guia de pruebas`.
+- Generic unknown no-monorepo (`is_unknown_generic`): `## Guia de ejecucion para proyectos genericos`.
 
 Nota: los nombres exactos de flags y propiedades de contexto deben corresponder a `src/render/data-builder.ts`.
 
 ### Secciones solo-full
-- `## Advanced agent protocol`
+- `## Protocolo avanzado para agentes`
 - Matriz de verificacion por capa.
-- Rollback playbook.
-- Post-merge audit.
+- Guia de rollback.
+- Auditoria post-merge.
 - Plantillas de incidente/handoff extendidas.
 
 ## Método de medición reproducible

@@ -1,30 +1,30 @@
 # AGENTS.md
 
-## Propósito del repositorio
+## Proposito del repositorio
 {{project_description}}
 
-## Tech stack
+## Stack tecnologico
 {{#stacks}}
 - {{.}}
 {{/stacks}}
 
-## Comandos canónicos
+## Comandos canonicos
 - Instalar dependencias: `{{commands.install}}`
 {{#has_dev}}
 - Ejecutar emuladores locales: `{{commands.dev}}`
 {{/has_dev}}
-- Deploy a Firebase: `firebase deploy --only functions`
+- Desplegar a Firebase: `firebase deploy --only functions`
 {{#has_build}}
-- Build: `{{commands.build}}`
+- Compilar: `{{commands.build}}`
 {{/has_build}}
 {{#has_lint}}
 - Lint: `{{commands.lint}}`
 {{/has_lint}}
 {{#has_tests}}
-- Tests: `{{commands.test}}`
+- Pruebas: `{{commands.test}}`
 {{/has_tests}}
 
-## Definition of Done
+## Definicion de terminado
 Antes de considerar una tarea completa:
 {{#has_tests}}
 - [ ] `{{commands.test}}` pasa sin errores
@@ -33,204 +33,204 @@ Antes de considerar una tarea completa:
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
 - [ ] Probado localmente con emuladores de Firebase
-- [ ] No añadir dependencias nuevas sin confirmación
-- [ ] Revisar quotas y límites de Firebase
+- [ ] No anadir dependencias nuevas sin confirmacion
+- [ ] Revisar cuotas y limites de Firebase
 
 ## Estilo y convenciones
 {{style_notes}}
 
 ### Funciones Firebase
-- Funciones idempotentes (mismo input = mismo output)
-- Manejar cold starts: minimizar dependencias globales
+- Funciones idempotentes (misma entrada = misma salida)
+- Manejar arranques en frio: minimizar dependencias globales
 - Usar `onCall` para funciones HTTPS callable, `onRequest` para endpoints REST
-- Timeout configurado según caso de uso (default 60s, max 540s)
+- Timeout configurado segun caso de uso (predeterminado 60s, max 540s)
 
-## Environment variables
-- Variables de configuración en `.env` (local) y Firebase Config (producción)
+## Variables de entorno
+- Variables de configuracion en `.env` (local) y Firebase Config (produccion)
 - Secrets en Google Secret Manager, accedidos via `functions.config()`
 - NO hardcodear API keys, tokens, o credenciales
 
 {{#has_tests}}
-## Testing guidelines
+## Guia de pruebas
 {{testing_notes}}
 
-### Estrategia de testing
-- Unit tests para lógica de negocio (sin Firebase)
-- Integration tests con emuladores de Firebase
+### Estrategia de pruebas
+- Pruebas unitarias para logica de negocio (sin Firebase)
+- Pruebas de integracion con emuladores de Firebase
 - Mocking de Firebase Admin SDK cuando sea necesario
 {{/has_tests}}
 
 {{#isStandardOrFull}}
-## How to work with AI agents
+## Como trabajar con agentes de IA
 
-### Task format
-- Define objective, scope, and expected output up front.
-- Include affected Firebase resources (Functions, Firestore, Storage).
-- Keep changes minimal and deterministic.
-- Request explicit validation steps before closing the task.
+### Formato de tareas
+- Define objetivo, alcance y salida esperada desde el inicio.
+- Incluye recursos de Firebase afectados (Functions, Firestore, Storage).
+- Manten cambios minimos y deterministicos.
+- Solicita pasos de validacion explicitos antes de cerrar la tarea.
 
-### Requesting diffs and validation
-- Ask for changed files and reason per file.
-- Ask for command log used for local validation.
-- Ask for test/emulator results with pass/fail summary.
-- Ask for security impact notes when touching auth or data paths.
+### Solicitud de diffs y validacion
+- Pide archivos cambiados y motivo por archivo.
+- Pide registro de comandos usados para validacion local.
+- Pide resultados de pruebas/emulador con resumen exito/fallo.
+- Pide notas de impacto en seguridad al tocar rutas de auth o datos.
 
-### Firebase delivery checklist
-- Confirm function triggers are correct and intentional.
-- Confirm retries/idempotency assumptions are explicit.
-- Confirm timeouts and resource usage are reasonable.
-- Confirm no secrets are embedded in source code.
+### Lista de entrega Firebase
+- Confirma que los triggers de funciones sean correctos e intencionales.
+- Confirma que supuestos de reintentos/idempotencia sean explicitos.
+- Confirma que timeouts y uso de recursos sean razonables.
+- Confirma que no haya secretos embebidos en codigo fuente.
 
-## Expanded Definition of Done
-- [ ] Scope complete with no unrelated refactors.
-- [ ] Emulator checks or equivalent local validation completed.
-- [ ] No placeholder values in generated markdown.
-- [ ] Docs and runbooks updated for behavior changes.
-- [ ] Backward compatibility confirmed for existing callers.
+## Definicion de terminado ampliada
+- [ ] Alcance completo sin refactors no relacionados.
+- [ ] Verificaciones en emulador o validacion local equivalente completadas.
+- [ ] Sin valores marcadores en markdown generado.
+- [ ] Docs y guias operativas actualizados por cambios de comportamiento.
+- [ ] Compatibilidad hacia atras confirmada para consumidores existentes.
 
-## Debug checklist
-- Reproduce with emulator or deterministic fixture.
-- Verify environment variables and Firebase config source.
-- Check command detection and generated command section.
-- Validate output size and required sections by profile.
-- Re-run focused tests before full suite.
+## Lista de depuracion
+- Reproduce con emulador o fixture deterministico.
+- Verifica variables de entorno y fuente de config de Firebase.
+- Revisa deteccion de comandos y seccion de comandos generada.
+- Valida tamano de salida y secciones obligatorias por perfil.
+- Reejecuta pruebas enfocadas antes de suite completa.
 
-## Testing strategy
-- Unit test pure business logic outside Firebase SDK wrappers.
-- Use emulator-backed integration tests for boundary behavior.
-- Keep assertions stable and deterministic.
+## Estrategia de pruebas
+- Prueba unitaria de logica de negocio pura fuera de wrappers de Firebase SDK.
+- Usa pruebas de integracion con emulador para comportamiento de frontera.
+- Manten aserciones estables y deterministicas.
 {{#has_tests}}
-- Keep command references aligned with `{{commands.test}}`.
+- Manten referencias de comandos alineadas con `{{commands.test}}`.
 {{/has_tests}}
 
-## Do / Don't
-### Do
-- Do validate input and auth context on every entry point.
-- Do keep function side effects explicit.
-- Do document deploy and rollback expectations.
-- Do preserve default compact behavior.
+## Haz / No hagas
+### Haz
+- Valida entrada y contexto auth en cada punto de entrada.
+- Manten efectos secundarios de funciones explicitos.
+- Documenta expectativas de deploy y rollback.
+- Preserva comportamiento compact por defecto.
 
-### Don't
-- Don't hardcode project ids, keys, or secrets.
-- Don't rely on implicit global state across invocations.
-- Don't skip validation on background triggers.
-- Don't bundle unrelated changes in one patch.
+### No hagas
+- No hardcodees ids de proyecto, keys o secretos.
+- No dependas de estado global implicito entre invocaciones.
+- No omitas validacion en triggers en background.
+- No agrupes cambios no relacionados en un mismo patch.
 
-## Agent handoff template
-### Required fields
-- Goal: one sentence describing expected final state.
-- Scope: exact files or folders that can change.
-- Constraints: what must not change.
-- Validation: commands that prove the change.
-- Risks: known uncertainty or follow-up items.
+## Plantilla de handoff del agente
+### Campos obligatorios
+- Objetivo: una frase que describa el estado final esperado.
+- Alcance: archivos o carpetas exactas que pueden cambiar.
+- Restricciones: lo que no debe cambiar.
+- Validacion: comandos que prueban el cambio.
+- Riesgos: incertidumbre conocida o items de seguimiento.
 
-### Status update format
-- Completed: concrete items done.
-- In progress: current active step.
-- Next: immediate next action.
-- Blockers: missing info or external dependency.
+### Formato de actualizacion de estado
+- Completado: items concretos finalizados.
+- En progreso: paso activo actual.
+- Siguiente: accion inmediata.
+- Bloqueos: informacion faltante o dependencia externa.
 
-### Review checklist
-- [ ] File-level diff is easy to follow.
-- [ ] Tests cover changed behavior.
-- [ ] Output remains deterministic.
-- [ ] No hidden behavior changes.
-- [ ] Error handling is explicit.
-- [ ] Documentation reflects new behavior.
+### Lista de revision
+- [ ] El diff por archivo es facil de seguir.
+- [ ] Las pruebas cubren el comportamiento cambiado.
+- [ ] La salida se mantiene deterministica.
+- [ ] No hay cambios de comportamiento ocultos.
+- [ ] El manejo de errores es explicito.
+- [ ] La documentacion refleja el nuevo comportamiento.
 
-### Escalation rules
-- Escalate when requirements conflict.
-- Escalate before adding dependencies.
-- Escalate before touching unrelated modules.
-- Escalate on ambiguous security implications.
+### Reglas de escalamiento
+- Escala cuando los requisitos entran en conflicto.
+- Escala antes de agregar dependencias.
+- Escala antes de tocar modulos no relacionados.
+- Escala ante implicaciones de seguridad ambiguas.
 {{/isStandardOrFull}}
 
 {{#isFull}}
-## Advanced agent protocol
+## Protocolo avanzado para agentes
 
-### Risk classification
-- Low: docs/template copy adjustments.
-- Medium: profile-dependent rendering and validation limits.
-- High: CLI parsing, deploy commands, and filesystem writes.
-- Medium/high changes require targeted regression tests.
+### Clasificacion de riesgos
+- Bajo: ajustes de texto en docs/templates.
+- Medio: renderizado dependiente de perfil y limites de validacion.
+- Alto: parseo de CLI, comandos de deploy y escrituras en filesystem.
+- Cambios medio/alto requieren pruebas de regresion enfocadas.
 
-### PR handoff checklist
-- Provide before/after output for each affected profile.
-- Provide exact verification commands and outcomes.
-- Provide compatibility notes for existing workflows.
-- Provide residual risk and rollback guidance.
+### Lista de handoff para PR
+- Entrega salida antes/despues para cada perfil afectado.
+- Entrega comandos exactos de verificacion y resultados.
+- Entrega notas de compatibilidad para workflows existentes.
+- Entrega guia de riesgo residual y rollback.
 
-### Failure triage flow
-1. Reproduce with fixture and explicit `--profile` flag.
-2. Isolate whether failure is detect/render/validate.
-3. Verify generated markdown includes required command set.
-4. Patch minimally and add regression coverage.
+### Flujo de triage de fallas
+1. Reproduce con fixture y flag `--profile` explicito.
+2. Aisla si la falla es detect/render/validate.
+3. Verifica que el markdown generado incluya el conjunto de comandos requerido.
+4. Aplica patch minimo y agrega cobertura de regresion.
 
-### CI hardening notes
-- Keep tests OS-neutral for paths and execution.
-- Use non-shell process invocation in e2e tests.
-- Avoid timing-dependent assertions.
-- Keep fixtures small and deterministic.
+### Notas de endurecimiento de CI
+- Manten pruebas neutrales al OS para rutas y ejecucion.
+- Usa invocacion de procesos sin shell en pruebas e2e.
+- Evita aserciones dependientes del tiempo.
+- Manten fixtures pequenos y deterministicos.
 
-### Verification matrix
-| Layer | Check | Evidence |
+### Matriz de verificacion
+| Capa | Verificacion | Evidencia |
 |---|---|---|
-| CLI | Arg parsing | command output |
-| Detection | scripts/framework | fixture result |
-| Rendering | profile sections | markdown preview |
-| Validation | limits/placeholders | unit tests |
-| E2E | dry-run command | test pass |
+| CLI | Parseo de argumentos | salida del comando |
+| Deteccion | scripts/framework | resultado del fixture |
+| Renderizado | secciones por perfil | vista previa markdown |
+| Validacion | limites/marcadores | pruebas unitarias |
+| E2E | comando dry-run | pruebas ok |
 
-### Rollback playbook
-1. Revert profile-specific template blocks first.
-2. Keep parser support only if backward compatible.
-3. Re-run compact profile tests and e2e.
-4. Re-introduce changes in smaller slices.
+### Guia de rollback
+1. Revierte primero bloques de template especificos por perfil.
+2. Manten soporte de parser solo si es compatible hacia atras.
+3. Reejecuta pruebas de perfil compact y e2e.
+4. Reintroduce cambios en porciones mas pequenas.
 
-### Communication protocol
-- Summarize assumptions before coding.
-- Report changed files immediately after edit step.
-- Report executed commands and outcomes.
-- Report unresolved risks before handoff.
+### Protocolo de comunicacion
+- Resume supuestos antes de codificar.
+- Reporta archivos cambiados inmediatamente despues de cada edicion.
+- Reporta comandos ejecutados y resultados.
+- Reporta riesgos no resueltos antes del handoff.
 
-### Post-merge audit
-- Verify README examples still run as documented.
-- Verify SPEC and behavior remain aligned.
-- Verify CI pass on at least one Windows runner.
-- Verify default compact output remains unchanged.
-- Verify standard/full remain within configured limits.
+### Auditoria post-merge
+- Verifica que los ejemplos del README sigan funcionando como estan documentados.
+- Verifica que SPEC y comportamiento sigan alineados.
+- Verifica CI verde en al menos un runner de Windows.
+- Verifica que la salida compact por defecto permanezca igual.
+- Verifica que standard/full se mantengan dentro de limites configurados.
 
-### Minimal failure report template
-- Command: exact failing command
-- Expected: what should happen
-- Actual: what happened
-- Suspected layer: detect/render/validate/cli
-- Reproduction fixture: path used
+### Plantilla minima de reporte de falla
+- Comando: comando exacto que falla
+- Esperado: que deberia pasar
+- Real: que paso
+- Capa sospechosa: detect/render/validate/cli
+- Fixture de reproduccion: ruta usada
 
-### Final release gate
-- Confirm profile-specific limits pass validator.
-- Confirm placeholder checks remain strict.
-- Confirm default compact output is unchanged.
-- Confirm docs match implemented flags.
-- Confirm test suite is green in CI mode.
-- Confirm no unrelated files changed.
-- Confirm generated markdown still starts with # AGENTS.
-- Confirm profile ordering full > standard > compact.
+### Puerta final de liberacion
+- Confirma que los limites por perfil pasen el validador.
+- Confirma que las validaciones de marcadores sigan estrictas.
+- Confirma que la salida compact por defecto no cambie.
+- Confirma que las docs coincidan con los flags implementados.
+- Confirma suite de pruebas en verde en modo CI.
+- Confirma que no haya archivos no relacionados modificados.
+- Confirma que el markdown generado siga iniciando con # AGENTS.
+- Confirma orden de perfiles full > standard > compact.
 {{/isFull}}
 
 ## Seguridad
 {{security_notes}}
 
-### Firebase-specific
+### Especifico de Firebase
 - Validar todos los inputs en funciones callable
-- Usar Firebase Auth para autenticación
+- Usar Firebase Auth para autenticacion
 - Implementar Security Rules en Firestore/Storage
-- Nunca exponer Service Account keys en código
+- Nunca exponer Service Account keys en codigo
 
-## Deployment
-- Deploy staging: `firebase deploy --only functions --project staging`
-- Deploy producción: `firebase deploy --only functions --project production`
-- Rollback: `firebase functions:delete FUNCTION_NAME` + redeploy versión anterior
+## Despliegue
+- Desplegar staging: `firebase deploy --only functions --project staging`
+- Desplegar produccion: `firebase deploy --only functions --project production`
+- Rollback: `firebase functions:delete FUNCTION_NAME` + redeploy version anterior
 
 ---
-*Generated by agents-md v{{generator_version}}*
+*Generado por agents-md v{{generator_version}}*

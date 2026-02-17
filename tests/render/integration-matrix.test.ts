@@ -10,6 +10,7 @@ type MatrixCase = {
   expectedFramework: FrameworkType;
   expectedMonorepo: boolean;
   requiredSpecificSections: string[];
+  forbiddenSpecificSections?: string[];
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +24,7 @@ const matrix: MatrixCase[] = [
     fixture: 'react-vite',
     expectedFramework: 'react',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## testing guidelines'],
+    requiredSpecificSections: ['## guia de pruebas'],
   },
   {
     fixture: 'runtime-npm',
@@ -35,19 +36,74 @@ const matrix: MatrixCase[] = [
     fixture: 'monorepo-turbo',
     expectedFramework: 'unknown',
     expectedMonorepo: true,
-    requiredSpecificSections: ['## estructura del monorepo', '## build y deploy'],
+    requiredSpecificSections: ['## estructura del monorepo', '## build y despliegue'],
   },
   {
     fixture: 'firebase-with-functions',
     expectedFramework: 'firebase-functions',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## environment variables', '## deployment'],
+    requiredSpecificSections: ['## variables de entorno', '## despliegue'],
   },
   {
     fixture: 'vue-vite',
     expectedFramework: 'vue',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## testing guidelines'],
+    requiredSpecificSections: ['## guia de pruebas'],
+  },
+  {
+    fixture: 'angular-simple',
+    expectedFramework: 'angular',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'sveltekit-simple',
+    expectedFramework: 'sveltekit',
+    expectedMonorepo: false,
+    requiredSpecificSections: ['### convenciones sveltekit'],
+  },
+  {
+    fixture: 'nest-simple',
+    expectedFramework: 'nestjs',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'astro-simple',
+    expectedFramework: 'astro',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'fastify-app-like-minimal',
+    expectedFramework: 'fastify',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'precedence-next-react',
+    expectedFramework: 'next',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'precedence-nuxt-vue',
+    expectedFramework: 'nuxt',
+    expectedMonorepo: false,
+    requiredSpecificSections: ['### convenciones nuxt'],
+  },
+  {
+    fixture: 'svelte-simple',
+    expectedFramework: 'svelte',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+    forbiddenSpecificSections: ['### convenciones sveltekit'],
+  },
+  {
+    fixture: 'express-app-like-minimal',
+    expectedFramework: 'express',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
   },
 ];
 
@@ -75,7 +131,7 @@ function assertRequiredSections(content: string): void {
   const normalized = normalizeText(content);
   expect(normalized).toContain('# agents');
   expect(normalized).toContain('## comandos canonicos');
-  expect(normalized).toContain('## definition of done');
+  expect(normalized).toContain('## definicion de terminado');
 }
 
 function assertNoBlockingPlaceholders(content: string): void {
@@ -114,6 +170,7 @@ describe('integration matrix detect->render->validate', () => {
         expect(run1.detection.folderStructure.isMonorepo).toBe(matrixCase.expectedMonorepo);
         expect(run1.result.validation.valid).toBe(true);
         expect(run1.result.validation.errors).toEqual([]);
+        expect(run1.result.content.charCodeAt(0)).not.toBe(0xfeff);
 
         assertRequiredSections(run1.result.content);
         assertNoBlockingPlaceholders(run1.result.content);
@@ -124,6 +181,9 @@ describe('integration matrix detect->render->validate', () => {
         const normalizedContent = normalizeText(run1.result.content);
         for (const section of matrixCase.requiredSpecificSections) {
           expect(normalizedContent).toContain(section);
+        }
+        for (const section of matrixCase.forbiddenSpecificSections ?? []) {
+          expect(normalizedContent).not.toContain(section);
         }
 
         lineCounts[profile] = run1.result.validation.lineCount;

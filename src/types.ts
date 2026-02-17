@@ -118,6 +118,7 @@ export interface TemplateContext {
   isStandardOrFull: boolean;
   is_unknown_generic?: boolean;
   is_nuxt?: boolean;
+  is_sveltekit?: boolean;
   framework_type: string;
   runtime_type: string;
 }

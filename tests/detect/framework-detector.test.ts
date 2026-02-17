@@ -201,6 +201,30 @@ describe('detectFramework', () => {
     expect(framework.confidence).toBe('high');
   });
 
+  it('should detect svelte for svelte fixture without @sveltejs/kit', () => {
+    const packageInfo: PackageInfo = {
+      name: 'svelte-simple-fixture',
+      scripts: {
+        dev: 'vite dev',
+        build: 'vite build',
+        test: 'vitest run',
+      },
+      dependencies: {
+        svelte: '^5.0.0',
+      },
+      devDependencies: {
+        vite: '^5.0.0',
+        '@sveltejs/vite-plugin-svelte': '^3.0.0',
+        vitest: '^1.0.0',
+      },
+    };
+
+    const framework = detectFramework(packageInfo, fixturePath('svelte-simple'));
+
+    expect(framework.type).toBe('svelte');
+    expect(framework.confidence).toBe('high');
+  });
+
   it('should return unknown for svelte-only ambiguous fixture', () => {
     const packageInfo: PackageInfo = {
       name: 'sveltekit-ambiguous-fixture',

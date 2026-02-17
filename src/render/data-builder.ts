@@ -7,6 +7,24 @@ import { detectBuildTools } from '../detect/framework-detector.js';
 import { getPackageVersion } from '../utils/version.js';
 
 /**
+ * Display names for framework types in the tech stack section
+ */
+const FRAMEWORK_DISPLAY_NAMES: Record<string, string> = {
+  react: 'React',
+  vue: 'Vue',
+  angular: 'Angular',
+  svelte: 'Svelte',
+  sveltekit: 'SvelteKit',
+  astro: 'Astro',
+  nestjs: 'NestJS',
+  next: 'Next.js',
+  nuxt: 'Nuxt',
+  express: 'Express',
+  fastify: 'Fastify',
+  'firebase-functions': 'Firebase Functions',
+};
+
+/**
  * Default values when data is missing
  */
 const DEFAULTS = {
@@ -35,6 +53,15 @@ const DEFAULTS = {
  */
 function buildStyleNotes(framework: DetectionResult['framework']): string {
   switch (framework.type) {
+    case 'next':
+      return (
+        DEFAULTS.style_notes +
+        '\n- Preferir componentes funcionales con hooks\n' +
+        '- App Router: Server Components por defecto, "use client" solo cuando necesario\n' +
+        '- Rutas en app/, layouts anidados, loading.tsx y error.tsx por segmento\n' +
+        '- Data fetching en Server Components; useFormAction/useFormStatus para mutations'
+      );
+
     case 'react':
       return (
         DEFAULTS.style_notes +
@@ -137,7 +164,7 @@ function buildTestingNotes(
   let notes = DEFAULTS.testing_notes;
 
   // Add framework-specific testing patterns
-  if (framework.type === 'react' && devDeps['@testing-library/react']) {
+  if ((framework.type === 'react' || framework.type === 'next') && devDeps['@testing-library/react']) {
     notes += '\n- Usar React Testing Library para tests de componentes\n';
     notes += '- Preferir queries por rol y texto sobre testIds';
   }
@@ -171,6 +198,10 @@ function buildTestingNotes(
     notes += '\n- fastify.inject() para tests de rutas sin servidor real';
   }
 
+  if (framework.type === 'astro' && devDeps['@astrojs/check']) {
+    notes += '\n- astro check para validación de tipos en componentes Astro';
+  }
+
   if (devDeps.vitest) {
     notes += '\n- Framework de testing: Vitest';
   } else if (devDeps.jest) {
@@ -185,6 +216,13 @@ function buildTestingNotes(
  */
 function buildSecurityNotes(framework: DetectionResult['framework']): string {
   switch (framework.type) {
+    case 'next':
+      return (
+        DEFAULTS.security_notes +
+        '\n- No exponer secrets en Client Components (solo Server Components/server actions)\n' +
+        '- Sanitizar dangerouslySetInnerHTML; no exponer API keys en código cliente'
+      );
+
     case 'vue':
     case 'nuxt':
       return (
@@ -221,6 +259,21 @@ function buildSecurityNotes(framework: DetectionResult['framework']): string {
         '- @fastify/rate-limit para prevenir abuso'
       );
 
+    case 'svelte':
+    case 'sveltekit':
+      return (
+        DEFAULTS.security_notes +
+        '\n- Sanitizar contenido antes de usar {@html} (riesgo XSS)\n' +
+        '- No exponer API keys en código cliente'
+      );
+
+    case 'astro':
+      return (
+        DEFAULTS.security_notes +
+        '\n- Sanitizar contenido antes de usar set:html (riesgo XSS)\n' +
+        '- No exponer secrets en componentes cliente (Islands)'
+      );
+
     default:
       return DEFAULTS.security_notes;
   }
@@ -252,7 +305,7 @@ function buildStackList(
   // Framework
   if (framework.type !== 'unknown') {
     const version = framework.version ? ` ${framework.version}` : '';
-    const frameworkName = framework.type.charAt(0).toUpperCase() + framework.type.slice(1);
+    const frameworkName = FRAMEWORK_DISPLAY_NAMES[framework.type] || framework.type.charAt(0).toUpperCase() + framework.type.slice(1);
     stacks.push(`${frameworkName}${version}`);
   }
 
@@ -314,6 +367,7 @@ export function buildTemplateContext(
     isStandardOrFull: profile === 'standard' || profile === 'full',
     is_unknown_generic: framework.type === 'unknown' && !folderStructure.isMonorepo,
     is_nuxt: framework.type === 'nuxt',
+    is_sveltekit: framework.type === 'sveltekit',
     framework_type: framework.type,
     runtime_type: runtime.type,
   };

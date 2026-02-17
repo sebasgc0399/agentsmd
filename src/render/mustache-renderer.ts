@@ -61,6 +61,19 @@ export function selectTemplate(context: TemplateContext): string {
     case 'angular':
       return 'angular.mustache';
 
+    case 'svelte':
+    case 'sveltekit':
+      return 'svelte.mustache';
+
+    case 'nestjs':
+      return 'nestjs.mustache';
+
+    case 'astro':
+      return 'astro.mustache';
+
+    case 'fastify':
+      return 'fastify.mustache';
+
     case 'firebase-functions':
       return 'firebase.mustache';
 

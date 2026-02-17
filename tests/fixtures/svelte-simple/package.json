@@ -1,0 +1,17 @@
+{
+  "name": "svelte-simple-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "svelte": "^5.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "vitest": "^1.0.0"
+  }
+}

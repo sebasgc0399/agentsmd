@@ -101,6 +101,14 @@ describe('detectProject', () => {
     expect(result.framework.confidence).toBe('high');
   });
 
+  it('detects svelte fixture as svelte when @sveltejs/kit is absent', async () => {
+    const projectPath = path.join(fixturesDir, 'svelte-simple');
+    const result = await detectProject(projectPath);
+
+    expect(result.framework.type).toBe('svelte');
+    expect(result.framework.confidence).toBe('high');
+  });
+
   it('returns unknown for ambiguous svelte fixture without config', async () => {
     const projectPath = path.join(fixturesDir, 'sveltekit-ambig');
     const result = await detectProject(projectPath);

@@ -10,7 +10,11 @@ const scriptPath = path.join(repoRoot, 'scripts', 'benchmark', 'lite.mjs');
 
 function parseReportFromStdout(stdout: string): {
   summary: { totalCases: number; passedCases: number; failedCases: number; gatePassed: boolean };
-  cases: Array<{ commands: { extracted: string[] } }>;
+  cases: Array<{
+    commands: { extracted: string[] };
+    score: { total: number; criteria: { clarityStructure: number } };
+    semantic: { requiredSectionsMissing: string[] };
+  }>;
 } {
   const marker = '--- Benchmark Lite JSON ---';
   const markerIndex = stdout.lastIndexOf(marker);
@@ -41,6 +45,9 @@ describe('benchmark lite harness', () => {
     expect(report.summary.totalCases).toBe(1);
     expect(report.summary.failedCases).toBe(0);
     expect(report.summary.gatePassed).toBe(true);
+    expect(report.cases[0].score.criteria.clarityStructure).toBe(2);
+    expect(report.cases[0].score.total).toBe(11);
+    expect(report.cases[0].semantic.requiredSectionsMissing).toEqual([]);
   });
 
   it('fails on invalid fixture input', () => {

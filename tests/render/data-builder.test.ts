@@ -175,6 +175,23 @@ describe('buildTemplateContext', () => {
     expect(context.stacks).toContain('Nuxt ^3.12.0');
   });
 
+  it('formats multi-word framework names correctly in stack list', () => {
+    const cases: Array<{ type: string; expected: string }> = [
+      { type: 'sveltekit', expected: 'SvelteKit' },
+      { type: 'nestjs', expected: 'NestJS' },
+      { type: 'firebase-functions', expected: 'Firebase Functions' },
+      { type: 'next', expected: 'Next.js' },
+    ];
+
+    for (const { type, expected } of cases) {
+      const detection = createDetection({
+        framework: { type: type as any, confidence: 'high' },
+      });
+      const context = buildTemplateContext(detection, 'compact');
+      expect(context.stacks).toContain(expected);
+    }
+  });
+
   it('falls back to Node.js stack when packageInfo is null and no runtime/framework signals exist', () => {
     const detection = createDetection({
       packageInfo: null,
@@ -297,6 +314,15 @@ describe('buildTemplateContext', () => {
   });
 
   // --- Framework-specific style notes ---
+
+  it('adds next-specific style notes for next', () => {
+    const detection = createDetection({
+      framework: { type: 'next', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.style_notes).toContain('App Router');
+    expect(context.style_notes).toContain('Server Components');
+  });
 
   it('adds angular-specific style notes for angular', () => {
     const detection = createDetection({
@@ -421,6 +447,33 @@ describe('buildTemplateContext', () => {
     expect(context.security_notes).toContain('ngCspNonce');
   });
 
+  it('adds next-specific security notes for next', () => {
+    const detection = createDetection({
+      framework: { type: 'next', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.security_notes).toContain('Server Components');
+    expect(context.security_notes).toContain('dangerouslySetInnerHTML');
+  });
+
+  it('adds svelte-specific security notes for svelte', () => {
+    const detection = createDetection({
+      framework: { type: 'svelte', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.security_notes).toContain('{@html}');
+    expect(context.security_notes).toContain('XSS');
+  });
+
+  it('adds astro-specific security notes for astro', () => {
+    const detection = createDetection({
+      framework: { type: 'astro', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.security_notes).toContain('set:html');
+    expect(context.security_notes).toContain('XSS');
+  });
+
   // --- is_nuxt flag ---
 
   it('sets is_nuxt to true for nuxt framework', () => {
@@ -437,6 +490,24 @@ describe('buildTemplateContext', () => {
     });
     const context = buildTemplateContext(detection, 'compact');
     expect(context.is_nuxt).toBe(false);
+  });
+
+  // --- is_sveltekit flag ---
+
+  it('sets is_sveltekit to true for sveltekit framework', () => {
+    const detection = createDetection({
+      framework: { type: 'sveltekit', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.is_sveltekit).toBe(true);
+  });
+
+  it('sets is_sveltekit to false for svelte framework', () => {
+    const detection = createDetection({
+      framework: { type: 'svelte', confidence: 'high' },
+    });
+    const context = buildTemplateContext(detection, 'compact');
+    expect(context.is_sveltekit).toBe(false);
   });
 
   it('sets is_unknown_generic to true only for unknown non-monorepo projects', () => {

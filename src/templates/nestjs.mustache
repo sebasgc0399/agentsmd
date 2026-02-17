@@ -35,30 +35,36 @@ Antes de considerar una tarea completa:
 - [ ] `{{commands.lint}}` pasa sin errores
 {{/has_lint}}
 - [ ] No anadir dependencias nuevas sin confirmacion
-- [ ] Componentes sin advertencias de React
-- [ ] Documentar props de componentes exportados
+- [ ] Build sin errores y TypeScript strict
+- [ ] ValidationPipe global activo para todas las rutas
 
 ## Estilo y convenciones
 {{style_notes}}
 
-### Estructura de componentes
-- Un componente por archivo
-- Archivo nombrado igual que el componente exportado (PascalCase)
-- Exports nombrados para componentes, predeterminado para paginas
+### Estructura modular
+- Un modulo por feature: `feature.module.ts`, `feature.controller.ts`, `feature.service.ts`
+- Barrel exports (`index.ts`) por modulo para imports limpios
+- Carpeta `common/` para decorators, filters, guards e interceptors compartidos
 
-### Gestion de estado
-- Estado local con `useState` para estado de UI
-- Props drilling evitado con Context API o libreria de gestion de estado
-- Side effects con `useEffect`, memoizacion con `useMemo`/`useCallback` cuando sea necesario
+### Providers y DI
+- `@Injectable()` para todos los servicios
+- Inyeccion por constructor; `@Inject()` solo para tokens custom
+- Scoping: `DEFAULT` (singleton), `REQUEST`, `TRANSIENT` segun necesidad
+
+### Concerns transversales
+- Guards (`@UseGuards`) para autorizacion
+- Interceptors para logging, transformacion de respuesta y cache
+- Pipes (`ValidationPipe`) para validacion de DTOs
+- ExceptionFilters para manejo centralizado de errores
 
 {{#has_tests}}
 ## Guia de pruebas
 {{testing_notes}}
 
 ### Cobertura esperada
-- Componentes: interacciones de usuario, renderizado condicional
-- Hooks personalizados: logica de negocio
-- Utilidades: funciones puras con casos limite
+- Controllers: mock de services, verificar respuestas HTTP
+- Services: pruebas unitarias con mocks de repositorios/DI
+- E2E: `createNestApplication()` + supertest para flujos completos
 {{/has_tests}}
 
 {{#isStandardOrFull}}
@@ -76,16 +82,17 @@ Antes de considerar una tarea completa:
 - Pide totales de pruebas (archivos/pruebas aprobadas).
 - Pide mencion explicita de compensaciones.
 
-### Lista de entrega React
-- Manten contratos de componentes estables salvo que el alcance exija cambio.
-- Confirma que el orden de hooks se preserve.
-- Valida consistencia de nombres de props y eventos.
-- Manten comportamiento de renderizado deterministico.
+### Lista de entrega NestJS
+- Manten contratos de modulos estables salvo que el alcance exija cambio.
+- Confirma que providers tienen el scope correcto (singleton vs request).
+- Valida que guards e interceptors no bloqueen rutas inesperadamente.
+- Manten manejo de errores explicito con ExceptionFilters.
+- No inyectar servicios circulares sin `forwardRef()`.
 
 ## Definicion de terminado ampliada
 - [ ] Alcance funcional completo con diff minimo.
-- [ ] No se introducen advertencias de React en salida dev/test.
-- [ ] Componentes compartidos mantienen compatibilidad hacia atras.
+- [ ] No se introducen errores de DI en runtime.
+- [ ] Modulos compartidos mantienen compatibilidad hacia atras.
 - [ ] El contenido generado de AGENTS no tiene marcadores.
 - [ ] Docs y pruebas reflejan cambios de comportamiento.
 
@@ -106,8 +113,8 @@ Antes de considerar una tarea completa:
 
 ## Haz / No hagas
 ### Haz
-- Manten componentes legibles y de alcance acotado.
-- Prefiere condiciones explicitas en templates.
+- Manten modulos legibles y de alcance acotado.
+- Prefiere decoradores explicitos sobre convencion magica.
 - Reporta cambios de comportamiento con ejemplos concretos.
 - Preserva el comportamiento del perfil por defecto.
 
@@ -222,10 +229,10 @@ Antes de considerar una tarea completa:
 ## Seguridad
 {{security_notes}}
 
-### Especifico de React
-- Sanitizar inputs antes de usar `dangerouslySetInnerHTML`
-- Validar props con PropTypes o TypeScript
-- No exponer API keys en codigo cliente
+### Especifico de NestJS
+- `ValidationPipe` global con `transform: true` y `whitelist: true`
+- No exponer stack traces en respuestas de produccion
+- Usar Guards para autorizacion en lugar de logica en controllers
 
 ---
 *Generado por agents-md v{{generator_version}}*
