@@ -17,6 +17,7 @@ CLI para generar archivos `AGENTS.md` automáticamente para proyectos Node.js.
 - [Perfiles de salida](#perfiles-de-salida)
 - [Límites de salida](#límites-de-salida-límites-suaves)
 - [Proyectos soportados](#proyectos-soportados)
+- [Estado actual de plantillas](#estado-actual-de-plantillas)
 - [Cómo funciona](#cómo-funciona)
 - [Releases y novedades](#releases-y-novedades)
 - [Desarrollo](#desarrollo)
@@ -140,6 +141,22 @@ Cómo se interpretan estos límites:
 - Express y Fastify
 - Proyectos Node.js genéricos
 - Monorepos (Turborepo/Nx)
+
+## Estado actual de plantillas
+
+| Plantilla | Frameworks que la usan |
+| --- | --- |
+| `react.mustache` | `react`, `next` |
+| `vue.mustache` | `vue`, `nuxt` |
+| `angular.mustache` | `angular` |
+| `firebase.mustache` | `firebase-functions` |
+| `monorepo.mustache` | cualquier monorepo |
+| `base.mustache` | `sveltekit`, `svelte`, `astro`, `nestjs`, `express`, `fastify`, proyectos Node.js genéricos y casos `unknown` |
+
+Notas importantes:
+
+- Si se detecta monorepo, `monorepo.mustache` tiene prioridad sobre cualquier framework.
+- Actualmente no hay plantilla dedicada para `sveltekit`, `svelte`, `astro`, `nestjs`, `express` y `fastify`; esos casos usan `base.mustache`.
 
 ## Cómo funciona
 
