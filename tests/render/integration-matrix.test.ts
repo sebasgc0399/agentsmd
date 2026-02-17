@@ -10,6 +10,7 @@ type MatrixCase = {
   expectedFramework: FrameworkType;
   expectedMonorepo: boolean;
   requiredSpecificSections: string[];
+  forbiddenSpecificSections?: string[];
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -59,7 +60,7 @@ const matrix: MatrixCase[] = [
     fixture: 'sveltekit-simple',
     expectedFramework: 'sveltekit',
     expectedMonorepo: false,
-    requiredSpecificSections: [],
+    requiredSpecificSections: ['### convenciones sveltekit'],
   },
   {
     fixture: 'nest-simple',
@@ -93,9 +94,10 @@ const matrix: MatrixCase[] = [
   },
   {
     fixture: 'svelte-simple',
-    expectedFramework: 'sveltekit',
+    expectedFramework: 'svelte',
     expectedMonorepo: false,
-    requiredSpecificSections: ['### convenciones sveltekit'],
+    requiredSpecificSections: [],
+    forbiddenSpecificSections: ['### convenciones sveltekit'],
   },
   {
     fixture: 'express-app-like-minimal',
@@ -179,6 +181,9 @@ describe('integration matrix detect->render->validate', () => {
         const normalizedContent = normalizeText(run1.result.content);
         for (const section of matrixCase.requiredSpecificSections) {
           expect(normalizedContent).toContain(section);
+        }
+        for (const section of matrixCase.forbiddenSpecificSections ?? []) {
+          expect(normalizedContent).not.toContain(section);
         }
 
         lineCounts[profile] = run1.result.validation.lineCount;

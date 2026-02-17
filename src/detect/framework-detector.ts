@@ -123,8 +123,9 @@ const FRAMEWORK_DEFINITIONS: FrameworkDefinition[] = [
       depSignal('svelte', 'svelte dependency'),
       scriptSignal('svelte-kit dev', 'script contains "svelte-kit dev"'),
     ],
-    guard: ctx => hasAnyFile(ctx, ['svelte.config.js']),
-    guardDescription: 'requires svelte.config.js',
+    guard: ctx =>
+      hasAnyFile(ctx, ['svelte.config.js']) && hasDependency(ctx, '@sveltejs/kit'),
+    guardDescription: 'requires svelte.config.js and @sveltejs/kit dependency',
   },
   {
     type: 'astro',

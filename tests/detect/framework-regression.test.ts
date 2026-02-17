@@ -9,8 +9,6 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const fixturesDir = path.join(repoRoot, 'tests', 'fixtures');
 
-// NOTE: `svelte` pure coverage is out of scope in this iteration because
-// current fixtures with `svelte.config.js` resolve to `sveltekit`.
 const EXISTING_FIXTURE_EXPECTATIONS: Record<string, FrameworkType> = {
   'ambiguous-express-fastify': 'express',
   'angular-simple': 'angular',
@@ -37,7 +35,7 @@ const EXISTING_FIXTURE_EXPECTATIONS: Record<string, FrameworkType> = {
   'runtime-npm': 'unknown',
   'runtime-pnpm': 'unknown',
   'runtime-yarn': 'unknown',
-  'svelte-simple': 'sveltekit',
+  'svelte-simple': 'svelte',
   'sveltekit-simple': 'sveltekit',
   'tool-only-turbo-nx': 'unknown',
   'vue-vite': 'vue',
