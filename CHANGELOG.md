@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.0](https://github.com/sebasgc0399/agents-md/compare/v0.2.2...v0.3.0) (2026-02-16)
+
+### Features
+
+* add defensive guard in validateOutput function; create initial test for renderTemplate function ([c922b8e](https://github.com/sebasgc0399/agents-md/commit/c922b8e74dfdc2166b0b7553b994b5edadedfe01))
+* add profile limits benchmarking script and baseline reports ([5a1b153](https://github.com/sebasgc0399/agents-md/commit/5a1b1533e00b60d51a9a36632f707024eaa1a706))
+* add tests for readPackageJson, directoryExists, and fileExists functions; create version test file ([8c0c01a](https://github.com/sebasgc0399/agents-md/commit/8c0c01adaa723c10c4816493b864bbd64f9a5760))
+* enhance framework detection and testing ([7294d1b](https://github.com/sebasgc0399/agents-md/commit/7294d1b439bb4b575937f366fd2f3f59d671a52d))
+* enhance framework detection logic and add precedence rules for Next.js and Nuxt ([c25bfa4](https://github.com/sebasgc0399/agents-md/commit/c25bfa44295da5ecd09cb33c88b0813359f251c4))
+* enhance framework detection with new frameworks and improved scoring ([7208238](https://github.com/sebasgc0399/agents-md/commit/7208238693c06d89a4901860fde08fe6c6d498cc))
+* **render:** add framework-specific templates and notes for Angular, Vue, Nuxt, Svelte, Astro, NestJS, Express, and Fastify ([4f4caad](https://github.com/sebasgc0399/agents-md/commit/4f4caadf384cf5a427457bf515b8feec5b23114b))
+* update benchmark reports with new timestamps and issue statuses; enhance tests for package and project detection ([7544ca0](https://github.com/sebasgc0399/agents-md/commit/7544ca0507de2588695b27135786da705e063c63))
+* update benchmarks and thresholds for compact and full profiles; add operational runbook for P2 ([a87251b](https://github.com/sebasgc0399/agents-md/commit/a87251be56efabd3065647cbe0f2f5fefa727f95))
+* update output profile limits and thresholds; refactor benchmark scripts to use shared constants ([d14ecba](https://github.com/sebasgc0399/agents-md/commit/d14ecbabb91e7d96edd43016d5239f330c4625b6))
+* update type assertions in runtime detection tests and improve fs.statSync mock implementations ([1eab02e](https://github.com/sebasgc0399/agents-md/commit/1eab02e7f779e2552f03fbcbf52da603b7a90332))
+
 ## [0.2.2](https://github.com/sebasgc0399/agents-md/compare/v0.2.1...v0.2.2) (2026-02-15)
 
 ### Bug Fixes

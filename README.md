@@ -6,59 +6,64 @@
 [![release](https://img.shields.io/github/v/release/sebasgc0399/agents-md?label=release&cacheSeconds=300)](https://github.com/sebasgc0399/agents-md/releases/latest)
 [![license](https://img.shields.io/github/license/sebasgc0399/agents-md?label=license)](https://github.com/sebasgc0399/agents-md/blob/main/LICENSE)
 
-CLI para generar archivos `AGENTS.md` automaticamente para proyectos Node.js.
+CLI para generar archivos `AGENTS.md` automáticamente para proyectos Node.js.
 
 ## Tabla de contenido
 
-- [¿Que es AGENTS.md?](#que-es-agentsmd)
+- [¿Qué es AGENTS.md?](#qué-es-agentsmd)
 - [Quickstart](#quickstart)
-- [Instalacion](#instalacion)
+- [Instalación](#instalación)
 - [Uso](#uso)
 - [Perfiles de salida](#perfiles-de-salida)
+- [Límites de salida](#límites-de-salida-límites-suaves)
 - [Proyectos soportados](#proyectos-soportados)
+- [Estado actual de plantillas](#estado-actual-de-plantillas)
+- [Cómo funciona](#cómo-funciona)
 - [Releases y novedades](#releases-y-novedades)
 - [Desarrollo](#desarrollo)
 - [Contribuciones](#contribuciones)
 - [Soporte](#soporte)
 - [Licencia](#licencia)
 
-## ¿Que es AGENTS.md?
+## ¿Qué es AGENTS.md?
 
-`AGENTS.md` es un "README para AI agents" que reduce alucinaciones al proporcionar:
+`AGENTS.md` es un documento para asistentes de código (IA) que resume cómo trabajar en tu proyecto sin adivinar.
 
-- Comandos canonicos (setup, test, build, lint)
-- Convenciones de codigo y estilo
-- Guias de testing
-- Reglas de seguridad
-- Definition of Done
+Incluye, de forma práctica:
+
+- Comandos recomendados para instalar, ejecutar, compilar, lint y pruebas.
+- Convenciones de código y estilo.
+- Guía de validación y pruebas antes de cerrar tareas.
+- Reglas de seguridad y calidad.
+- Criterios claros para considerar una tarea como terminada.
 
 ## Quickstart
 
-Nombres importantes para evitar confusion:
+Antes de ejecutar:
 
-- Package en npm: `@sebasgc0399/agents-md`
-- Comando instalado: `agents-md`
-- No usar `npx agents-md ...` sin scope
+- Paquete en npm: `@sebasgc0399/agents-md`
+- Comando del CLI: `agents-md`
+- Importante: no uses `npx agents-md ...` sin scope; usa `@sebasgc0399/agents-md`.
 
-Uso sin instalacion (recomendado):
-
-```bash
-npx -p @sebasgc0399/agents-md agents-md init
-npx -p @sebasgc0399/agents-md agents-md init --dry-run
-npx -p @sebasgc0399/agents-md agents-md init --profile compact
-npx -p @sebasgc0399/agents-md agents-md init --profile standard
-npx -p @sebasgc0399/agents-md agents-md init --profile full
-```
-
-## Instalacion
-
-Opcion 1: sin instalacion (npx)
+Uso sin instalación (recomendado):
 
 ```bash
-npx -p @sebasgc0399/agents-md agents-md init
+npx @sebasgc0399/agents-md init
+npx @sebasgc0399/agents-md init --dry-run
+npx @sebasgc0399/agents-md init --profile compact
+npx @sebasgc0399/agents-md init --profile standard
+npx @sebasgc0399/agents-md init --profile full
 ```
 
-Opcion 2: instalacion global
+## Instalación
+
+Opción 1: sin instalación (npx)
+
+```bash
+npx @sebasgc0399/agents-md init
+```
+
+Opción 2: instalación global
 
 ```bash
 npm install -g @sebasgc0399/agents-md
@@ -68,7 +73,7 @@ agents-md init
 Requisitos:
 
 - Node.js >= 18
-- `package.json` en la raiz del proyecto
+- `package.json` en la raíz del proyecto
 
 ## Uso
 
@@ -76,7 +81,7 @@ Requisitos:
 # Generar AGENTS.md en el directorio actual
 agents-md init
 
-# Preview sin escribir archivo
+# Vista previa sin escribir archivo
 agents-md init --dry-run
 
 # Elegir perfil de salida (default: compact)
@@ -87,55 +92,93 @@ agents-md init --profile full
 # Sobrescribir archivo existente
 agents-md init --force
 
-# Modo verbose (mostrar detalles de deteccion)
+# Mostrar detalles de detección
 agents-md init --verbose
 
 # Especificar ruta de salida
 agents-md init --out ./docs/AGENTS.md
 ```
 
-Nota: actualmente las flags `-y/--yes` y `-i/--interactive` estan reservadas y no cambian el comportamiento del comando.
+Qué hace cada opción clave:
+
+- `--dry-run`: muestra el resultado sin escribir `AGENTS.md`.
+- `--profile`: cambia nivel de detalle (`compact`, `standard`, `full`).
+- `--force`: permite sobrescribir un archivo existente.
+- `--verbose`: muestra cómo se detectó el proyecto y los comandos encontrados.
+- `--out`: define la ruta y nombre del archivo de salida.
+
+Nota: las flags `-y/--yes` y `-i/--interactive` están reservadas y hoy no cambian el comportamiento.
 
 ## Perfiles de salida
 
-- `compact` (default): salida corta y directa (~30-90 lineas objetivo)
-- `standard`: salida mas completa para equipos (~130-190 lineas objetivo)
-- `full`: salida mas detallada para handoff y CI (~200-280 lineas objetivo)
+- `compact` (default): salida breve y directa (objetivo aproximado: 30-90 líneas).
+- `standard`: salida intermedia para equipos (objetivo aproximado: 130-190 líneas).
+- `full`: salida más detallada para traspaso técnico y CI (objetivo aproximado: 200-280 líneas).
 
-## Limites de salida (soft limits)
+## Límites de salida (límites suaves)
 
-- `compact`: 190-700 tokens, 30-90 lines
-- `standard`: 1050-1700 tokens, 130-190 lines
-- `full`: 1650-2600 tokens, 200-280 lines
+- `compact`: 190-700 tokens, 30-90 líneas
+- `standard`: 1050-1700 tokens, 130-190 líneas
+- `full`: 1650-2600 tokens, 200-280 líneas
 
-Se aplica tolerancia de +-10% por perfil. Fuera del rango base genera warning; fuera de tolerancia se reporta breach no bloqueante en P0.
-La generacion solo se bloquea cuando hay errors de validacion.
+Cómo se interpretan estos límites:
+
+- El rango base es el objetivo principal por perfil.
+- Se aplica una tolerancia de +-10%.
+- Si el resultado queda fuera del rango base, se reporta advertencia.
+- Si queda fuera de la tolerancia, se reporta incumplimiento P0 no bloqueante.
+- La generación solo se bloquea cuando hay errores de validación.
 
 ## Proyectos soportados
 
 - React (Vite, CRA, Next.js)
 - Vue (Vite, Nuxt)
+- Angular
+- Svelte y SvelteKit
+- Astro
+- NestJS
 - Firebase Functions
-- Proyectos Node.js genericos
+- Express y Fastify
+- Proyectos Node.js genéricos
 - Monorepos (Turborepo/Nx)
 
-## Como funciona
+## Estado actual de plantillas
 
-1. Lee `package.json`.
-2. Detecta framework y estructura de carpetas.
-3. Extrae comandos canonicos desde scripts.
-4. Genera un `AGENTS.md` limpio y conciso segun el perfil seleccionado.
+| Plantilla | Frameworks que la usan |
+| --- | --- |
+| `react.mustache` | `react`, `next` |
+| `vue.mustache` | `vue`, `nuxt` |
+| `angular.mustache` | `angular` |
+| `firebase.mustache` | `firebase-functions` |
+| `monorepo.mustache` | cualquier monorepo |
+| `base.mustache` | `sveltekit`, `svelte`, `astro`, `nestjs`, `express`, `fastify`, proyectos Node.js genéricos y casos `unknown` |
+
+Notas importantes:
+
+- Si se detecta monorepo, `monorepo.mustache` tiene prioridad sobre cualquier framework.
+- Actualmente no hay plantilla dedicada para `sveltekit`, `svelte`, `astro`, `nestjs`, `express` y `fastify`; esos casos usan `base.mustache`.
+
+## Cómo funciona
+
+1. Lee `package.json` del proyecto.
+2. Detecta la estructura de carpetas y el framework principal.
+3. Detecta runtime y gestor de paquetes (`npm`, `yarn`, `pnpm` o `bun`) usando lockfiles y metadatos.
+4. Revisa `package.json > scripts` para encontrar comandos existentes.
+5. Para cada tarea usa una prioridad fija de nombres: desarrollo (`dev` > `start` > `serve`), build (`build` > `compile`), pruebas (`test` > `test:unit` > `vitest` > `jest`), lint (`lint` > `eslint`) y formato (`format` > `prettier`).
+6. Construye el comando final según el gestor detectado (por ejemplo `npm run build`, `yarn build`, `pnpm run build`).
+7. Si un script no existe, no lo inventa: ese comando se deja como no disponible.
+8. Genera un `AGENTS.md` limpio y consistente según el perfil seleccionado.
 
 ## Releases y novedades
 
-Cambios en esta version actual:
+Cambios en la versión actual (v0.3.0 - 2026-02-16):
 
-- Benchmark de calidad P0/P1/P2 integrado (`benchmark:lite`, `benchmark:p1`, `benchmark:p2`)
-- Baseline reproducible de limites por perfil (`benchmark:limits`)
-- Gates de calidad en CI para benchmark lite + baseline semantico P1
-- Workflow semanal/manual de tendencias (`benchmark-trends`) con reporte JSON/Markdown
+- Nuevas plantillas específicas por framework: Angular, Vue, Nuxt, Svelte, Astro, NestJS, Express y Fastify.
+- Detección de frameworks mejorada con reglas de precedencia (incluye Next.js y Nuxt) y mejor puntaje de clasificación.
+- Calidad reforzada con validaciones defensivas y más cobertura de pruebas en detección, runtime y utilidades de archivos.
+- Benchmarks de perfiles refinados: límites y umbrales actualizados, scripts unificados con constantes compartidas y runbook operativo P2.
 
-Actualizar a la ultima version global:
+Actualizar a la última versión global:
 
 ```bash
 npm update -g @sebasgc0399/agents-md
@@ -164,74 +207,74 @@ npm run test:coverage
 # Lint (verificar tipos)
 npm run lint
 
-# Benchmark lite (P0 quality gate)
+# Benchmark base de calidad (P0)
 npm run benchmark:lite
 
-# Benchmark de limites por perfil (estimado vs token real)
+# Benchmark de límites por perfil (estimado vs token real)
 npm run benchmark:limits
 
-# Benchmark P1 (semantic baseline + regression budget)
+# Benchmark P1 (línea base semántica y control de regresión)
 npm run benchmark:p1
 
-# Regenerar baseline P1 (solo cuando el cambio es intencional)
+# Regenerar línea base P1 (solo cuando el cambio es intencional)
 npm run benchmark:p1:update
 
-# Benchmark P2 (weekly trends report, non-blocking)
+# Benchmark P2 (tendencias semanales, no bloqueante)
 npm run benchmark:p2
 
 # Benchmark P2 local (sin GitHub Issues)
 npm run benchmark:p2:local
 
-# Benchmark P2 deterministico (json-only, fecha fija)
+# Benchmark P2 determinístico (json-only, fecha fija)
 npm run benchmark:p2:deterministic
 
 # Smoke del CLI compilado
 node dist/cli.js init --dry-run
 ```
 
-### Runbook P2 (operacion)
+### Runbook P2 (operación)
 
-Comandos de operacion:
+Comandos de operación:
 
 - Local sin red/issues: `npm run benchmark:p2:local`
-- Deterministico local: `npm run benchmark:p2:deterministic`
+- Determinístico local: `npm run benchmark:p2:deterministic`
 - CI/semanal: `npm run benchmark:p2`
 
-Lectura minima de reportes:
+Cómo leer los reportes:
 
-- `artifacts/benchmark-p2/report.json`: estado estructurado (`metrics`, `issues`, `alerts`).
-- `artifacts/benchmark-p2/report.md`: resumen para `GITHUB_STEP_SUMMARY`.
+- `artifacts/benchmark-p2/report.json`: salida estructurada con `metrics`, `issues` y `alerts`.
+- `artifacts/benchmark-p2/report.md`: resumen pensado para `GITHUB_STEP_SUMMARY`.
 
-Respuesta a alertas P2:
+Interpretación rápida de alertas P2:
 
-- `determinism_rate`: revisar salida no estable (doble corrida por fixture/perfil).
-- `invalid_command_rate`: validar comandos contra scripts reales + allowlist.
-- `score_vs_baseline`: revisar drift contra baseline P1; corregir o justificar update.
-- `p1_status`: ejecutar `npm run benchmark:p1` y resolver drift/regresion antes de continuar.
+- `determinism_rate`: revisar salidas inestables entre corridas del mismo fixture/perfil.
+- `invalid_command_rate`: revisar detección de comandos contra scripts reales y la lista permitida (allowlist).
+- `score_vs_baseline`: revisar diferencia de puntaje contra la línea base P1; corregir o justificar actualización.
+- `p1_status`: ejecutar `npm run benchmark:p1` y resolver diferencias antes de continuar.
 
 ## Contribuciones
 
 Gracias por ayudar a mejorar `agents-md`.
 
-Para mantener el proyecto de alta calidad:
+Para mantener calidad y claridad en el proyecto:
 
-- Abre un issue primero para cambios no triviales.
-- Incluye problema, solucion propuesta y trade-off tecnico.
+- Abre un issue antes de cambios no triviales.
+- Incluye problema, propuesta de solución y trade-offs técnicos.
 - Si usaste IA, revisa manualmente el resultado antes de abrir PR.
-- Manten los PRs pequenos y enfocados.
+- Mantén los PRs pequeños y enfocados.
 - Agrega o actualiza tests cuando cambie el comportamiento.
 - Ejecuta `npm test` antes de enviar.
 
-Comandos de desarrollo y validacion: ver seccion `## Desarrollo`.
+Comandos de desarrollo y validación: ver sección `## Desarrollo`.
 
 ## Soporte
 
-Si esta herramienta te resulta util, puedes apoyar el proyecto de estas formas:
+Si esta herramienta te resulta útil, puedes apoyar el proyecto de estas formas:
 
-- Dar estrella al repo
-- Compartirlo con tu equipo
-- Reportar bugs con pasos reproducibles
-- Proponer mejoras via issues o PRs acotados
+- Dar estrella al repo.
+- Compartirlo con tu equipo.
+- Reportar bugs con pasos reproducibles.
+- Proponer mejoras vía issues o PRs acotados.
 
 ## Licencia
 
