@@ -32,6 +32,15 @@ Excepcion:
 | Compatibilidad multi-herramienta | No contiene instrucciones dependientes de una herramienta especifica. | 2 | 18.18% |
 | Determinismo y estabilidad | Dos corridas iguales producen salida identica. | 1 | 9.09% |
 
+Secciones minimas canonicas para "Claridad y estructura" en benchmark lite:
+
+- `## Proposito del repositorio`
+- `## Stack tecnologico`
+- `## Comandos canonicos`
+- `## Definicion de terminado`
+- `## Estilo y convenciones`
+- `## Seguridad`
+
 Definicion de lock-in:
 
 - Se considera lock-in cualquier instruccion que dependa de una herramienta concreta.

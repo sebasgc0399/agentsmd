@@ -24,21 +24,21 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "environment variables",
+          "variables de entorno",
           "seguridad",
-          "deployment"
+          "despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -62,28 +62,28 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "environment variables",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
+          "variables de entorno",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
           "seguridad",
-          "deployment"
+          "despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -107,27 +107,27 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "environment variables",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
+          "variables de entorno",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad",
-          "deployment"
+          "despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -151,21 +151,21 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -187,28 +187,28 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -230,27 +230,27 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -272,22 +272,22 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
+          "guia de pruebas",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -313,29 +313,29 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -361,28 +361,28 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "estructura del monorepo",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad",
-          "build y deploy"
+          "build y despliegue"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -408,20 +408,20 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
+          "guia de pruebas",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -447,27 +447,27 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -493,26 +493,26 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -538,19 +538,19 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -572,28 +572,28 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "generic project execution playbook",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
-          "generic full-profile operations guide",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "guia de ejecucion para proyectos genericos",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
+          "guia operativa para perfil full generico",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -615,26 +615,26 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "generic project execution playbook",
-          "do / don't",
-          "agent handoff template",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "guia de ejecucion para proyectos genericos",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -656,20 +656,20 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
+          "guia de pruebas",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -695,27 +695,27 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
-          "advanced agent protocol",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
+          "protocolo avanzado para agentes",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [
@@ -741,26 +741,26 @@
       "semantic": {
         "h2HeadingsNormalized": [
           "proposito del repositorio",
-          "tech stack",
+          "stack tecnologico",
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
-          "testing guidelines",
-          "how to work with ai agents",
-          "expanded definition of done",
-          "debug checklist",
-          "testing strategy",
-          "do / don't",
-          "agent handoff template",
+          "guia de pruebas",
+          "como trabajar con agentes de ia",
+          "definicion de terminado ampliada",
+          "lista de depuracion",
+          "estrategia de pruebas",
+          "haz / no hagas",
+          "plantilla de handoff del agente",
           "seguridad"
         ],
         "requiredSectionsPresent": [
           "comandos canonicos",
-          "definition of done",
+          "definicion de terminado",
           "estilo y convenciones",
           "proposito del repositorio",
           "seguridad",
-          "tech stack"
+          "stack tecnologico"
         ],
         "requiredSectionsMissing": [],
         "canonicalCommands": [

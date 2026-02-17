@@ -102,8 +102,8 @@ describe('renderAgentsMd profiles', () => {
     expect(getLengthWarnings(monorepoStandard.validation.warnings)).toEqual([]);
     expect(getLengthWarnings(monorepoFull.validation.warnings)).toEqual([]);
 
-    expect(reactStandard.content).toContain('React delivery checklist');
-    expect(monorepoStandard.content).toContain('Monorepo delivery checklist');
+    expect(reactStandard.content).toContain('Lista de entrega React');
+    expect(monorepoStandard.content).toContain('Lista de entrega monorepo');
   });
 
   it('keeps representative calibrated profiles free of token warning regressions', async () => {
@@ -129,16 +129,16 @@ describe('renderAgentsMd profiles', () => {
 
     const standardResult = renderAgentsMd(detection, 'standard');
 
-    expect(standardResult.content).not.toContain('## Generic project execution playbook');
+    expect(standardResult.content).not.toContain('## Guia de ejecucion para proyectos genericos');
   });
 
-  it('vue template includes Vue delivery checklist in standard', async () => {
+  it('vue template includes Vue delivery list in standard', async () => {
     const fixturePath = path.join(repoRoot, 'tests', 'fixtures', 'vue-vite');
     const detection = await detectProject(fixturePath);
     const standardResult = renderAgentsMd(detection, 'standard');
 
-    expect(standardResult.content).toContain('Vue delivery checklist');
-    expect(standardResult.content).not.toContain('React delivery checklist');
+    expect(standardResult.content).toContain('Lista de entrega Vue');
+    expect(standardResult.content).not.toContain('Lista de entrega React');
   });
 
   it('angular fixture stays within profile limits', async () => {

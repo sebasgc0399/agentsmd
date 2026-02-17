@@ -23,7 +23,7 @@ const matrix: MatrixCase[] = [
     fixture: 'react-vite',
     expectedFramework: 'react',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## testing guidelines'],
+    requiredSpecificSections: ['## guia de pruebas'],
   },
   {
     fixture: 'runtime-npm',
@@ -35,19 +35,19 @@ const matrix: MatrixCase[] = [
     fixture: 'monorepo-turbo',
     expectedFramework: 'unknown',
     expectedMonorepo: true,
-    requiredSpecificSections: ['## estructura del monorepo', '## build y deploy'],
+    requiredSpecificSections: ['## estructura del monorepo', '## build y despliegue'],
   },
   {
     fixture: 'firebase-with-functions',
     expectedFramework: 'firebase-functions',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## environment variables', '## deployment'],
+    requiredSpecificSections: ['## variables de entorno', '## despliegue'],
   },
   {
     fixture: 'vue-vite',
     expectedFramework: 'vue',
     expectedMonorepo: false,
-    requiredSpecificSections: ['## testing guidelines'],
+    requiredSpecificSections: ['## guia de pruebas'],
   },
   {
     fixture: 'angular-simple',
@@ -93,7 +93,7 @@ function assertRequiredSections(content: string): void {
   const normalized = normalizeText(content);
   expect(normalized).toContain('# agents');
   expect(normalized).toContain('## comandos canonicos');
-  expect(normalized).toContain('## definition of done');
+  expect(normalized).toContain('## definicion de terminado');
 }
 
 function assertNoBlockingPlaceholders(content: string): void {
