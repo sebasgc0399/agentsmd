@@ -176,12 +176,12 @@ Notas importantes:
 
 ## Releases y novedades
 
-Cambios en la versión actual (v0.3.0 - 2026-02-16):
+Cambios en la versión actual (v0.4.0 - 2026-02-17):
 
-- Cobertura especifica por framework ampliada: Angular, Vue/Nuxt, Svelte/SvelteKit, Astro, NestJS y Fastify; Express se mantiene en `base.mustache` por ser no-opinado.
-- Detección de frameworks mejorada con reglas de precedencia (incluye Next.js y Nuxt) y mejor puntaje de clasificación.
-- Calidad reforzada con validaciones defensivas y más cobertura de pruebas en detección, runtime y utilidades de archivos.
-- Benchmarks de perfiles refinados: límites y umbrales actualizados, scripts unificados con constantes compartidas y runbook operativo P2.
+- Se agregó y actualizó la sección de estado de plantillas en README con el mapeo real por framework.
+- Se amplió el soporte de frameworks y templates dedicados, con mejoras de detección y precedencia (incluyendo Next.js y Nuxt).
+- Se reforzó la calidad técnica con más cobertura de pruebas en detección/runtime/fs y mejoras en benchmarks de perfiles.
+- Correcciones de documentación y notas de release para mayor claridad y consistencia.
 
 Actualizar a la última versión global:
 
