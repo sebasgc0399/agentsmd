@@ -79,6 +79,30 @@ const matrix: MatrixCase[] = [
     expectedMonorepo: false,
     requiredSpecificSections: [],
   },
+  {
+    fixture: 'precedence-next-react',
+    expectedFramework: 'next',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
+  {
+    fixture: 'precedence-nuxt-vue',
+    expectedFramework: 'nuxt',
+    expectedMonorepo: false,
+    requiredSpecificSections: ['### convenciones nuxt'],
+  },
+  {
+    fixture: 'svelte-simple',
+    expectedFramework: 'sveltekit',
+    expectedMonorepo: false,
+    requiredSpecificSections: ['### convenciones sveltekit'],
+  },
+  {
+    fixture: 'express-app-like-minimal',
+    expectedFramework: 'express',
+    expectedMonorepo: false,
+    requiredSpecificSections: [],
+  },
 ];
 
 function fixturePath(name: string): string {
@@ -144,6 +168,7 @@ describe('integration matrix detect->render->validate', () => {
         expect(run1.detection.folderStructure.isMonorepo).toBe(matrixCase.expectedMonorepo);
         expect(run1.result.validation.valid).toBe(true);
         expect(run1.result.validation.errors).toEqual([]);
+        expect(run1.result.content.charCodeAt(0)).not.toBe(0xfeff);
 
         assertRequiredSections(run1.result.content);
         assertNoBlockingPlaceholders(run1.result.content);

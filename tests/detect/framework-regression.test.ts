@@ -9,16 +9,27 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..');
 const fixturesDir = path.join(repoRoot, 'tests', 'fixtures');
 
+// NOTE: `svelte` pure coverage is out of scope in this iteration because
+// current fixtures with `svelte.config.js` resolve to `sveltekit`.
 const EXISTING_FIXTURE_EXPECTATIONS: Record<string, FrameworkType> = {
   'ambiguous-express-fastify': 'express',
+  'angular-simple': 'angular',
+  'astro-simple': 'astro',
+  'express-app-like-minimal': 'express',
+  'express-library-like': 'express',
+  'fastify-app-like-minimal': 'fastify',
+  'fastify-library-like': 'fastify',
   'firebase-with-functions': 'firebase-functions',
   'monorepo-nx': 'unknown',
   'monorepo-packages-only-turbo': 'unknown',
   'monorepo-pnpm-workspace': 'unknown',
   'monorepo-turbo': 'unknown',
   'monorepo-workspaces-object': 'unknown',
+  'nest-simple': 'nestjs',
   'node-firebase': 'unknown',
   'nuxt-only': 'nuxt',
+  'precedence-next-react': 'next',
+  'precedence-nuxt-vue': 'nuxt',
   'react-no-scripts': 'react',
   'react-vite': 'react',
   'runtime-bun-dep': 'unknown',
@@ -26,6 +37,8 @@ const EXISTING_FIXTURE_EXPECTATIONS: Record<string, FrameworkType> = {
   'runtime-npm': 'unknown',
   'runtime-pnpm': 'unknown',
   'runtime-yarn': 'unknown',
+  'svelte-simple': 'sveltekit',
+  'sveltekit-simple': 'sveltekit',
   'tool-only-turbo-nx': 'unknown',
   'vue-vite': 'vue',
 };
