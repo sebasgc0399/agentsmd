@@ -186,7 +186,7 @@ Cambios en la versión actual (v0.4.1 - 2026-02-21):
 Actualizar a la última versión global:
 
 ```bash
-npm update -g @sebasgc0399/agents-md
+npm update -g @sebasgc0399/agents-md 
 ```
 
 [Ver historial completo de versiones](https://github.com/sebasgc0399/agents-md/releases)
