@@ -177,12 +177,11 @@ Notas importantes:
 
 ## Releases y novedades
 
-Cambios en la versión actual (v0.4.0 - 2026-02-17):
+Cambios en la versión actual (v0.4.1 - 2026-02-21):
 
-- Se agregó y actualizó la sección de estado de plantillas en README con el mapeo real por framework.
-- Se amplió el soporte de frameworks y templates dedicados, con mejoras de detección y precedencia (incluyendo Next.js y Nuxt).
-- Se reforzó la calidad técnica con más cobertura de pruebas en detección/runtime/fs y mejoras en benchmarks de perfiles.
-- Correcciones de documentación y notas de release para mayor claridad y consistencia.
+- Se incorporó una política de actualización segura de dependencias con runbooks en `Docs/DEPENDENCY_UPDATES.md` y `Docs/SECURITY_TRACKING.md`.
+- Se agregó configuración de Dependabot y mejoras en CI para reforzar validaciones de calidad y mantenimiento.
+- Se actualizaron dependencias en `package.json` y `package-lock.json`, eliminando entradas obsoletas.
 
 Actualizar a la última versión global:
 
