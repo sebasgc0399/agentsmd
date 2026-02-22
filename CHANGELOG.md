@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.4.1](https://github.com/sebasgc0399/agents-md/compare/v0.2.2...v0.4.1) (2026-02-21)
+
+### Features
+
+* add "Estado actual de plantillas" section to README.md with template details ([5b5b611](https://github.com/sebasgc0399/agents-md/commit/5b5b6112d366d4c6fc6b1437573237931cf9f47b))
+* add defensive guard in validateOutput function; create initial test for renderTemplate function ([c922b8e](https://github.com/sebasgc0399/agents-md/commit/c922b8e74dfdc2166b0b7553b994b5edadedfe01))
+* add profile limits benchmarking script and baseline reports ([5a1b153](https://github.com/sebasgc0399/agents-md/commit/5a1b1533e00b60d51a9a36632f707024eaa1a706))
+* add support for new frameworks and templates ([a574cda](https://github.com/sebasgc0399/agents-md/commit/a574cdae6963e65e7dbfac47eb2190847ac3df76))
+* add tests for readPackageJson, directoryExists, and fileExists functions; create version test file ([8c0c01a](https://github.com/sebasgc0399/agents-md/commit/8c0c01adaa723c10c4816493b864bbd64f9a5760))
+* enhance framework detection and testing ([7294d1b](https://github.com/sebasgc0399/agents-md/commit/7294d1b439bb4b575937f366fd2f3f59d671a52d))
+* enhance framework detection logic and add precedence rules for Next.js and Nuxt ([c25bfa4](https://github.com/sebasgc0399/agents-md/commit/c25bfa44295da5ecd09cb33c88b0813359f251c4))
+* enhance framework detection with new frameworks and improved scoring ([7208238](https://github.com/sebasgc0399/agents-md/commit/7208238693c06d89a4901860fde08fe6c6d498cc))
+* enhance framework support with specific notes and display names for multiple frameworks ([e0d4cfa](https://github.com/sebasgc0399/agents-md/commit/e0d4cfa4765c05a6356ce1887220f4f48d0e9c3d))
+* enhance Svelte framework detection and update test cases for accuracy ([b99fa48](https://github.com/sebasgc0399/agents-md/commit/b99fa484c86079bac01e8298212959fcb29e6009))
+* expand framework coverage with new templates and update test expectations ([27c9425](https://github.com/sebasgc0399/agents-md/commit/27c9425ac09df0f5ae8edd4d0cd104229da0e5b5))
+* **render:** add framework-specific templates and notes for Angular, Vue, Nuxt, Svelte, Astro, NestJS, Express, and Fastify ([4f4caad](https://github.com/sebasgc0399/agents-md/commit/4f4caadf384cf5a427457bf515b8feec5b23114b))
+* update benchmark reports with new timestamps and issue statuses; enhance tests for package and project detection ([7544ca0](https://github.com/sebasgc0399/agents-md/commit/7544ca0507de2588695b27135786da705e063c63))
+* update benchmarks and thresholds for compact and full profiles; add operational runbook for P2 ([a87251b](https://github.com/sebasgc0399/agents-md/commit/a87251be56efabd3065647cbe0f2f5fefa727f95))
+* update output profile limits and thresholds; refactor benchmark scripts to use shared constants ([d14ecba](https://github.com/sebasgc0399/agents-md/commit/d14ecbabb91e7d96edd43016d5239f330c4625b6))
+* update type assertions in runtime detection tests and improve fs.statSync mock implementations ([1eab02e](https://github.com/sebasgc0399/agents-md/commit/1eab02e7f779e2552f03fbcbf52da603b7a90332))
+
+### Bug Fixes
+
+* correct typos and improve clarity in README.md ([89eb5e3](https://github.com/sebasgc0399/agents-md/commit/89eb5e3c1037ae1709384a8b97ec3d1eb9b7fd5c))
+* simplify npx command usage in README.md ([8b91f6b](https://github.com/sebasgc0399/agents-md/commit/8b91f6bbcd52ec50ac8fa41ddd0a1c2fa8a89bba))
+* update dependencies in package-lock.json and remove obsolete entries ([db05d90](https://github.com/sebasgc0399/agents-md/commit/db05d90b193b4488627ffaa12b46008bd0be1a6a))
+* update release notes for version 0.3.0 with new features and improvements ([afe6987](https://github.com/sebasgc0399/agents-md/commit/afe698786c23ede4c67c1720f527271b3b2dcbe8))
+
 ## [0.4.0](https://github.com/sebasgc0399/agents-md/compare/v0.2.2...v0.4.0) (2026-02-17)
 
 ### Features

@@ -21,6 +21,7 @@ CLI para generar archivos `AGENTS.md` automáticamente para proyectos Node.js.
 - [Cómo funciona](#cómo-funciona)
 - [Releases y novedades](#releases-y-novedades)
 - [Desarrollo](#desarrollo)
+- [Dependency maintenance](#dependency-maintenance)
 - [Contribuciones](#contribuciones)
 - [Soporte](#soporte)
 - [Licencia](#licencia)
@@ -176,17 +177,16 @@ Notas importantes:
 
 ## Releases y novedades
 
-Cambios en la versión actual (v0.4.0 - 2026-02-17):
+Cambios en la versión actual (v0.4.1 - 2026-02-21):
 
-- Se agregó y actualizó la sección de estado de plantillas en README con el mapeo real por framework.
-- Se amplió el soporte de frameworks y templates dedicados, con mejoras de detección y precedencia (incluyendo Next.js y Nuxt).
-- Se reforzó la calidad técnica con más cobertura de pruebas en detección/runtime/fs y mejoras en benchmarks de perfiles.
-- Correcciones de documentación y notas de release para mayor claridad y consistencia.
+- Se incorporó una política de actualización segura de dependencias con runbooks en `Docs/DEPENDENCY_UPDATES.md` y `Docs/SECURITY_TRACKING.md`.
+- Se agregó configuración de Dependabot y mejoras en CI para reforzar validaciones de calidad y mantenimiento.
+- Se actualizaron dependencias en `package.json` y `package-lock.json`, eliminando entradas obsoletas.
 
 Actualizar a la última versión global:
 
 ```bash
-npm update -g @sebasgc0399/agents-md
+npm update -g @sebasgc0399/agents-md 
 ```
 
 [Ver historial completo de versiones](https://github.com/sebasgc0399/agents-md/releases)
@@ -236,6 +236,20 @@ npm run benchmark:p2:deterministic
 # Smoke del CLI compilado
 node dist/cli.js init --dry-run
 ```
+
+### Dependency maintenance
+
+Policy and workflow:
+
+- `Docs/DEPENDENCY_UPDATES.md`
+- `Docs/SECURITY_TRACKING.md`
+
+Operational commands:
+
+- Runtime update: `npm run deps:update:runtime`
+- Runtime verification: `npm run deps:verify:runtime`
+- Dev update batch: `npm run deps:update:all`
+- Dev verification: `npm run deps:verify:dev`
 
 ### Runbook P2 (operación)
 

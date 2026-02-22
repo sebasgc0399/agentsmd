@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [20]
+        node: [18, 20]
 
     steps:
       - name: Checkout
@@ -36,8 +36,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Lint
+      - name: Lint (required baseline)
         run: npm run lint
+
+      - name: Test (required baseline)
+        run: npm test
 
       - name: Test coverage
         run: npm run test:coverage
@@ -74,11 +77,11 @@ jobs:
           path: artifacts/coverage-p0/*
           if-no-files-found: warn
 
-      - name: Benchmark lite
+      - name: Benchmark lite (required baseline)
         run: npm run benchmark:lite
 
       - name: Benchmark p1
         run: npm run benchmark:p1
 
-      - name: Package smoke check
+      - name: Package smoke check (required baseline)
         run: npm pack --dry-run
